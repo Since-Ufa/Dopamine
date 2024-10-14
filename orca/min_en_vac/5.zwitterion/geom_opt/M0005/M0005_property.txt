@@ -1,0 +1,106 @@
+-------------------------------------------------------------
+----------------------- !PROPERTIES! ------------------------
+-------------------------------------------------------------
+# -----------------------------------------------------------
+$ PAL_Flags
+   description: The PAL Flags
+   geom. index: 1
+   prop. index: 1
+        Diskflag:     2
+# -----------------------------------------------------------
+$ SCF_Energy
+   description: The SCF energy
+   geom. index: 1
+   prop. index: 1
+        SCF Energy:     -515.5290659980
+# -----------------------------------------------------------
+$ DFT_Energy
+   description: The DFT energy
+   geom. index: 1
+   prop. index: 1
+   Number of Alpha Electrons        41.0000611051 
+   Number of Alpha Electrons        41.0000611051 
+   Total nuber of  Electrons        82.0001222103 
+   Exchange energy                 -68.1076611952 
+   Correlation energy               -2.7508690846 
+   Correlantion energy NL            0.0000000000 
+   Exchange-Correlation energy     -70.8585302797 
+   Embedding correction              0.0000000000 
+# -----------------------------------------------------------
+$ VdW_Correction
+   description: The Van der Waals Correction
+   geom. index: 1
+   prop. index: 1
+        Van der Waals Correction:       -0.0233221371
+# -----------------------------------------------------------
+$ Calculation_Info
+   description: Details of the calculation
+   geom. index: 1
+   prop. index: 1
+     Multiplicity:                          1
+     Charge:                                0
+     number of atoms:                       22
+     number of electrons:                   0
+     number of frozen core electrons:       1
+     number of correlated electrons:        0
+     number of basis functions:             209
+     number of aux C basis functions:       0
+     number of aux J basis functions:       0
+     number of aux JK basis functions:      0
+     number of aux CABS basis functions:    0
+     Total Energy                           -515.552388
+# -----------------------------------------------------------
+$ SCF_Electric_Properties
+   description: The SCF Calculated Electric Properties
+   geom. index: 1
+   prop. index: 1
+       Filename                          : M0005.scfp 
+       Do Dipole Moment Calculation      : true 
+       Do Quadrupole Moment Calculation  : false 
+       Do Polarizability Calculation     : false 
+** Dipole moment part of electric properties **
+        Magnitude of dipole moment (Debye) :       17.0835644765
+        Electronic Contribution:
+                  0    
+      0       9.243090
+      1      -1.195112
+      2       4.196740
+        Nuclear Contribution:
+                  0    
+      0     -14.418938
+      1       0.029073
+      2      -8.322699
+        Total Dipole moment:
+                  0    
+      0      -5.175848
+      1      -1.166039
+      2      -4.125958
+# -------------------------------------------------------------
+----------------------- !GEOMETRIES! ------------------------
+# -------------------------------------------------------------
+------------------------ !GEOMETRY! -------------------------
+    Number of atoms:    22 
+    Geometry Index:     1 
+    Coordinates:
+               0 O      2.618028000000   -1.924163000000    1.148274000000
+               1 C      1.892695000000   -0.804126000000    1.018802000000
+               2 C      0.454162000000   -0.917308000000    0.718116000000
+               3 C     -0.312430000000    0.161677000000    0.583028000000
+               4 C     -1.792763000000    0.047744000000    0.298897000000
+               5 C     -2.076905000000    0.288552000000   -1.208205000000
+               6 N     -1.400607000000   -0.710281000000   -2.071197000000
+               7 H     -1.633481000000   -0.576239000000   -3.045140000000
+               8 H     -0.394596000000   -0.654169000000   -2.010265000000
+               9 H     -1.666778000000   -1.654558000000   -1.832485000000
+              10 C      0.304564000000    1.494500000000    0.736602000000
+              11 C      1.600021000000    1.615279000000    1.003317000000
+              12 C      2.439451000000    0.414011000000    1.154984000000
+              13 O      3.898593000000    0.594624000000    1.461011000000
+              14 H      3.541335000000   -1.806583000000    1.341918000000
+              15 H      0.048366000000   -1.922922000000    0.613273000000
+              16 H     -2.178466000000   -0.942209000000    0.591250000000
+              17 H     -2.330548000000    0.799415000000    0.899384000000
+              18 H     -3.168301000000    0.239800000000   -1.370850000000
+              19 H     -1.742895000000    1.305141000000   -1.480160000000
+              20 H     -0.311453000000    2.389346000000    0.641705000000
+              21 H      2.079814000000    2.604480000000    1.061713000000
