@@ -3,4 +3,4 @@
 %base "cu2"
 %pal nprocs=8 end
 %geom maxiter=75 end
-*xyzfile 2 1 cu+cu.xyz
+*xyzfile 0 1 cu+cu.xyz
