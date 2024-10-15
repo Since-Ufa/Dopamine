@@ -771,6 +771,70 @@ $ SCF_Electric_Properties
       0      -0.000000
       1      -0.000000
       2      -0.000000
+# -----------------------------------------------------------
+$ PAL_Flags
+   description: The PAL Flags
+   geom. index: 25
+   prop. index: 1
+        Diskflag:     2
+# -----------------------------------------------------------
+$ SCF_Energy
+   description: The SCF energy
+   geom. index: 25
+   prop. index: 1
+        SCF Energy:    -3280.5659610270
+# -----------------------------------------------------------
+$ DFT_Energy
+   description: The DFT energy
+   geom. index: 25
+   prop. index: 1
+   Number of Alpha Electrons        29.0000001771 
+   Number of Alpha Electrons        29.0000001771 
+   Total nuber of  Electrons        58.0000003542 
+   Exchange energy                -131.1280398409 
+   Correlation energy               -2.7095987737 
+   Correlantion energy NL            0.0000000000 
+   Exchange-Correlation energy    -133.8376386146 
+   Embedding correction              0.0000000000 
+# -----------------------------------------------------------
+$ VdW_Correction
+   description: The Van der Waals Correction
+   geom. index: 25
+   prop. index: 1
+        Van der Waals Correction:       -0.0010236433
+# -----------------------------------------------------------
+$ THERMOCHEMISTRY_Energies
+   description: The Thermochemistry energies
+   geom. index: 25
+   prop. index: 1
+        Temperature (Kelvin)           :        298.1500000000
+        Pressure (atm)                 :          1.0000000000
+        Total Mass (AMU)               :        127.1000000000
+        Spin Degeneracy                :          1.0000000000
+        Electronic Energy (Hartree)    :      -3280.5669846703
+        Translational Energy (Hartree) :          0.0014162714
+        Rotational Energy (Hartree)    :          0.0009441809
+        Vibrational Energy (Hartree)   :          0.0004792631
+        Number of frequencies          :     6      
+        Scaling Factor for frequencies :          1.0000000000
+        Vibrational frequencies        :     
+                  0    
+      0       0.000000
+      1       0.000000
+      2       0.000000
+      3       0.000000
+      4       0.000000
+      5     255.181753
+        Zero Point Energy (Hartree)    :          0.0005813468
+        Inner Energy (Hartree)         :      -3280.5635636081
+        Enthalpy (Hartree)             :      -3280.5626193991
+        Electronic entropy             :          0.0000000000
+        Rotational entropy             :          0.0074699301
+        Vibrational entropy            :          0.0008076482
+        Translational entropy          :          0.0074699301
+        Entropy                        :          0.0274884479
+        Gibbs Energy (Hartree)         :      -3280.5901078470
+        Is Linear                      :                 false
 # -------------------------------------------------------------
 ----------------------- !GEOMETRIES! ------------------------
 # -------------------------------------------------------------
@@ -915,6 +979,12 @@ $ SCF_Electric_Properties
 ------------------------ !GEOMETRY! -------------------------
     Number of atoms:    2 
     Geometry Index:     24 
+    Coordinates:
+               0 Cu     0.000000000000    0.000000000000   -1.083552087888
+               1 Cu     0.000000000000    0.000000000000    1.183552087888
+------------------------ !GEOMETRY! -------------------------
+    Number of atoms:    2 
+    Geometry Index:     25 
     Coordinates:
                0 Cu     0.000000000000    0.000000000000   -1.083552087888
                1 Cu     0.000000000000    0.000000000000    1.183552087888

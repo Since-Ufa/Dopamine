@@ -163,6 +163,10 @@ Your calculation utilizes the auxiliary basis: def2/J
 ================================================================================
 
 
+WARNING: The environment variable RSH_COMMAND is not set!
+  ===> : All Displacements for the Numerical Hessian calculation
+         will be started on localhost
+
 WARNING: Geometry Optimization
   ===> : Switching off AutoStart
          For restart on a previous wavefunction, please use MOREAD
@@ -173,7 +177,7 @@ INFO   : the flag for use of the SHARK integral package has been found!
                                        INPUT FILE
 ================================================================================
 NAME = ex.inp
-|  1> ! PBE D3 def2-TZVP opt 
+|  1> ! PBE D3 def2-TZVP opt numfreq
 |  2> 
 |  3> %base "cu2"
 |  4> %pal nprocs=8 end
@@ -330,7 +334,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -352,7 +356,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=   4450.380321803001 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -448,13 +452,13 @@ Convergence Tolerance:
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 2.009e-05
-Time for diagonalization                   ...    0.012 sec
+Time for diagonalization                   ...    0.005 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.003 sec
-Total time needed                          ...    0.016 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.006 sec
 
-Time for model grid setup =    0.155 sec
+Time for model grid setup =    0.056 sec
 
 ------------------------------
 INITIAL GUESS: MODEL POTENTIAL
@@ -477,7 +481,7 @@ Diagonalizing the Hamiltonian                      ... done (   0.0 sec)
 Back transforming the eigenvectors                 ... done (   0.0 sec)
 Now organizing SCF variables                       ... done
                       ------------------
-                      INITIAL GUESS DONE (   0.2 sec)
+                      INITIAL GUESS DONE (   0.1 sec)
                       ------------------
 -------------------
 DFT GRID GENERATION
@@ -498,7 +502,7 @@ Total number of grid points                  ...    22448
 Total number of batches                      ...      352
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11224
-Time for grid setup =    0.217 sec
+Time for grid setup =    0.185 sec
 
 --------------
 SCF ITERATIONS
@@ -804,24 +808,24 @@ TIMINGS
 
 Total SCF time: 0 days 0 hours 0 min 1 sec 
 
-Total time                  ....       1.535 sec
-Sum of individual times     ....       1.362 sec  ( 88.8%)
+Total time                  ....       1.252 sec
+Sum of individual times     ....       1.184 sec  ( 94.6%)
 
-Fock matrix formation       ....       0.866 sec  ( 56.4%)
-  Split-RI-J                ....       0.308 sec  ( 35.6% of F)
-  XC integration            ....       0.527 sec  ( 60.8% of F)
-    Basis function eval.    ....       0.097 sec  ( 18.4% of XC)
-    Density eval.           ....       0.072 sec  ( 13.7% of XC)
-    XC-Functional eval.     ....       0.032 sec  (  6.0% of XC)
-    XC-Potential eval.      ....       0.101 sec  ( 19.2% of XC)
-Diagonalization             ....       0.044 sec  (  2.9%)
-Density matrix formation    ....       0.002 sec  (  0.1%)
-Population analysis         ....       0.002 sec  (  0.1%)
-Initial guess               ....       0.031 sec  (  2.0%)
+Fock matrix formation       ....       0.830 sec  ( 66.3%)
+  Split-RI-J                ....       0.294 sec  ( 35.5% of F)
+  XC integration            ....       0.504 sec  ( 60.7% of F)
+    Basis function eval.    ....       0.092 sec  ( 18.3% of XC)
+    Density eval.           ....       0.067 sec  ( 13.3% of XC)
+    XC-Functional eval.     ....       0.029 sec  (  5.8% of XC)
+    XC-Potential eval.      ....       0.097 sec  ( 19.2% of XC)
+Diagonalization             ....       0.042 sec  (  3.3%)
+Density matrix formation    ....       0.002 sec  (  0.2%)
+Population analysis         ....       0.002 sec  (  0.2%)
+Initial guess               ....       0.023 sec  (  1.8%)
 Orbital Transformation      ....       0.000 sec  (  0.0%)
 Orbital Orthonormalization  ....       0.000 sec  (  0.0%)
-DIIS solution               ....       0.045 sec  (  3.0%)
-Grid generation             ....       0.373 sec  ( 24.3%)
+DIIS solution               ....       0.045 sec  (  3.6%)
+Grid generation             ....       0.241 sec  ( 19.2%)
 
 Maximum memory used throughout the entire SCF-calculation: 10.1 MB
 
@@ -882,7 +886,7 @@ SHARK Integral package           ... ON
 
 Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
 HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
-RI-J gradient            (SHARK) ... done (  0.3 sec)
+RI-J gradient            (SHARK) ... done (  0.2 sec)
 Exchange-correlation gradient    ... done
 Dispersion correction            ... done
 
@@ -907,11 +911,11 @@ MAX gradient                       ... 18332.5164177611
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.558 sec
+Total SCF gradient time            ...        0.362 sec
 
-One electron gradient       ....       0.015 sec  (  2.6%)
-RI-J Coulomb gradient       ....       0.298 sec  ( 53.4%)
-XC gradient                 ....       0.055 sec  (  9.9%)
+One electron gradient       ....       0.008 sec  (  2.2%)
+RI-J Coulomb gradient       ....       0.189 sec  ( 52.3%)
+XC gradient                 ....       0.062 sec  ( 17.1%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -1071,7 +1075,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -1093,7 +1097,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=   1719.932726223199 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -1105,11 +1109,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 1.228e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.002 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.003 sec
 
 -------------------
 DFT GRID GENERATION
@@ -1130,7 +1134,7 @@ Total number of grid points                  ...    22462
 Total number of batches                      ...      352
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11231
-Time for grid setup =    0.207 sec
+Time for grid setup =    0.209 sec
 
 --------------
 SCF ITERATIONS
@@ -1294,7 +1298,7 @@ MO 6 should be a Cu p core orbital but seems to be delocalized with a Cu s orbit
              **** ENERGY FILE WAS UPDATED (cu2.en.tmp) ****
              **** THE GBW FILE WAS UPDATED (cu2.gbw) ****
              **** DENSITY cu2.scfp WAS UPDATED ****
-Total SCF time: 0 days 0 hours 0 min 3 sec 
+Total SCF time: 0 days 0 hours 0 min 2 sec 
 
 Maximum memory used throughout the entire SCF-calculation: 10.1 MB
 
@@ -1361,11 +1365,11 @@ MAX gradient                       ... 1547.7659933394
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.471 sec
+Total SCF gradient time            ...        0.362 sec
 
-One electron gradient       ....       0.012 sec  (  2.5%)
-RI-J Coulomb gradient       ....       0.220 sec  ( 46.7%)
-XC gradient                 ....       0.057 sec  ( 12.2%)
+One electron gradient       ....       0.005 sec  (  1.5%)
+RI-J Coulomb gradient       ....       0.197 sec  ( 54.3%)
+XC gradient                 ....       0.065 sec  ( 17.9%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -1545,11 +1549,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 1.357e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
 Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Total time needed                          ...    0.003 sec
 
 -------------------
 DFT GRID GENERATION
@@ -1759,11 +1763,11 @@ MAX gradient                       ... 1297.8372957851
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.344 sec
+Total SCF gradient time            ...        0.360 sec
 
-One electron gradient       ....       0.006 sec  (  1.8%)
-RI-J Coulomb gradient       ....       0.183 sec  ( 53.2%)
-XC gradient                 ....       0.058 sec  ( 16.8%)
+One electron gradient       ....       0.007 sec  (  1.9%)
+RI-J Coulomb gradient       ....       0.195 sec  ( 54.2%)
+XC gradient                 ....       0.064 sec  ( 17.9%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -1909,7 +1913,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -1931,7 +1935,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=   1279.443316748444 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -1943,11 +1947,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 2.062e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.002 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.005 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.004 sec
 
 -------------------
 DFT GRID GENERATION
@@ -1968,7 +1972,7 @@ Total number of grid points                  ...    22474
 Total number of batches                      ...      352
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11237
-Time for grid setup =    0.210 sec
+Time for grid setup =    0.197 sec
 
 --------------
 SCF ITERATIONS
@@ -2057,7 +2061,7 @@ SHARK Integral package           ... ON
 
 Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
 HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
-RI-J gradient            (SHARK) ... done (  0.3 sec)
+RI-J gradient            (SHARK) ... done (  0.2 sec)
 Exchange-correlation gradient    ... done
 Dispersion correction            ... done
 
@@ -2082,11 +2086,11 @@ MAX gradient                       ...  657.8934143062
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.500 sec
+Total SCF gradient time            ...        0.403 sec
 
-One electron gradient       ....       0.013 sec  (  2.6%)
-RI-J Coulomb gradient       ....       0.259 sec  ( 51.8%)
-XC gradient                 ....       0.059 sec  ( 11.7%)
+One electron gradient       ....       0.006 sec  (  1.4%)
+RI-J Coulomb gradient       ....       0.233 sec  ( 57.8%)
+XC gradient                 ....       0.067 sec  ( 16.8%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -2232,7 +2236,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -2254,7 +2258,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=   1052.487511643709 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -2266,11 +2270,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 2.818e-04
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.008 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -2291,7 +2295,7 @@ Total number of grid points                  ...    22502
 Total number of batches                      ...      352
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11251
-Time for grid setup =    0.245 sec
+Time for grid setup =    0.198 sec
 
 --------------
 SCF ITERATIONS
@@ -2403,11 +2407,11 @@ MAX gradient                       ...  347.0679555820
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.395 sec
+Total SCF gradient time            ...        0.431 sec
 
-One electron gradient       ....       0.007 sec  (  1.8%)
-RI-J Coulomb gradient       ....       0.199 sec  ( 50.5%)
-XC gradient                 ....       0.057 sec  ( 14.6%)
+One electron gradient       ....       0.006 sec  (  1.4%)
+RI-J Coulomb gradient       ....       0.226 sec  ( 52.5%)
+XC gradient                 ....       0.067 sec  ( 15.5%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -2553,7 +2557,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -2575,7 +2579,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    881.966163218348 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -2587,11 +2591,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 3.663e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.002 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.003 sec
 
 -------------------
 DFT GRID GENERATION
@@ -2612,7 +2616,7 @@ Total number of grid points                  ...    22522
 Total number of batches                      ...      352
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11261
-Time for grid setup =    0.267 sec
+Time for grid setup =    0.236 sec
 
 --------------
 SCF ITERATIONS
@@ -2657,7 +2661,7 @@ MO 4 should be a Cu p core orbital but seems to be delocalized with a Cu s orbit
              **** ENERGY FILE WAS UPDATED (cu2.en.tmp) ****
              **** THE GBW FILE WAS UPDATED (cu2.gbw) ****
              **** DENSITY cu2.scfp WAS UPDATED ****
-Total SCF time: 0 days 0 hours 0 min 1 sec 
+Total SCF time: 0 days 0 hours 0 min 0 sec 
 
 Maximum memory used throughout the entire SCF-calculation: 10.1 MB
 
@@ -2699,7 +2703,7 @@ SHARK Integral package           ... ON
 
 Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
 HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
-RI-J gradient            (SHARK) ... done (  0.3 sec)
+RI-J gradient            (SHARK) ... done (  0.2 sec)
 Exchange-correlation gradient    ... done
 Dispersion correction            ... done
 
@@ -2724,11 +2728,11 @@ MAX gradient                       ...  170.9903924775
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.505 sec
+Total SCF gradient time            ...        0.386 sec
 
-One electron gradient       ....       0.013 sec  (  2.5%)
-RI-J Coulomb gradient       ....       0.255 sec  ( 50.4%)
-XC gradient                 ....       0.056 sec  ( 11.2%)
+One electron gradient       ....       0.007 sec  (  1.8%)
+RI-J Coulomb gradient       ....       0.208 sec  ( 53.8%)
+XC gradient                 ....       0.068 sec  ( 17.7%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -2874,7 +2878,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -2896,7 +2900,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    764.304488184404 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -2908,11 +2912,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 4.446e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -2933,7 +2937,7 @@ Total number of grid points                  ...    22540
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11270
-Time for grid setup =    0.198 sec
+Time for grid setup =    0.213 sec
 
 --------------
 SCF ITERATIONS
@@ -3033,11 +3037,11 @@ MAX gradient                       ...   92.1772604251
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.459 sec
+Total SCF gradient time            ...        0.423 sec
 
-One electron gradient       ....       0.012 sec  (  2.7%)
-RI-J Coulomb gradient       ....       0.219 sec  ( 47.7%)
-XC gradient                 ....       0.057 sec  ( 12.4%)
+One electron gradient       ....       0.008 sec  (  1.9%)
+RI-J Coulomb gradient       ....       0.236 sec  ( 55.9%)
+XC gradient                 ....       0.070 sec  ( 16.5%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -3183,7 +3187,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -3205,7 +3209,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    663.641070053427 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -3217,11 +3221,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 5.285e-04
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.008 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -3242,7 +3246,7 @@ Total number of grid points                  ...    22552
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11276
-Time for grid setup =    0.208 sec
+Time for grid setup =    0.209 sec
 
 --------------
 SCF ITERATIONS
@@ -3503,7 +3507,7 @@ Total Energy       :        -3262.13212003 Eh          -88767.12782 eV
              **** ENERGY FILE WAS UPDATED (cu2.en.tmp) ****
              **** THE GBW FILE WAS UPDATED (cu2.gbw) ****
              **** DENSITY cu2.scfp WAS UPDATED ****
-Total SCF time: 0 days 0 hours 0 min 5 sec 
+Total SCF time: 0 days 0 hours 0 min 6 sec 
 
 Maximum memory used throughout the entire SCF-calculation: 10.1 MB
 
@@ -3570,11 +3574,11 @@ MAX gradient                       ...   50.6513741043
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.489 sec
+Total SCF gradient time            ...        0.356 sec
 
-One electron gradient       ....       0.012 sec  (  2.5%)
-RI-J Coulomb gradient       ....       0.235 sec  ( 48.0%)
-XC gradient                 ....       0.062 sec  ( 12.7%)
+One electron gradient       ....       0.008 sec  (  2.3%)
+RI-J Coulomb gradient       ....       0.175 sec  ( 49.3%)
+XC gradient                 ....       0.070 sec  ( 19.8%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -3720,7 +3724,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -3742,7 +3746,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    574.834215937075 Eh
 
-SHARK setup successfully completed in   0.3 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -3754,11 +3758,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 6.210e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -3779,7 +3783,7 @@ Total number of grid points                  ...    22570
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11285
-Time for grid setup =    0.170 sec
+Time for grid setup =    0.258 sec
 
 --------------
 SCF ITERATIONS
@@ -3981,11 +3985,11 @@ MAX gradient                       ...   29.2641592186
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.470 sec
+Total SCF gradient time            ...        0.417 sec
 
-One electron gradient       ....       0.011 sec  (  2.4%)
-RI-J Coulomb gradient       ....       0.248 sec  ( 52.7%)
-XC gradient                 ....       0.062 sec  ( 13.3%)
+One electron gradient       ....       0.008 sec  (  1.8%)
+RI-J Coulomb gradient       ....       0.235 sec  ( 56.4%)
+XC gradient                 ....       0.075 sec  ( 18.0%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.6 MB
 ------------------------------------------------------------------------------
@@ -4132,7 +4136,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -4154,7 +4158,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    490.654356672423 Eh
 
-SHARK setup successfully completed in   0.3 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -4166,11 +4170,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 7.459e-04
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.008 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -4191,7 +4195,7 @@ Total number of grid points                  ...    22590
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11295
-Time for grid setup =    0.197 sec
+Time for grid setup =    0.196 sec
 
 --------------
 SCF ITERATIONS
@@ -4435,7 +4439,7 @@ SHARK Integral package           ... ON
 
 Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
 HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
-RI-J gradient            (SHARK) ... done (  0.2 sec)
+RI-J gradient            (SHARK) ... done (  0.3 sec)
 Exchange-correlation gradient    ... done
 Dispersion correction            ... done
 
@@ -4460,11 +4464,11 @@ MAX gradient                       ...   14.3499760180
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.466 sec
+Total SCF gradient time            ...        0.433 sec
 
-One electron gradient       ....       0.013 sec  (  2.8%)
-RI-J Coulomb gradient       ....       0.227 sec  ( 48.7%)
-XC gradient                 ....       0.060 sec  ( 12.9%)
+One electron gradient       ....       0.008 sec  (  1.8%)
+RI-J Coulomb gradient       ....       0.257 sec  ( 59.4%)
+XC gradient                 ....       0.071 sec  ( 16.5%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -4611,7 +4615,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -4633,7 +4637,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    432.858284582620 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -4645,11 +4649,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 8.869e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.002 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.005 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.003 sec
 
 -------------------
 DFT GRID GENERATION
@@ -4670,7 +4674,7 @@ Total number of grid points                  ...    22602
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11301
-Time for grid setup =    0.213 sec
+Time for grid setup =    0.199 sec
 
 --------------
 SCF ITERATIONS
@@ -4851,11 +4855,11 @@ MAX gradient                       ...    7.7917677444
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.447 sec
+Total SCF gradient time            ...        0.400 sec
 
-One electron gradient       ....       0.012 sec  (  2.7%)
-RI-J Coulomb gradient       ....       0.209 sec  ( 46.8%)
-XC gradient                 ....       0.059 sec  ( 13.2%)
+One electron gradient       ....       0.005 sec  (  1.3%)
+RI-J Coulomb gradient       ....       0.199 sec  ( 49.8%)
+XC gradient                 ....       0.072 sec  ( 18.1%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -5024,7 +5028,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    382.756174767055 Eh
 
-SHARK setup successfully completed in   0.3 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -5036,11 +5040,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 9.730e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -5061,7 +5065,7 @@ Total number of grid points                  ...    22612
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11306
-Time for grid setup =    0.218 sec
+Time for grid setup =    0.207 sec
 
 --------------
 SCF ITERATIONS
@@ -5200,7 +5204,7 @@ SHARK Integral package           ... ON
 
 Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
 HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
-RI-J gradient            (SHARK) ... done (  0.3 sec)
+RI-J gradient            (SHARK) ... done (  0.2 sec)
 Exchange-correlation gradient    ... done
 Dispersion correction            ... done
 
@@ -5225,11 +5229,11 @@ MAX gradient                       ...    4.0336490867
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.543 sec
+Total SCF gradient time            ...        0.380 sec
 
-One electron gradient       ....       0.020 sec  (  3.6%)
-RI-J Coulomb gradient       ....       0.260 sec  ( 47.9%)
-XC gradient                 ....       0.085 sec  ( 15.6%)
+One electron gradient       ....       0.005 sec  (  1.4%)
+RI-J Coulomb gradient       ....       0.212 sec  ( 55.8%)
+XC gradient                 ....       0.071 sec  ( 18.7%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -5410,11 +5414,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 9.516e-04
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.003 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.007 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.004 sec
 
 -------------------
 DFT GRID GENERATION
@@ -5435,7 +5439,7 @@ Total number of grid points                  ...    22622
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11311
-Time for grid setup =    0.252 sec
+Time for grid setup =    0.214 sec
 
 --------------
 SCF ITERATIONS
@@ -5593,11 +5597,11 @@ MAX gradient                       ...    2.1123057182
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.414 sec
+Total SCF gradient time            ...        0.403 sec
 
-One electron gradient       ....       0.010 sec  (  2.4%)
-RI-J Coulomb gradient       ....       0.187 sec  ( 45.2%)
-XC gradient                 ....       0.060 sec  ( 14.5%)
+One electron gradient       ....       0.006 sec  (  1.5%)
+RI-J Coulomb gradient       ....       0.193 sec  ( 48.0%)
+XC gradient                 ....       0.081 sec  ( 20.0%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -5744,7 +5748,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -5766,7 +5770,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    309.897619188753 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -5778,11 +5782,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 8.914e-04
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.002 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.003 sec
 
 -------------------
 DFT GRID GENERATION
@@ -5803,7 +5807,7 @@ Total number of grid points                  ...    22634
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11317
-Time for grid setup =    0.228 sec
+Time for grid setup =    0.204 sec
 
 --------------
 SCF ITERATIONS
@@ -5920,11 +5924,11 @@ MAX gradient                       ...    1.1143667976
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.419 sec
+Total SCF gradient time            ...        0.336 sec
 
-One electron gradient       ....       0.011 sec  (  2.7%)
-RI-J Coulomb gradient       ....       0.201 sec  ( 48.0%)
-XC gradient                 ....       0.057 sec  ( 13.5%)
+One electron gradient       ....       0.007 sec  (  2.2%)
+RI-J Coulomb gradient       ....       0.166 sec  ( 49.3%)
+XC gradient                 ....       0.071 sec  ( 21.2%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -6093,7 +6097,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    281.806127501054 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -6105,11 +6109,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 8.836e-04
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.002 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.008 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.003 sec
 
 -------------------
 DFT GRID GENERATION
@@ -6130,7 +6134,7 @@ Total number of grid points                  ...    22644
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11322
-Time for grid setup =    0.249 sec
+Time for grid setup =    0.277 sec
 
 --------------
 SCF ITERATIONS
@@ -6167,7 +6171,7 @@ Total Energy       :        -3280.34760838 Eh          -89262.79646 eV
              **** ENERGY FILE WAS UPDATED (cu2.en.tmp) ****
              **** THE GBW FILE WAS UPDATED (cu2.gbw) ****
              **** DENSITY cu2.scfp WAS UPDATED ****
-Total SCF time: 0 days 0 hours 0 min 0 sec 
+Total SCF time: 0 days 0 hours 0 min 1 sec 
 
 Maximum memory used throughout the entire SCF-calculation: 10.0 MB
 
@@ -6234,11 +6238,11 @@ MAX gradient                       ...    0.5839197525
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.413 sec
+Total SCF gradient time            ...        0.332 sec
 
-One electron gradient       ....       0.011 sec  (  2.8%)
-RI-J Coulomb gradient       ....       0.187 sec  ( 45.4%)
-XC gradient                 ....       0.057 sec  ( 13.7%)
+One electron gradient       ....       0.006 sec  (  1.9%)
+RI-J Coulomb gradient       ....       0.160 sec  ( 48.2%)
+XC gradient                 ....       0.071 sec  ( 21.4%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -6385,7 +6389,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -6419,11 +6423,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 1.121e-03
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
 Time for construction of square roots      ...    0.001 sec
-Total time needed                          ...    0.005 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -6444,7 +6448,7 @@ Total number of grid points                  ...    22646
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11323
-Time for grid setup =    0.218 sec
+Time for grid setup =    0.297 sec
 
 --------------
 SCF ITERATIONS
@@ -6522,7 +6526,7 @@ SHARK Integral package           ... ON
 
 Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
 HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
-RI-J gradient            (SHARK) ... done (  0.1 sec)
+RI-J gradient            (SHARK) ... done (  0.2 sec)
 Exchange-correlation gradient    ... done
 Dispersion correction            ... done
 
@@ -6547,11 +6551,11 @@ MAX gradient                       ...    0.3002958244
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.336 sec
+Total SCF gradient time            ...        0.332 sec
 
-One electron gradient       ....       0.004 sec  (  1.3%)
-RI-J Coulomb gradient       ....       0.145 sec  ( 43.2%)
-XC gradient                 ....       0.052 sec  ( 15.4%)
+One electron gradient       ....       0.006 sec  (  1.9%)
+RI-J Coulomb gradient       ....       0.169 sec  ( 50.9%)
+XC gradient                 ....       0.066 sec  ( 19.9%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -6720,7 +6724,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    238.263885356886 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -6732,11 +6736,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 1.959e-03
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -6757,7 +6761,7 @@ Total number of grid points                  ...    22648
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11324
-Time for grid setup =    0.214 sec
+Time for grid setup =    0.206 sec
 
 --------------
 SCF ITERATIONS
@@ -6859,11 +6863,11 @@ MAX gradient                       ...    0.1503442279
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.443 sec
+Total SCF gradient time            ...        0.328 sec
 
-One electron gradient       ....       0.011 sec  (  2.5%)
-RI-J Coulomb gradient       ....       0.209 sec  ( 47.2%)
-XC gradient                 ....       0.048 sec  ( 10.8%)
+One electron gradient       ....       0.006 sec  (  1.9%)
+RI-J Coulomb gradient       ....       0.161 sec  ( 49.1%)
+XC gradient                 ....       0.059 sec  ( 17.9%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -7010,7 +7014,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -7032,7 +7036,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    222.301329779983 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -7044,11 +7048,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 3.821e-03
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.002 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.008 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.004 sec
 
 -------------------
 DFT GRID GENERATION
@@ -7069,7 +7073,7 @@ Total number of grid points                  ...    22650
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11325
-Time for grid setup =    0.207 sec
+Time for grid setup =    0.204 sec
 
 --------------
 SCF ITERATIONS
@@ -7144,7 +7148,7 @@ SHARK Integral package           ... ON
 
 Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
 HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
-RI-J gradient            (SHARK) ... done (  0.3 sec)
+RI-J gradient            (SHARK) ... done (  0.2 sec)
 Exchange-correlation gradient    ... done
 Dispersion correction            ... done
 
@@ -7169,11 +7173,11 @@ MAX gradient                       ...    0.0713808636
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.568 sec
+Total SCF gradient time            ...        0.321 sec
 
-One electron gradient       ....       0.020 sec  (  3.6%)
-RI-J Coulomb gradient       ....       0.261 sec  ( 45.9%)
-XC gradient                 ....       0.069 sec  ( 12.1%)
+One electron gradient       ....       0.006 sec  (  1.9%)
+RI-J Coulomb gradient       ....       0.160 sec  ( 49.8%)
+XC gradient                 ....       0.057 sec  ( 17.7%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.5 MB
 ------------------------------------------------------------------------------
@@ -7342,7 +7346,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    210.178562175916 Eh
 
-SHARK setup successfully completed in   0.3 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -7354,11 +7358,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 6.750e-03
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.005 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -7379,7 +7383,7 @@ Total number of grid points                  ...    22650
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11325
-Time for grid setup =    0.215 sec
+Time for grid setup =    0.289 sec
 
 --------------
 SCF ITERATIONS
@@ -7480,11 +7484,11 @@ MAX gradient                       ...    0.0307108588
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.406 sec
+Total SCF gradient time            ...        0.347 sec
 
-One electron gradient       ....       0.012 sec  (  2.8%)
-RI-J Coulomb gradient       ....       0.188 sec  ( 46.2%)
-XC gradient                 ....       0.048 sec  ( 11.8%)
+One electron gradient       ....       0.007 sec  (  2.1%)
+RI-J Coulomb gradient       ....       0.186 sec  ( 53.7%)
+XC gradient                 ....       0.061 sec  ( 17.5%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.4 MB
 ------------------------------------------------------------------------------
@@ -7630,7 +7634,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -7652,7 +7656,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    202.071840052459 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -7664,11 +7668,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 9.935e-03
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.008 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -7689,7 +7693,7 @@ Total number of grid points                  ...    22652
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11326
-Time for grid setup =    0.196 sec
+Time for grid setup =    0.204 sec
 
 --------------
 SCF ITERATIONS
@@ -7790,11 +7794,11 @@ MAX gradient                       ...    0.0109286494
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.437 sec
+Total SCF gradient time            ...        0.334 sec
 
-One electron gradient       ....       0.020 sec  (  4.6%)
-RI-J Coulomb gradient       ....       0.181 sec  ( 41.3%)
-XC gradient                 ....       0.051 sec  ( 11.7%)
+One electron gradient       ....       0.007 sec  (  2.1%)
+RI-J Coulomb gradient       ....       0.169 sec  ( 50.5%)
+XC gradient                 ....       0.062 sec  ( 18.5%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.4 MB
 ------------------------------------------------------------------------------
@@ -7974,11 +7978,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 1.210e-02
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -7999,7 +8003,7 @@ Total number of grid points                  ...    22652
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11326
-Time for grid setup =    0.217 sec
+Time for grid setup =    0.239 sec
 
 --------------
 SCF ITERATIONS
@@ -8099,11 +8103,11 @@ MAX gradient                       ...    0.0027882286
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.406 sec
+Total SCF gradient time            ...        0.359 sec
 
-One electron gradient       ....       0.011 sec  (  2.8%)
-RI-J Coulomb gradient       ....       0.182 sec  ( 45.0%)
-XC gradient                 ....       0.049 sec  ( 12.0%)
+One electron gradient       ....       0.007 sec  (  2.1%)
+RI-J Coulomb gradient       ....       0.188 sec  ( 52.5%)
+XC gradient                 ....       0.061 sec  ( 16.9%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.4 MB
 ------------------------------------------------------------------------------
@@ -8249,7 +8253,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -8271,7 +8275,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    196.495560816985 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -8283,11 +8287,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 1.291e-02
-Time for diagonalization                   ...    0.003 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.006 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
 -------------------
 DFT GRID GENERATION
@@ -8308,7 +8312,7 @@ Total number of grid points                  ...    22652
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11326
-Time for grid setup =    0.240 sec
+Time for grid setup =    0.299 sec
 
 --------------
 SCF ITERATIONS
@@ -8405,11 +8409,11 @@ MAX gradient                       ...    0.0003313681
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.405 sec
+Total SCF gradient time            ...        0.329 sec
 
-One electron gradient       ....       0.011 sec  (  2.8%)
-RI-J Coulomb gradient       ....       0.185 sec  ( 45.7%)
-XC gradient                 ....       0.046 sec  ( 11.3%)
+One electron gradient       ....       0.007 sec  (  2.1%)
+RI-J Coulomb gradient       ....       0.171 sec  ( 52.2%)
+XC gradient                 ....       0.059 sec  ( 17.8%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.4 MB
 ------------------------------------------------------------------------------
@@ -8555,7 +8559,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 30
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       465
@@ -8577,7 +8581,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    196.309278804020 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -8589,11 +8593,11 @@ Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 1.302e-02
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.008 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.003 sec
 
 -------------------
 DFT GRID GENERATION
@@ -8614,7 +8618,7 @@ Total number of grid points                  ...    22652
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11326
-Time for grid setup =    0.248 sec
+Time for grid setup =    0.204 sec
 
 --------------
 SCF ITERATIONS
@@ -8711,11 +8715,11 @@ MAX gradient                       ...    0.0000117817
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.398 sec
+Total SCF gradient time            ...        0.362 sec
 
-One electron gradient       ....       0.011 sec  (  2.9%)
-RI-J Coulomb gradient       ....       0.170 sec  ( 42.8%)
-XC gradient                 ....       0.045 sec  ( 11.3%)
+One electron gradient       ....       0.006 sec  (  1.7%)
+RI-J Coulomb gradient       ....       0.208 sec  ( 57.4%)
+XC gradient                 ....       0.057 sec  ( 15.6%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 27.4 MB
 ------------------------------------------------------------------------------
@@ -8909,7 +8913,7 @@ Calculating one electron integrals          ... done (  0.0 sec)
 Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
 Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    196.302418272426 Eh
 
-SHARK setup successfully completed in   0.2 seconds
+SHARK setup successfully completed in   0.1 seconds
 
 Maximum memory used throughout the entire GTOINT-calculation: 17.2 MB
 
@@ -9005,11 +9009,11 @@ Convergence Tolerance:
 
 Diagonalization of the overlap matrix:
 Smallest eigenvalue                        ... 1.303e-02
-Time for diagonalization                   ...    0.005 sec
+Time for diagonalization                   ...    0.002 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
-Time for construction of square roots      ...    0.002 sec
-Total time needed                          ...    0.008 sec
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.004 sec
 
 ---------------------
 INITIAL GUESS: MOREAD
@@ -9041,7 +9045,7 @@ Total number of grid points                  ...    22652
 Total number of batches                      ...      354
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11326
-Time for grid setup =    0.207 sec
+Time for grid setup =    0.249 sec
 
 --------------
 SCF ITERATIONS
@@ -9313,24 +9317,24 @@ TIMINGS
 
 Total SCF time: 0 days 0 hours 0 min 0 sec 
 
-Total time                  ....       0.421 sec
-Sum of individual times     ....       0.264 sec  ( 62.6%)
+Total time                  ....       0.402 sec
+Sum of individual times     ....       0.318 sec  ( 79.0%)
 
-Fock matrix formation       ....       0.043 sec  ( 10.2%)
-  Split-RI-J                ....       0.016 sec  ( 38.1% of F)
-  XC integration            ....       0.026 sec  ( 60.3% of F)
-    Basis function eval.    ....       0.008 sec  ( 32.1% of XC)
-    Density eval.           ....       0.005 sec  ( 19.1% of XC)
-    XC-Functional eval.     ....       0.003 sec  ( 10.7% of XC)
-    XC-Potential eval.      ....       0.005 sec  ( 19.4% of XC)
-Diagonalization             ....       0.004 sec  (  0.9%)
+Fock matrix formation       ....       0.056 sec  ( 14.0%)
+  Split-RI-J                ....       0.022 sec  ( 38.7% of F)
+  XC integration            ....       0.034 sec  ( 59.6% of F)
+    Basis function eval.    ....       0.011 sec  ( 32.2% of XC)
+    Density eval.           ....       0.006 sec  ( 19.3% of XC)
+    XC-Functional eval.     ....       0.004 sec  ( 10.5% of XC)
+    XC-Potential eval.      ....       0.006 sec  ( 19.3% of XC)
+Diagonalization             ....       0.005 sec  (  1.1%)
 Density matrix formation    ....       0.000 sec  (  0.1%)
-Population analysis         ....       0.002 sec  (  0.4%)
-Initial guess               ....       0.007 sec  (  1.6%)
+Population analysis         ....       0.002 sec  (  0.5%)
+Initial guess               ....       0.003 sec  (  0.7%)
 Orbital Transformation      ....       0.000 sec  (  0.0%)
-Orbital Orthonormalization  ....       0.003 sec  (  0.7%)
-DIIS solution               ....       0.002 sec  (  0.5%)
-Grid generation             ....       0.207 sec  ( 49.1%)
+Orbital Orthonormalization  ....       0.001 sec  (  0.3%)
+DIIS solution               ....       0.003 sec  (  0.6%)
+Grid generation             ....       0.249 sec  ( 61.9%)
 
 Maximum memory used throughout the entire SCF-calculation: 9.9 MB
 
@@ -9418,13 +9422,208 @@ x,y,z [a.u.] :    -0.000000    -0.000000    -0.000000
 x,y,z [Debye]:    -0.000000    -0.000000    -0.000000 
 
  
+DisplAtoms
+	  0         0     
+	  1         1     
+
+
+----------------------------------------------------------------------------
+                           ORCA NUMERICAL FREQUENCIES
+                              (8-process run)
+----------------------------------------------------------------------------
+
+Number of atoms                ... 2
+Central differences            ... used
+Number of displacements        ... 12
+Numerical increment            ... 5.000e-03 bohr
+IR-spectrum generation         ... on
+Raman-spectrum generation      ... off
+Surface Crossing Hessian       ... off
+
+The output will be reduced. Please look at the following files:
+SCF program output             ... >cu2.lastscf
+Integral program output        ... >cu2.lastint
+Gradient program output        ... >cu2.lastgrad
+Dipole moment program output   ... >cu2.lastmom
+AutoCI program output          ... >cu2.lastautoci
+
+	<< Calculating on displaced geometry   3 (of  12) >>
+	<< Calculating on displaced geometry   1 (of  12) >>
+	<< Calculating on displaced geometry   8 (of  12) >>
+	<< Calculating on displaced geometry   5 (of  12) >>
+	<< Calculating on displaced geometry   7 (of  12) >>
+	<< Calculating on displaced geometry   2 (of  12) >>
+	<< Calculating on displaced geometry   6 (of  12) >>
+	<< Calculating on displaced geometry   4 (of  12) >>
+	<< Calculating on displaced geometry  12 (of  12) >>
+	<< Calculating on displaced geometry  11 (of  12) >>
+	<< Calculating on displaced geometry  10 (of  12) >>
+	<< Calculating on displaced geometry   9 (of  12) >>
+Warning: T+R mode no 5 is zero 
+
+-----------------------
+VIBRATIONAL FREQUENCIES
+-----------------------
+
+Scaling factor for frequencies =  1.000000000 (already applied!)
+
+   0:         0.00 cm**-1
+   1:         0.00 cm**-1
+   2:         0.00 cm**-1
+   3:         0.00 cm**-1
+   4:         0.00 cm**-1
+   5:       255.18 cm**-1
+
+
+------------
+NORMAL MODES
+------------
+
+These modes are the cartesian displacements weighted by the diagonal matrix
+M(i,i)=1/sqrt(m[i]) where m[i] is the mass of the displaced atom
+Thus, these vectors are normalized but *not* orthogonal
+
+                  0          1          2          3          4          5    
+      0       0.000000   0.000000   0.000000   0.000000   0.000000   0.000000
+      1       0.000000   0.000000   0.000000   0.000000   0.000000   0.000000
+      2       0.000000   0.000000   0.000000   0.000000   0.000000   0.707107
+      3       0.000000   0.000000   0.000000   0.000000   0.000000   0.000000
+      4       0.000000   0.000000   0.000000   0.000000   0.000000   0.000000
+      5       0.000000   0.000000   0.000000   0.000000   0.000000  -0.707107
+
+
+-----------
+IR SPECTRUM
+-----------
+
+ Mode   freq       eps      Int      T**2         TX        TY        TZ
+       cm**-1   L/(mol*cm) km/mol    a.u.
+----------------------------------------------------------------------------
+  5:    255.18   0.000000    0.00  0.000000  (-0.000000 -0.000000 -0.000000)
+
+* The epsilon (eps) is given for a Dirac delta lineshape.
+** The dipole moment derivative (T) already includes vibrational overlap.
+
+The first frequency considered to be a vibration is 5
+The total number of vibrations considered is 1
+
+
+--------------------------
+THERMOCHEMISTRY AT 298.15K
+--------------------------
+
+Temperature         ... 298.15 K
+Pressure            ... 1.00 atm
+Total Mass          ... 127.10 AMU
+The molecule is recognized as being linear
+
+Throughout the following assumptions are being made:
+  (1) The electronic state is orbitally nondegenerate
+  (2) There are no thermally accessible electronically excited states
+  (3) Hindered rotations indicated by low frequency modes are not
+      treated as such but are treated as vibrations and this may
+      cause some error
+  (4) All equations used are the standard statistical mechanics
+      equations for an ideal gas
+  (5) All vibrations are strictly harmonic
+
+freq.     255.18  E(vib)   ...       0.30 
+
+------------
+INNER ENERGY
+------------
+
+The inner energy is: U= E(el) + E(ZPE) + E(vib) + E(rot) + E(trans)
+    E(el)   - is the total energy from the electronic structure calculation
+              = E(kin-el) + E(nuc-el) + E(el-el) + E(nuc-nuc)
+    E(ZPE)  - the the zero temperature vibrational energy from the frequency calculation
+    E(vib)  - the the finite temperature correction to E(ZPE) due to population
+              of excited vibrational states
+    E(rot)  - is the rotational thermal energy
+    E(trans)- is the translational thermal energy
+
+Summary of contributions to the inner energy U:
+Electronic energy                ...  -3280.56698467 Eh
+Zero point energy                ...      0.00058135 Eh       0.36 kcal/mol
+Thermal vibrational correction   ...      0.00047926 Eh       0.30 kcal/mol
+Thermal rotational correction    ...      0.00094418 Eh       0.59 kcal/mol
+Thermal translational correction ...      0.00141627 Eh       0.89 kcal/mol
+-----------------------------------------------------------------------
+Total thermal energy                  -3280.56356361 Eh
+
+
+Summary of corrections to the electronic energy:
+(perhaps to be used in another calculation)
+Total thermal correction                  0.00283972 Eh       1.78 kcal/mol
+Non-thermal (ZPE) correction              0.00058135 Eh       0.36 kcal/mol
+-----------------------------------------------------------------------
+Total correction                          0.00342106 Eh       2.15 kcal/mol
+
+
+--------
+ENTHALPY
+--------
+
+The enthalpy is H = U + kB*T
+                kB is Boltzmann's constant
+Total free energy                 ...  -3280.56356361 Eh 
+Thermal Enthalpy correction       ...      0.00094421 Eh       0.59 kcal/mol
+-----------------------------------------------------------------------
+Total Enthalpy                    ...  -3280.56261940 Eh
+
+
+Note: Rotational entropy computed according to Herzberg 
+Infrared and Raman Spectra, Chapter V,1, Van Nostrand Reinhold, 1945 
+Point Group:  Dinfh, Symmetry Number:   2  
+Rotational constants in cm-1:     0.000000     0.103221     0.103221 
+
+Vibrational entropy computed according to the QRRHO of S. Grimme
+Chem.Eur.J. 2012 18 9955
+
+
+-------
+ENTROPY
+-------
+
+The entropy contributions are T*S = T*(S(el)+S(vib)+S(rot)+S(trans))
+     S(el)   - electronic entropy
+     S(vib)  - vibrational entropy
+     S(rot)  - rotational entropy
+     S(trans)- translational entropy
+The entropies will be listed as multiplied by the temperature to get
+units of energy
+
+Electronic entropy                ...      0.00000000 Eh      0.00 kcal/mol
+Vibrational entropy               ...      0.00080765 Eh      0.51 kcal/mol
+Rotational entropy                ...      0.00746993 Eh      4.69 kcal/mol
+Translational entropy             ...      0.01921087 Eh     12.05 kcal/mol
+-----------------------------------------------------------------------
+Final entropy term                ...      0.02748845 Eh     17.25 kcal/mol
+
+
+-------------------
+GIBBS FREE ENERGY
+-------------------
+
+The Gibbs free energy is G = H - T*S
+
+Total enthalpy                    ...  -3280.56261940 Eh 
+Total entropy correction          ...     -0.02748845 Eh    -17.25 kcal/mol
+-----------------------------------------------------------------------
+Final Gibbs free energy         ...  -3280.59010785 Eh
+
+For completeness - the Gibbs free energy minus the electronic energy
+G-E(el)                           ...     -0.02312318 Eh    -14.51 kcal/mol
+
+
 
 Timings for individual modules:
 
-Sum of individual times         ...       91.893 sec (=   1.532 min)
-GTO integral calculation        ...       17.881 sec (=   0.298 min)  19.5 %
-SCF iterations                  ...       51.712 sec (=   0.862 min)  56.3 %
-SCF Gradient evaluation         ...       22.141 sec (=   0.369 min)  24.1 %
-Geometry relaxation             ...        0.160 sec (=   0.003 min)   0.2 %
+Sum of individual times         ...       74.687 sec (=   1.245 min)
+GTO integral calculation        ...        7.592 sec (=   0.127 min)  10.2 %
+SCF iterations                  ...       42.058 sec (=   0.701 min)  56.3 %
+SCF Gradient evaluation         ...       11.944 sec (=   0.199 min)  16.0 %
+Geometry relaxation             ...        0.132 sec (=   0.002 min)   0.2 %
+Numerical frequency calculation ...       12.961 sec (=   0.216 min)  17.4 %
                              ****ORCA TERMINATED NORMALLY****
-TOTAL RUN TIME: 0 days 0 hours 1 minutes 45 seconds 655 msec
+TOTAL RUN TIME: 0 days 0 hours 1 minutes 17 seconds 1 msec

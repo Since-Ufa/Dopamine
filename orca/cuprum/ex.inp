@@ -1,4 +1,4 @@
-! PBE D3 def2-TZVP opt 
+! PBE D3 def2-TZVP opt numfreq
 
 %base "cu2"
 %pal nprocs=8 end
