@@ -26,31 +26,6 @@ $ DFT_Energy
    Correlantion energy NL            0.0000000000 
    Exchange-Correlation energy      -0.5107882726 
    Embedding correction              0.0000000000 
-# -----------------------------------------------------------
-$ PAL_Flags
-   description: The PAL Flags
-   geom. index: 2
-   prop. index: 1
-        Diskflag:     2
-# -----------------------------------------------------------
-$ SCF_Energy
-   description: The SCF energy
-   geom. index: 2
-   prop. index: 1
-        SCF Energy:       -1.1635937377
-# -----------------------------------------------------------
-$ DFT_Energy
-   description: The DFT energy
-   geom. index: 2
-   prop. index: 1
-   Number of Alpha Electrons         1.0000000575 
-   Number of Alpha Electrons         1.0000000575 
-   Total nuber of  Electrons         2.0000001149 
-   Exchange energy                  -0.4940716418 
-   Correlation energy               -0.0480974816 
-   Correlantion energy NL            0.0000000000 
-   Exchange-Correlation energy      -0.5421691234 
-   Embedding correction              0.0000000000 
 # -------------------------------------------------------------
 ----------------------- !GEOMETRIES! ------------------------
 # -------------------------------------------------------------
@@ -60,9 +35,3 @@ $ DFT_Energy
     Coordinates:
                0 H      0.000000000000    0.000000000000    0.000000000000
                1 H      0.000000000000    0.000000000000    1.000000000000
------------------------- !GEOMETRY! -------------------------
-    Number of atoms:    2 
-    Geometry Index:     2 
-    Coordinates:
-               0 H      0.000000000000    0.000000000000    0.079376581245
-               1 H      0.000000000000    0.000000000000    0.920623418755
