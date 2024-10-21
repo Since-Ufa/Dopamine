@@ -1,0 +1,28 @@
+! PBE D3 def2-TZVP opt PModel
+%pal nprocs=8 end
+%geom maxiter=75 end
+*xyzfile -2 2 1_M0002.xyz
+
+$new_job
+%pal nprocs=8 end
+%geom maxiter=75 end
+! PBE D3 def2-TZVP opt PModel NOAUTOSTART
+*xyzfile -2 2 2_M0001.xyz
+
+$new_job
+%pal nprocs=8 end
+%geom maxiter=75 end
+! PBE D3 def2-TZVP opt PModel NOAUTOSTART
+*xyzfile -2 2 3_M0003.xyz
+
+$new_job
+%pal nprocs=8 end
+%geom maxiter=75 end
+! PBE D3 def2-TZVP opt PModel NOAUTOSTART
+*xyzfile -2 2 4_M0006.xyz
+
+$new_job
+%pal nprocs=8 end
+%geom maxiter=75 end
+! PBE D3 def2-TZVP opt PModel NOAUTOSTART
+*xyzfile -2 2 5_M0005.xyz
