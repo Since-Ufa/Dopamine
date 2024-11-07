@@ -1,6 +1,6 @@
 ! PBE D3 def2-TZVP opt PModel
-%pal nprocs=8 end
-%geom maxiter=75 end
+%pal nprocs=16 end
+%geom maxiter=150 end
 %base "1_M0005"
 *xyz -1 2
 8        2.249561000     -1.841863000     -0.165908000
@@ -28,8 +28,8 @@
 *
 
 $new_job
-%pal nprocs=8 end
-%geom maxiter=75 end
+%pal nprocs=16 end
+%geom maxiter=150 end
 %base "2_M0003"
 ! PBE D3 def2-TZVP opt PModel NOAUTOSTART
 *xyz -1 2
@@ -58,12 +58,12 @@ $new_job
 *
 
 $new_job
-%pal nprocs=8 end
-%geom maxiter=75 end
+%pal nprocs=16 end
+%geom maxiter=150 end
 %base "3_M0004"
 ! PBE D3 def2-TZVP opt PModel NOAUTOSTART
 *xyz -1 2
-8        2.316592000     -1.801093000      0.257262000
+88        2.316592000     -1.801093000      0.257262000
 8        3.237912000      0.735278000      0.459552000
 7       -3.220340000      0.495950000      1.166711000
 6       -2.161748000     -0.219699000     -0.983872000
@@ -88,8 +88,8 @@ $new_job
 *
 
 $new_job
-%pal nprocs=8 end
-%geom maxiter=75 end
+%pal nprocs=16 end
+%geom maxiter=150 end
 %base "4_M0007"
 ! PBE D3 def2-TZVP opt PModel NOAUTOSTART
 *xyz -1 2
@@ -118,8 +118,8 @@ $new_job
 *
 
 $new_job
-%pal nprocs=8 end
-%geom maxiter=75 end
+%pal nprocs=16 end
+%geom maxiter=150 end
 %base "5_M0006"
 ! PBE D3 def2-TZVP opt PModel NOAUTOSTART
 *xyz -1 2
