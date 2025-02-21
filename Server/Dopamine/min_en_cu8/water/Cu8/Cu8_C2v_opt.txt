@@ -1,4 +1,4 @@
-! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART
+! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 
@@ -16,7 +16,7 @@ Cu      -1.562335000      1.380609000     -0.484737000
 *
 
 $new_job
-! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART
+! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 
@@ -34,7 +34,7 @@ Cu      -1.402014000      1.412800000     -0.521009000
 *
 
 $new_job
-! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART
+! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 
@@ -52,7 +52,7 @@ Cu      -1.343491000      1.506847000     -0.550165000
 *
 
 $new_job
-! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART
+! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 

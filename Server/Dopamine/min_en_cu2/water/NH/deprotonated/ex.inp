@@ -1,4 +1,4 @@
-! PBE D3 def2-TZVP opt PModel
+! PBE D3 def2-TZVP opt PModel cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=200 end
 %base "1_M0005"
@@ -32,7 +32,7 @@ $new_job
 %pal nprocs=16 end
 %geom maxiter=200 end
 %base "2_M0003"
-! PBE D3 def2-TZVP opt PModel NOAUTOSTART
+! PBE D3 def2-TZVP opt PModel NOAUTOSTART cpcm(water)
 *xyz -1 1
   O         2.250562000000     -1.837087000000      0.120435000000
   O         3.249215000000      0.590745000000     -0.536637000000
@@ -63,7 +63,7 @@ $new_job
 %pal nprocs=16 end
 %geom maxiter=200 end
 %base "3_M0004"
-! PBE D3 def2-TZVP opt PModel NOAUTOSTART
+! PBE D3 def2-TZVP opt PModel NOAUTOSTART cpcm(water)
 *xyz -1 1
   O         2.316592000000     -1.801093000000      0.257262000000
   O         3.237912000000      0.735278000000      0.459552000000
@@ -94,7 +94,7 @@ $new_job
 %pal nprocs=16 end
 %geom maxiter=200 end
 %base "4_M0007"
-! PBE D3 def2-TZVP opt PModel NOAUTOSTART
+! PBE D3 def2-TZVP opt PModel NOAUTOSTART cpcm(water)
 *xyz -1 1
   O         2.185387000000     -1.873294000000      0.196276000000
   O         3.274745000000      0.479286000000     -0.581660000000
@@ -125,7 +125,7 @@ $new_job
 %pal nprocs=16 end
 %geom maxiter=200 end
 %base "5_M0006"
-! PBE D3 def2-TZVP opt PModel NOAUTOSTART
+! PBE D3 def2-TZVP opt PModel NOAUTOSTART cpcm(water)
 *xyz -1 1
   O         2.394153000000     -1.874655000000     -0.048523000000
   O         3.462705000000      0.594594000000     -0.343502000000

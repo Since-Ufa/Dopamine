@@ -1,4 +1,4 @@
-! PBE D3 def2-TZVP opt PModel
+! PBE D3 def2-TZVP opt PModel cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "1_M0001"
@@ -31,7 +31,7 @@
 
 $new_job
 
-! PBE D3 def2-TZVP opt PModel
+! PBE D3 def2-TZVP opt PModel cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "2_M0002"
@@ -64,7 +64,7 @@ $new_job
 
 $new_job
 
-! PBE D3 def2-TZVP opt PModel
+! PBE D3 def2-TZVP opt PModel cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "3_M0003"
@@ -97,7 +97,7 @@ $new_job
 
 $new_job
 
-! PBE D3 def2-TZVP opt PModel
+! PBE D3 def2-TZVP opt PModel cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "4_M0004"
@@ -130,7 +130,7 @@ $new_job
 
 $new_job
 
-! PBE D3 def2-TZVP opt PModel
+! PBE D3 def2-TZVP opt PModel cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "5_M0005"

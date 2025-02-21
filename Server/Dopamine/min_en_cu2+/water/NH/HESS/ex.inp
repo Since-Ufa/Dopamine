@@ -1,4 +1,4 @@
-! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART
+! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "neutral"
@@ -30,7 +30,7 @@
 
 $new_job
 
-! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART
+! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "deprotonated"
@@ -61,7 +61,7 @@ $new_job
 
 $new_job
 
-! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART
+! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "2x_deprotonated"

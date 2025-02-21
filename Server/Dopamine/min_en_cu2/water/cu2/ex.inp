@@ -1,4 +1,4 @@
-! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART
+! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "cu2"
