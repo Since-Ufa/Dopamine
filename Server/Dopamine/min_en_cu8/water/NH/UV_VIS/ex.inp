@@ -1,0 +1,112 @@
+# opt in PBE-D3/def2tzvp
+
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
+%pal nprocs=16 end
+%base "neutral"
+*xyz 0 2
+
+*
+
+
+
+$new_job
+
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
+%pal nprocs=16 end
+%base "protonated"
+*xyz 1 2
+ 
+*
+
+
+
+$new_job
+
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
+%pal nprocs=16 end
+%base "deprotonated"
+*xyz -1 2
+
+*
+
+
+
+$new_job
+
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
+%pal nprocs=16 end
+%base "2x_deprotonated"
+*xyz -2 2
+
+*
+
+
+
+$new_job
+
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
+%pal nprocs=16 end
+%base "zwitterione"
+*xyz 0 2
+
+*

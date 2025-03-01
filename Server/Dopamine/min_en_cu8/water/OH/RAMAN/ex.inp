@@ -1,0 +1,56 @@
+# preopt in PBE-D3
+
+! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+%pal nprocs=16 end
+%geom maxiter=150 end
+%elprop Polar 1 end
+%base "neutral"
+*xyz 0 2
+
+*
+
+
+$new_job
+
+! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+%pal nprocs=16 end
+%geom maxiter=150 end
+%elprop Polar 1 end
+%base "protonated"
+*xyz 1 2
+ 
+*
+
+
+$new_job
+
+! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+%pal nprocs=16 end
+%geom maxiter=150 end
+%elprop Polar 1 end
+%base "deprotonated"
+*xyz -1 2
+
+*
+
+$new_job
+
+! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+%pal nprocs=16 end
+%geom maxiter=150 end
+%elprop Polar 1 end
+%base "2x_deprotonated"
+*xyz -2 2
+
+*
+
+$new_job
+
+! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+%pal nprocs=16 end
+%geom maxiter=150 end
+%elprop Polar 1 end
+%base "zwitterione"
+*xyz 0 2
+
+*

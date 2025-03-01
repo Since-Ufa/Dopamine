@@ -1,0 +1,49 @@
+! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+%pal nprocs=16 end
+%geom maxiter=150 end
+%base "neutral"
+*xyz 0 2
+
+*
+
+
+$new_job
+
+! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+%pal nprocs=16 end
+%geom maxiter=150 end
+%base "protonated"
+*xyz 1 2
+ 
+*
+
+
+$new_job
+
+! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+%pal nprocs=16 end
+%geom maxiter=150 end
+%base "deprotonated"
+*xyz -1 2
+
+*
+
+$new_job
+
+! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+%pal nprocs=16 end
+%geom maxiter=150 end
+%base "2x_deprotonated"
+*xyz -2 2
+
+*
+
+$new_job
+
+! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+%pal nprocs=16 end
+%geom maxiter=150 end
+%base "zwitterione"
+*xyz 0 2
+
+*
