@@ -1,0 +1,195 @@
+-------------------------------------------------------------
+----------------------- !PROPERTIES! ------------------------
+-------------------------------------------------------------
+# -----------------------------------------------------------
+$ PAL_Flags
+   description: The PAL Flags
+   geom. index: 1
+   prop. index: 1
+        Diskflag:     2
+# -----------------------------------------------------------
+$ SCF_Energy
+   description: The SCF energy
+   geom. index: 1
+   prop. index: 1
+        SCF Energy:   -13122.4037824279
+# -----------------------------------------------------------
+$ DFT_Energy
+   description: The DFT energy
+   geom. index: 1
+   prop. index: 1
+   Number of Alpha Electrons                116.0000194312 
+   Number of Beta  Electrons                116.0000194312 
+   Total number of  Electrons               232.0000388625 
+   Exchange energy                         -524.2963666414 
+   Correlation energy                       -10.8980517404 
+   Correlation energy NL                      0.0000000000 
+   Exchange-Correlation energy             -535.1944183818 
+   Embedding correction                       0.0000000000 
+   Total DFT Energy (No VdW correction)  -13122.4037824279 
+# -----------------------------------------------------------
+$ Solvation_Details
+   description: Details concerning solvation
+   geom. index: 1
+   prop. index: 1
+     Epsilon:               80.4000000000
+     Refrac:                 1.3300000000
+     RSolv:                  1.3000000000
+     Surface Type:                      2
+     Number of Points:                850
+     Surface Area:         707.2324774502
+     Dielectric Energy:     -0.0504381864
+# -----------------------------------------------------------
+$ VdW_Correction
+   description: The Van der Waals Correction
+   geom. index: 1
+   prop. index: 1
+        Van der Waals Correction:       -0.0209863722
+# -----------------------------------------------------------
+$ SCF_Electric_Properties
+   description: The SCF Calculated Electric Properties
+   geom. index: 1
+   prop. index: 1
+       Filename                          : CU8_D2dII_2.scfp 
+       Do Dipole Moment Calculation      : true 
+       Do Quadrupole Moment Calculation  : false 
+       Do Polarizability Calculation     : false 
+** Dipole moment part of electric properties **
+        Magnitude of dipole moment (Debye) :        0.2050393753
+        Electronic Contribution:
+                  0    
+      0       0.000147
+      1       0.000227
+      2       0.080667
+        Nuclear Contribution:
+                  0    
+      0      -0.000000
+      1      -0.000000
+      2       0.000000
+        Total Dipole moment:
+                  0    
+      0       0.000147
+      1       0.000227
+      2       0.080667
+# -----------------------------------------------------------
+$ PAL_Flags
+   description: The PAL Flags
+   geom. index: 2
+   prop. index: 1
+        Diskflag:     2
+# -----------------------------------------------------------
+$ SCF_Energy
+   description: The SCF energy
+   geom. index: 2
+   prop. index: 1
+        SCF Energy:   -13122.4037824277
+# -----------------------------------------------------------
+$ DFT_Energy
+   description: The DFT energy
+   geom. index: 2
+   prop. index: 1
+   Number of Alpha Electrons                116.0000194312 
+   Number of Beta  Electrons                116.0000194312 
+   Total number of  Electrons               232.0000388625 
+   Exchange energy                         -524.2963666412 
+   Correlation energy                       -10.8980517404 
+   Correlation energy NL                      0.0000000000 
+   Exchange-Correlation energy             -535.1944183816 
+   Embedding correction                       0.0000000000 
+   Total DFT Energy (No VdW correction)  -13122.4037824277 
+# -----------------------------------------------------------
+$ Solvation_Details
+   description: Details concerning solvation
+   geom. index: 2
+   prop. index: 1
+     Epsilon:               80.4000000000
+     Refrac:                 1.3300000000
+     RSolv:                  1.3000000000
+     Surface Type:                      2
+     Number of Points:                850
+     Surface Area:         707.2324774502
+     Dielectric Energy:     -0.0504381864
+# -----------------------------------------------------------
+$ VdW_Correction
+   description: The Van der Waals Correction
+   geom. index: 2
+   prop. index: 1
+        Van der Waals Correction:       -0.0209863722
+# -----------------------------------------------------------
+$ THERMOCHEMISTRY_Energies
+   description: The Thermochemistry energies
+   geom. index: 2
+   prop. index: 1
+        Temperature (Kelvin)           :        298.1500000000
+        Pressure (atm)                 :          1.0000000000
+        Total Mass (AMU)               :        508.4000000000
+        Spin Degeneracy                :          1.0000000000
+        Electronic Energy (Hartree)    :     -13122.4247687999
+        Translational Energy (Hartree) :          0.0014162714
+        Rotational Energy (Hartree)    :          0.0014162714
+        Vibrational Energy (Hartree)   :          0.0047902993
+        Number of frequencies          :     24      
+        Scaling Factor for frequencies :          1.0000000000
+        Vibrational frequencies        :     
+                  0    
+      0       0.000000
+      1       0.000000
+      2       0.000000
+      3       0.000000
+      4       0.000000
+      5       0.000000
+      6     -82.395990
+      7     -79.719138
+      8     -76.462133
+      9     -75.452050
+     10     -66.860702
+     11     -59.295965
+     12     -46.787928
+     13     -43.810522
+     14     -38.196782
+     15     -23.885896
+     16     -19.852729
+     17     -16.873009
+     18      44.270263
+     19      53.245110
+     20      60.047852
+     21      66.731783
+     22      67.214552
+     23     117.557848
+        Zero Point Energy (Hartree)    :          0.0009319241
+        Inner Energy (Hartree)         :     -13122.4162140336
+        Enthalpy (Hartree)             :     -13122.4152698246
+        Electronic entropy             :          0.0000000000
+        Rotational entropy             :          0.0162811976
+        Vibrational entropy            :          0.0097878916
+        Translational entropy          :          0.0162811976
+        Entropy                        :          0.0472433279
+        Gibbs Energy (Hartree)         :     -13122.4625131525
+        Is Linear                      :                 false
+# -------------------------------------------------------------
+----------------------- !GEOMETRIES! ------------------------
+# -------------------------------------------------------------
+------------------------ !GEOMETRY! -------------------------
+    Number of atoms:    8 
+    Geometry Index:     1 
+    Coordinates:
+               0 Cu     0.183291000000   -1.370095000000   -2.379575000000
+               1 Cu     0.142238000000   -1.380000000000    2.380383000000
+               2 Cu     0.151044000000    2.762887000000    0.002875000000
+               3 Cu    -0.150599000000   -2.762486000000    0.002904000000
+               4 Cu    -0.142106000000    1.380067000000    2.380371000000
+               5 Cu     1.313666000000    0.025421000000   -0.003724000000
+               6 Cu    -1.313712000000   -0.026021000000   -0.003685000000
+               7 Cu    -0.183822000000    1.370229000000   -2.379548000000
+------------------------ !GEOMETRY! -------------------------
+    Number of atoms:    8 
+    Geometry Index:     2 
+    Coordinates:
+               0 Cu     0.183291000000   -1.370095000000   -2.379575000000
+               1 Cu     0.142238000000   -1.380000000000    2.380383000000
+               2 Cu     0.151044000000    2.762887000000    0.002875000000
+               3 Cu    -0.150599000000   -2.762486000000    0.002904000000
+               4 Cu    -0.142106000000    1.380067000000    2.380371000000
+               5 Cu     1.313666000000    0.025421000000   -0.003724000000
+               6 Cu    -1.313712000000   -0.026021000000   -0.003685000000
+               7 Cu    -0.183822000000    1.370229000000   -2.379548000000
