@@ -59,7 +59,7 @@ $new_job
 29      -1.585323572     -2.497563442      2.466550864
 *
 
-# $new_job
+$new_job
 ! PBE D3 def2-TZVP opt PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
 %geom maxiter=150 end

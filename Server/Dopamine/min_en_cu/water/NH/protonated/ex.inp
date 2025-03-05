@@ -65,7 +65,7 @@ $new_job
 %pal nprocs=16 end
 %geom maxiter=150 end
 %base "3_M0003"
-! PBE D3 def2-TZVP opt PModel NOAUTOSTART cpcm(water)
+! PBE D3 def2-TZVP slowconv opt PModel NOAUTOSTART cpcm(water)
 *xyz 1 2
 6       -1.052971000     -1.610853000      0.227945000
 6       -0.155273000      1.042331000      0.386444000
