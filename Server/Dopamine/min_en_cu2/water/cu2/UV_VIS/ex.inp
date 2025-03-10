@@ -1,0 +1,19 @@
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
+%pal nprocs=16 end
+%base "cu2"
+*xyz 0 1
+Cu      -2.630013769      0.000000000     -3.527558151
+Cu      -2.630013769      0.000000000     -6.267558151
+*
