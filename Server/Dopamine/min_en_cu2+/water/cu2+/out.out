@@ -1,0 +1,2321 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                                            #,                                       
+                                            ###                                      
+                                            ####                                     
+                                            #####                                    
+                                            ######                                   
+                                           ########,                                 
+                                     ,,################,,,,,                         
+                               ,,#################################,,                 
+                          ,,##########################################,,             
+                       ,#########################################, ''#####,          
+                    ,#############################################,,   '####,        
+                  ,##################################################,,,,####,       
+                ,###########''''           ''''###############################       
+              ,#####''   ,,,,##########,,,,          '''####'''          '####       
+            ,##' ,,,,###########################,,,                        '##       
+           ' ,,###''''                  '''############,,,                           
+         ,,##''                                '''############,,,,        ,,,,,,###''
+      ,#''                                            '''#######################'''  
+     '                                                          ''''####''''         
+             ,#######,   #######,   ,#######,      ##                                
+            ,#'     '#,  ##    ##  ,#'     '#,    #''#        ######   ,####,        
+            ##       ##  ##   ,#'  ##            #'  '#       #        #'  '#        
+            ##       ##  #######   ##           ,######,      #####,   #    #        
+            '#,     ,#'  ##    ##  '#,     ,#' ,#      #,         ##   #,  ,#        
+             '#######'   ##     ##  '#######'  #'      '#     #####' # '####'        
+
+
+
+                  #######################################################
+                  #                        -***-                        #
+                  #          Department of theory and spectroscopy      #
+                  #    Directorship and core code : Frank Neese         #
+                  #        Max Planck Institute fuer Kohlenforschung    #
+                  #                Kaiser Wilhelm Platz 1               #
+                  #                 D-45470 Muelheim/Ruhr               #
+                  #                      Germany                        #
+                  #                                                     #
+                  #                  All rights reserved                #
+                  #                        -***-                        #
+                  #######################################################
+
+
+                         Program Version 5.0.2 -  RELEASE  -
+
+
+ With contributions from (in alphabetic order):
+   Daniel Aravena         : Magnetic Suceptibility
+   Michael Atanasov       : Ab Initio Ligand Field Theory (pilot matlab implementation)
+   Alexander A. Auer      : GIAO ZORA, VPT2 properties, NMR spectrum
+   Ute Becker             : Parallelization
+   Giovanni Bistoni       : ED, misc. LED, open-shell LED, HFLD
+   Martin Brehm           : Molecular dynamics
+   Dmytro Bykov           : SCF Hessian
+   Vijay G. Chilkuri      : MRCI spin determinant printing, contributions to CSF-ICE
+   Dipayan Datta          : RHF DLPNO-CCSD density
+   Achintya Kumar Dutta   : EOM-CC, STEOM-CC
+   Dmitry Ganyushin       : Spin-Orbit,Spin-Spin,Magnetic field MRCI
+   Miquel Garcia          : C-PCM and meta-GGA Hessian, CC/C-PCM, Gaussian charge scheme
+   Yang Guo               : DLPNO-NEVPT2, F12-NEVPT2, CIM, IAO-localization
+   Andreas Hansen         : Spin unrestricted coupled pair/coupled cluster methods
+   Benjamin Helmich-Paris : MC-RPA, TRAH-SCF, COSX integrals
+   Lee Huntington         : MR-EOM, pCC
+   Robert Izsak           : Overlap fitted RIJCOSX, COSX-SCS-MP3, EOM
+   Marcus Kettner         : VPT2
+   Christian Kollmar      : KDIIS, OOCD, Brueckner-CCSD(T), CCSD density, CASPT2, CASPT2-K
+   Simone Kossmann        : Meta GGA functionals, TD-DFT gradient, OOMP2, MP2 Hessian
+   Martin Krupicka        : Initial AUTO-CI
+   Lucas Lang             : DCDCAS
+   Marvin Lechner         : AUTO-CI (C++ implementation), FIC-MRCC
+   Dagmar Lenk            : GEPOL surface, SMD
+   Dimitrios Liakos       : Extrapolation schemes; Compound Job, initial MDCI parallelization
+   Dimitrios Manganas     : Further ROCIS development; embedding schemes
+   Dimitrios Pantazis     : SARC Basis sets
+   Anastasios Papadopoulos: AUTO-CI, single reference methods and gradients
+   Taras Petrenko         : DFT Hessian,TD-DFT gradient, ASA, ECA, R-Raman, ABS, FL, XAS/XES, NRVS
+   Peter Pinski           : DLPNO-MP2, DLPNO-MP2 Gradient
+   Christoph Reimann      : Effective Core Potentials
+   Marius Retegan         : Local ZFS, SOC
+   Christoph Riplinger    : Optimizer, TS searches, QM/MM, DLPNO-CCSD(T), (RO)-DLPNO pert. Triples
+   Tobias Risthaus        : Range-separated hybrids, TD-DFT gradient, RPA, STAB
+   Michael Roemelt        : Original ROCIS implementation
+   Masaaki Saitow         : Open-shell DLPNO-CCSD energy and density
+   Barbara Sandhoefer     : DKH picture change effects
+   Avijit Sen             : IP-ROCIS
+   Kantharuban Sivalingam : CASSCF convergence, NEVPT2, FIC-MRCI
+   Bernardo de Souza      : ESD, SOC TD-DFT
+   Georgi Stoychev        : AutoAux, RI-MP2 NMR, DLPNO-MP2 response
+   Willem Van den Heuvel  : Paramagnetic NMR
+   Boris Wezisla          : Elementary symmetry handling
+   Frank Wennmohs         : Technical directorship
+
+
+ We gratefully acknowledge several colleagues who have allowed us to
+ interface, adapt or use parts of their codes:
+   Stefan Grimme, W. Hujo, H. Kruse, P. Pracht,  : VdW corrections, initial TS optimization,
+                  C. Bannwarth, S. Ehlert          DFT functionals, gCP, sTDA/sTD-DF
+   Ed Valeev, F. Pavosevic, A. Kumar             : LibInt (2-el integral package), F12 methods
+   Garnet Chan, S. Sharma, J. Yang, R. Olivares  : DMRG
+   Ulf Ekstrom                                   : XCFun DFT Library
+   Mihaly Kallay                                 : mrcc  (arbitrary order and MRCC methods)
+   Jiri Pittner, Ondrej Demel                    : Mk-CCSD
+   Frank Weinhold                                : gennbo (NPA and NBO analysis)
+   Christopher J. Cramer and Donald G. Truhlar   : smd solvation model
+   Lars Goerigk                                  : TD-DFT with DH, B97 family of functionals
+   V. Asgeirsson, H. Jonsson                     : NEB implementation
+   FAccTs GmbH                                   : IRC, NEB, NEB-TS, DLPNO-Multilevel, CI-OPT
+                                                   MM, QMMM, 2- and 3-layer-ONIOM, Crystal-QMMM,
+                                                   LR-CPCM, SF, NACMEs, symmetry and pop. for TD-DFT,
+                                                   nearIR, NL-DFT gradient (VV10), updates on ESD,
+                                                   ML-optimized integration grids
+   S Lehtola, MJT Oliveira, MAL Marques          : LibXC Library
+   Liviu Ungur et al                             : ANISO software
+
+
+ Your calculation uses the libint2 library for the computation of 2-el integrals
+ For citations please refer to: http://libint.valeyev.net
+
+ Your ORCA version has been built with support for libXC version: 5.1.0
+ For citations please refer to: https://tddft.org/programs/libxc/
+
+ This ORCA versions uses:
+   CBLAS   interface :  Fast vector & matrix operations
+   LAPACKE interface :  Fast linear algebra routines
+   SCALAPACK package :  Parallel linear algebra routines
+   Shared memory     :  Shared parallel matrices
+   BLAS/LAPACK       :  OpenBLAS 0.3.15  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell SINGLE_THREADED
+        Core in use  :  Haswell
+   Copyright (c) 2011-2014, The OpenBLAS Project
+
+
+Your calculation utilizes the atom-pairwise dispersion correction
+with the Becke-Johnson damping scheme (D3BJ)
+Cite in your paper:
+S.Grimme, S.Ehrlich, L.Goerigk, J Comput Chem, (2011), 32, 1456â€“1465 
+S.Grimme, J.Antony, S.Ehrlich and H.Krieg, J.Chem.Phys., 132, (2010), 154104 
+   
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+WARNING: Old DensityContainer found on disk!
+         Will remove this file - 
+         If you want to keep old densities, please start your calculation with a different basename. 
+
+WARNING: Gradients needed for Numerical Frequencies
+  ===> : Setting RunTyp to EnGrad
+
+WARNING: your system is open-shell and RHF/RKS was chosen
+  ===> : WILL SWITCH to UHF/UKS
+
+
+WARNING: The environment variable RSH_COMMAND is not set!
+  ===> : All Displacements for the Numerical Hessian or Gradient calculation
+         will be started on localhost
+
+INFO   : the flag for use of the SHARK integral package has been found!
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = ex.inp
+|  1> ! PBE D3 def2-TZVP slowconv numfreq PModel NOAUTOSTART cpcm(water)
+|  2> %pal nprocs=16 end
+|  3> %geom maxiter=200 end
+|  4> %base "cu2+"
+|  5> *xyz 2 2
+|  6>   Cu  2.79467885448518     -2.80596664371773      0.03172156093816
+|  7> *
+|  8> 
+|  9>                          ****END OF INPUT****
+================================================================================
+
+                     *******************************
+                     * Energy+Gradient Calculation *
+                     *******************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  Cu     2.794679   -2.805967    0.031722
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 Cu   29.0000    0    63.550    5.281178   -5.302508    0.059945
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ Cu     0   0   0     0.000000000000     0.00000000     0.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ Cu     0   0   0     0.000000000000     0.00000000     0.00000000
+
+---------------------
+BASIS SET INFORMATION
+---------------------
+There are 1 groups of distinct atoms
+
+ Group   1 Type Cu  : 17s11p7d1f contracted to 6s4p4d1f pattern {842111/6311/4111/1}
+
+Atom   0Cu   basis set group =>   1
+---------------------------------
+AUXILIARY/J BASIS SET INFORMATION
+---------------------------------
+There are 1 groups of distinct atoms
+
+ Group   1 Type Cu  : 19s5p5d3f3g contracted to 8s5p4d3f3g pattern {121111111/11111/2111/111/111}
+
+Atom   0Cu   basis set group =>   1
+No protocol specified
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+------------------------------------------------------------------------------
+                           ORCA GTO INTEGRAL CALCULATION
+                           -- RI-GTO INTEGRALS CHOSEN --
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+                   ___                                                        
+                  /   \      - P O W E R E D   B Y -                         
+                 /     \                                                     
+                 |  |  |   _    _      __       _____    __    __             
+                 |  |  |  | |  | |    /  \     |  _  \  |  |  /  |          
+                  \  \/   | |  | |   /    \    | | | |  |  | /  /          
+                 / \  \   | |__| |  /  /\  \   | |_| |  |  |/  /          
+                |  |  |   |  __  | /  /__\  \  |    /   |      \           
+                |  |  |   | |  | | |   __   |  |    \   |  |\   \          
+                \     /   | |  | | |  |  |  |  | |\  \  |  | \   \       
+                 \___/    |_|  |_| |__|  |__|  |_| \__\ |__|  \__/        
+                                                                              
+                      - O R C A' S   B I G   F R I E N D -                    
+                                      &                                       
+                       - I N T E G R A L  F E E D E R -                       
+                                                                              
+ v1 FN, 2020, v2 2021                                                         
+------------------------------------------------------------------------------
+
+
+Reading SHARK input file cu2+.SHARKINP.tmp ... ok
+----------------------
+SHARK INTEGRAL PACKAGE
+----------------------
+
+Number of atoms                             ...      1
+Number of basis functions                   ...     45
+Number of shells                            ...     15
+Maximum angular momentum                    ...      3
+Integral batch strategy                     ... SHARK/LIBINT Hybrid
+RI-J (if used) integral strategy            ... SPLIT-RIJ (Revised 2003 algorithm where possible)
+Printlevel                                  ...      1
+Contraction scheme used                     ... SEGMENTED contraction
+Coulomb Range Separation                    ... NOT USED
+Exchange Range Separation                   ... NOT USED
+Finite Nucleus Model                        ... NOT USED
+Auxiliary Coulomb fitting basis             ... AVAILABLE
+   # of basis functions in Aux-J            ...     91
+   # of shells in Aux-J                     ...     23
+   Maximum angular momentum in Aux-J        ...      4
+Auxiliary J/K fitting basis                 ... NOT available
+Auxiliary Correlation fitting basis         ... NOT available
+Auxiliary 'external' fitting basis          ... NOT available
+Integral threshold                          ...     2.500000e-11
+Primitive cut-off                           ...     2.500000e-12
+Primitive pair pre-selection threshold      ...     2.500000e-12
+
+Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 15
+Organizing shell pair data                  ... done (  0.0 sec)
+Shell pair information
+Total number of shell pairs                 ...       120
+Shell pairs after pre-screening             ...       120
+Total number of primitive shell pairs       ...       725
+Primitive shell pairs kept                  ...       725
+          la=0 lb=0:     21 shell pairs
+          la=1 lb=0:     24 shell pairs
+          la=1 lb=1:     10 shell pairs
+          la=2 lb=0:     24 shell pairs
+          la=2 lb=1:     16 shell pairs
+          la=2 lb=2:     10 shell pairs
+          la=3 lb=0:      6 shell pairs
+          la=3 lb=1:      4 shell pairs
+          la=3 lb=2:      4 shell pairs
+          la=3 lb=3:      1 shell pairs
+
+Calculating one electron integrals          ... done (  0.0 sec)
+Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
+Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=      0.000000000000 Eh
+
+SHARK setup successfully completed in   0.2 seconds
+
+Maximum memory used throughout the entire GTOINT-calculation: 17.3 MB
+No protocol specified
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+-------------------------------------------------------------------------------
+                                 ORCA SCF
+-------------------------------------------------------------------------------
+
+------------
+SCF SETTINGS
+------------
+Hamiltonian:
+ Density Functional     Method          .... DFT(GTOs)
+ Exchange Functional    Exchange        .... PBE
+   PBE kappa parameter   XKappa         ....  0.804000
+   PBE mue parameter    XMuePBE         ....  0.219520
+ Correlation Functional Correlation     .... PBE
+   PBE beta parameter  CBetaPBE         ....  0.066725
+ LDA part of GGA corr.  LDAOpt          .... PW91-LDA
+ Gradients option       PostSCFGGA      .... off
+   Density functional embedding theory  .... OFF
+   NL short-range parameter             ....  6.400000
+ RI-approximation to the Coulomb term is turned on
+   Number of AuxJ basis functions       .... 91
+
+
+General Settings:
+ Integral files         IntName         .... cu2+
+ Hartree-Fock type      HFTyp           .... UHF
+ Total Charge           Charge          ....    2
+ Multiplicity           Mult            ....    2
+ Number of Electrons    NEL             ....   27
+ Basis Dimension        Dim             ....   45
+ Nuclear Repulsion      ENuc            ....      0.0000000000 Eh
+
+Convergence Acceleration:
+ DIIS                   CNVDIIS         .... on
+   Start iteration      DIISMaxIt       ....     0
+   Startup error        DIISStart       ....  0.200000
+   # of expansion vecs  DIISMaxEq       ....     5
+   Bias factor          DIISBfac        ....   1.050
+   Max. coefficient     DIISMaxC        ....  10.000
+ Trust-Rad. Augm. Hess. CNVTRAH         .... auto
+   Auto Start mean grad. ratio tolernc. ....  1.125000
+   Auto Start start iteration           ....    20
+   Auto Start num. interpolation iter.  ....    10
+   Max. Number of Micro iterations      ....    16
+   Max. Number of Macro iterations      .... Maxiter - #DIIS iter
+   Number of Davidson start vectors     ....     2
+   Converg. threshold I  (grad. norm)   ....   1.000e-05
+   Converg. threshold II (energy diff.) ....   1.000e-08
+   Grad. Scal. Fac. for Micro threshold ....   0.100
+   Minimum threshold for Micro iter.    ....   0.010
+   NR start threshold (gradient norm)   ....   0.001
+   Initial trust radius                 ....   0.400
+   Minimum AH scaling param. (alpha)    ....   1.000
+   Maximum AH scaling param. (alpha)    .... 1000.000
+   Orbital update algorithm             .... Taylor
+   White noise on init. David. guess    .... on
+   Maximum white noise                  ....   0.010
+   Quad. conv. algorithm                .... NR
+ SOSCF                  CNVSOSCF        .... off
+ Level Shifting         CNVShift        .... on
+   Level shift para.    LevelShift      ....    0.2500
+   Turn off err/grad.   ShiftErr        ....    0.0000
+ Zerner damping         CNVZerner       .... off
+ Static damping         CNVDamp         .... on
+   Fraction old density DampFac         ....    0.8500
+   Max. Damping (<1)    DampMax         ....    0.9800
+   Min. Damping (>=0)   DampMin         ....    0.0000
+   Turn off err/grad.   DampErr         ....    0.0300
+ Fernandez-Rico         CNVRico         .... off
+
+SCF Procedure:
+ Maximum # iterations   MaxIter         ....   125
+ SCF integral mode      SCFMode         .... Direct
+   Integral package                     .... SHARK and LIBINT hybrid scheme
+ Reset frequency        DirectResetFreq ....    20
+ Integral Threshold     Thresh          ....  2.500e-11 Eh
+ Primitive CutOff       TCut            ....  2.500e-12 Eh
+
+Convergence Tolerance:
+ Convergence Check Mode ConvCheckMode   .... Total+1el-Energy
+ Convergence forced     ConvForced      .... 0
+ Energy Change          TolE            ....  1.000e-08 Eh
+ 1-El. energy change                    ....  1.000e-05 Eh
+ DIIS Error             TolErr          ....  5.000e-07
+
+
+Diagonalization of the overlap matrix:
+Smallest eigenvalue                        ... 7.073e-02
+Time for diagonalization                   ...    0.001 sec
+Threshold for overlap eigenvalues          ... 1.000e-08
+Number of eigenvalues below threshold      ... 0
+Time for construction of square roots      ...    0.007 sec
+Total time needed                          ...    0.099 sec
+
+Time for model grid setup =    0.061 sec
+
+------------------------------
+INITIAL GUESS: MODEL POTENTIAL
+------------------------------
+Loading Hartree-Fock densities                     ... done
+Calculating cut-offs                               ... done
+Initializing the effective Hamiltonian             ... done
+Setting up the integral package (SHARK)            ... done
+Starting the Coulomb interaction                   ... done (   0.0 sec)
+Reading the grid                                   ... done
+Mapping shells                                     ... done
+Starting the XC term evaluation                    ... done (   0.0 sec)
+  promolecular density results
+     # of electrons  =     29.000002311
+     EX              =    -65.435521160
+     EC              =     -1.335840562
+     EX+EC           =    -66.771361722
+Transforming the Hamiltonian                       ... done (   0.0 sec)
+Diagonalizing the Hamiltonian                      ... done (   0.0 sec)
+Back transforming the eigenvectors                 ... done (   0.0 sec)
+Now organizing SCF variables                       ... done
+                      ------------------
+                      INITIAL GUESS DONE (   0.1 sec)
+                      ------------------
+-------------------
+DFT GRID GENERATION
+-------------------
+
+General Integration Accuracy     IntAcc      ... 4.388
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 4 (Lebedev-302)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... Becke
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Angular grids for H and He will be reduced by one unit
+Partially contracted basis set               ... off
+Rotationally invariant grid construction     ... off
+
+Total number of grid points                  ...    11336
+Total number of batches                      ...      178
+Average number of points per batch           ...       63
+Average number of grid points per atom       ...    11336
+Time for grid setup =    0.158 sec
+
+
+--------------------
+CPCM SOLVATION MODEL
+--------------------
+CPCM parameters:
+  Epsilon                                         ...      80.4000
+  Refrac                                          ...       1.3300
+  Rsolv                                           ...       1.3000
+  Surface type                                    ... GAUSSIAN VDW
+  Epsilon function type                           ...         CPCM
+Radii:
+ Radius for Cu used is    3.1747 Bohr (=   1.6800 Ang.)
+Calculating surface                               ...        done! (  0.0s)
+GEPOL surface points                              ...          110
+GEPOL Volume                                      ...     134.0334
+GEPOL Surface-area                                ...     126.6561
+Calculating surface distance matrix               ...        done! (  0.0s)
+Performing Cholesky decomposition & store         ...        done! (  0.0s)
+Overall time for CPCM initialization              ...                 0.0s
+--------------
+SCF ITERATIONS
+--------------
+ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
+               ***  Starting incremental Fock matrix formation  ***
+  0  -1639.7201393545   0.000000000000 0.01159447  0.00072756  0.2806279 0.8500
+  1  -1639.7417516105  -0.021612256047 0.00885968  0.00056462  0.1859523 0.8500
+                               ***Turning on DIIS***
+  2  -1639.7536449909  -0.011893380422 0.00564803  0.00037300  0.1150581 0.8500
+  3  -1639.7609853737  -0.007340382713 0.00293599  0.00020882  0.0704709 0.8500
+  4  -1639.7664005167  -0.005415142999 0.00208906  0.00015384  0.0528059 0.8500
+  5  -1639.7706909654  -0.004290448752 0.00163207  0.00012179  0.0429200 0.8500
+  6  -1639.7742305631  -0.003539597659 0.00133460  0.00009952  0.0359426 0.8500
+  7  -1639.7771945351  -0.002963971987 0.00112306  0.00008283  0.0303678 0.8500
+  8  -1639.7796942816  -0.002499746541 0.00637754  0.00046773  0.0254880 0.0000
+  9  -1639.7934123527  -0.013718071118 0.00066549  0.00004236  0.0032689 0.0000
+ 10  -1639.7934181767  -0.000005824038 0.00058405  0.00002227  0.0024077 0.0000
+ 11  -1639.7934225183  -0.000004341553 0.00060303  0.00001452  0.0002657 0.0000
+ 12  -1639.7934236009  -0.000001082593 0.00063682  0.00001532  0.0002691 0.0000
+ 13  -1639.7934247738  -0.000001172879 0.00066322  0.00001592  0.0002751 0.0000
+ 14  -1639.7934260262  -0.000001252393 0.00065347  0.00001590  0.0002831 0.0000
+ 15  -1639.7934270417  -0.000001015551 0.00068488  0.00001644  0.0007683 0.0000
+ 16  -1639.7934283867  -0.000001344977 0.00070349  0.00001690  0.0008019 0.0000
+ 17  -1639.7934297491  -0.000001362371 0.00073158  0.00001760  0.0009382 0.0000
+ 18  -1639.7934313552  -0.000001606160 0.00075015  0.00001804  0.0009149 0.0000
+ 19  -1639.7934328666  -0.000001511399 0.00072274  0.00001792  0.0010999 0.0000
+               *** Restarting incremental Fock matrix formation ***
+                                   *** Resetting DIIS ***
+
+ WARNING: the maximum gradient error descreased on average only by a factor   0.8
+          during the last 20 iterations
+
+                      *** Initiating the TRAH-SCF procedure ***
+
+
+TRAH GRID
+---------
+
+General Integration Accuracy     IntAcc      ... 3.467
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 1 (Lebedev-50)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... Becke
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Angular grids for H and He will be reduced by one unit
+Partially contracted basis set               ... off
+Rotationally invariant grid construction     ... off
+
+Total number of grid points                  ...     4348
+Total number of batches                      ...       68
+Average number of points per batch           ...       63
+Average number of grid points per atom       ...     4348
+
+ --------------------------------------------------------------------------------------------
+   Iter.        energy            ||Error||_2        Shift      TRadius  Mac/Mic        Rej.
+ --------------------------------------------------------------------------------------------
+WARNING: 1 diagonal Hessian elements are negative!
+    0      -1639.793433156478     3.638935e-03                     0.400 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.006202
+    0     dE    -1.670296e-06     7.395722e-03    -1.6703e-06      0.001 (TRAH MIcro)
+    0     dE    -3.545698e-06     7.579014e-03    -3.5457e-06      0.003 (TRAH MIcro)
+    0     dE    -2.817538e-05     2.226240e-02    -2.8095e-05      0.054 (TRAH MIcro)
+    0     dE    -1.461838e-03     2.252057e-02    -7.9557e-03      0.400 (TRAH MIcro)
+    0     dE    -7.673719e-04     6.412501e-03    -9.6895e-03      0.257 (TRAH MIcro)
+    0     dE    -9.006564e-04     4.481946e-03    -1.0461e-02      0.271 (TRAH MIcro)
+    0     dE    -9.280071e-04     5.830015e-04    -1.0572e-02      0.274 (TRAH MIcro)
+    0     dE    -9.282894e-04     2.077564e-04    -1.0573e-02      0.274 (TRAH MIcro)
+WARNING: 1 diagonal Hessian elements are negative!
+    1      -1639.794081498593     1.472843e-02                     0.400 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.001341
+    1     dE    -2.523878e-05     2.097524e-02    -2.5239e-05      0.002 (TRAH MIcro)
+    1     dE    -4.451500e-05     2.116885e-02    -4.4513e-05      0.007 (TRAH MIcro)
+    1     dE    -4.704704e-05     2.090733e-02    -4.7039e-05      0.013 (TRAH MIcro)
+    1     dE    -2.962550e-04     2.421829e-02    -2.8692e-04      0.180 (TRAH MIcro)
+    1     dE    -4.093441e-04     1.510997e-02    -3.8498e-04      0.252 (TRAH MIcro)
+    1     dE    -4.646191e-04     1.403841e-03    -4.2998e-04      0.284 (TRAH MIcro)
+    2      -1639.794329874920     1.515092e-02                     0.400 (TRAH MAcro)   No
+WARNING : small    HOMO - LUMO gap : (op =  beta) 0.000159
+    2     dE    -2.729739e-05     1.740150e-02    -2.7297e-05      0.002 (TRAH MIcro)
+    2     dE    -7.198421e-05     1.360710e-02    -7.1751e-05      0.057 (TRAH MIcro)
+    2     dE    -9.805424e-05     3.488852e-03    -9.7463e-05      0.078 (TRAH MIcro)
+    2     dE    -9.878221e-05     3.350247e-03    -9.8180e-05      0.078 (TRAH MIcro)
+    2     dE    -1.000180e-04     3.885608e-04    -9.9330e-05      0.083 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+    3      -1639.794431078780     1.399026e-03                     0.480 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000155
+    3     dE    -2.290899e-07     1.585862e-03    -2.2909e-07      0.000 (TRAH MIcro)
+    3     dE    -4.170923e-07     6.352460e-04    -4.1709e-07      0.001 (TRAH MIcro)
+    3     dE    -5.604987e-07     1.045310e-03    -5.6049e-07      0.005 (TRAH MIcro)
+    3     dE    -1.880240e-06     6.744058e-04    -1.8774e-06      0.039 (TRAH MIcro)
+    3     dE    -1.986116e-06     7.410157e-05    -1.9827e-06      0.042 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+    4      -1639.794434709724     2.471480e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000204
+    4     dE    -2.089821e-07     9.069814e-04                           (NR   MIcro)
+    4     dE    -1.142246e-06     2.182375e-03                           (NR   MIcro)
+    4     dE    -3.578916e-06     9.476948e-04                           (NR   MIcro)
+    4     dE    -3.796130e-06     1.178382e-04                           (NR   MIcro)
+    4     dE    -3.803514e-06     1.001348e-04                           (NR   MIcro)
+    4     dE    -3.890415e-06     1.010662e-03                           (NR   MIcro)
+    4     dE    -3.754954e-06     4.540991e-05                           (NR   MIcro)
+    4     dE    -3.755436e-06     8.504839e-06                           (NR   MIcro)
+    4     dE    -3.755791e-06     3.754243e-05                           (NR   MIcro)
+    4     dE    -3.758310e-06     5.699028e-05                           (NR   MIcro)
+    4     dE    -3.758995e-06     4.215209e-06                           (NR   MIcro)
+    4     dE    -3.759001e-06     4.993645e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+    5      -1639.794441071542     1.062241e-03                     0.576 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000144
+    5     dE    -1.242257e-07     7.813122e-04    -1.2423e-07      0.000 (TRAH MIcro)
+    5     dE    -2.356246e-07     3.075833e-04    -2.3562e-07      0.001 (TRAH MIcro)
+    5     dE    -4.909318e-07     1.495203e-03    -4.9089e-07      0.009 (TRAH MIcro)
+    5     dE    -2.106305e-04     8.716531e-03    -1.0075e-03      0.443 (TRAH MIcro)
+    5     dE    -2.650648e-04     1.065198e-03    -1.0853e-03      0.481 (TRAH MIcro)
+    5     dE    -2.652807e-04     8.425369e-04    -1.0857e-03      0.481 (TRAH MIcro)
+    5     dE    -2.661264e-04     8.513854e-04    -1.0860e-03      0.482 (TRAH MIcro)
+    5     dE    -2.696530e-04     3.405863e-04    -1.0875e-03      0.485 (TRAH MIcro)
+    5     dE    -2.699327e-04     1.905548e-04    -1.0876e-03      0.485 (TRAH MIcro)
+    5     dE    -2.700891e-04     2.543746e-04    -1.0877e-03      0.485 (TRAH MIcro)
+    5     dE    -7.395053e-04     1.099850e-02    -2.2240e-03      0.576 (TRAH MIcro)
+    5     dE    -7.695326e-04     2.524337e-03    -2.3147e-03      0.576 (TRAH MIcro)
+    5     dE    -7.708490e-04     1.718171e-03    -2.3187e-03      0.576 (TRAH MIcro)
+    5     dE    -1.457663e-06     1.459079e-04    -2.7436e-03      0.017 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+    6      -1639.794442184945     1.545074e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000165
+    6     dE    -9.333804e-08     5.968361e-04                           (NR   MIcro)
+    6     dE     9.594537e-07     2.118358e-03                           (NR   MIcro)
+    6     dE     5.478375e-07     5.042930e-04                           (NR   MIcro)
+    6     dE     4.954455e-07     1.025705e-04                           (NR   MIcro)
+    6     dE     4.932743e-07     2.236660e-05                           (NR   MIcro)
+    6     dE     4.904203e-07     1.177783e-04                           (NR   MIcro)
+    6     dE     4.726004e-07     1.370755e-04                           (NR   MIcro)
+    6     dE     4.691583e-07     1.563581e-05                           (NR   MIcro)
+    6     dE     4.690999e-07     2.118607e-06                           (NR   MIcro)
+    6     dE     4.690963e-07     2.405073e-06                           (NR   MIcro)
+    6     dE     4.691152e-07     3.325317e-06                           (NR   MIcro)
+    6     dE     4.691122e-07     3.205694e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+    7      -1639.794441161686     1.046319e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000172
+    7     dE    -2.606946e-07     1.322569e-03                           (NR   MIcro)
+    7     dE     1.038862e-06     1.469820e-03                           (NR   MIcro)
+    7     dE     7.967238e-07     2.308812e-04                           (NR   MIcro)
+    7     dE     7.869362e-07     8.635716e-06                           (NR   MIcro)
+    7     dE     7.869131e-07     8.933398e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+    8      -1639.794439471462     1.671846e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000179
+    8     dE    -2.054188e-07     1.000307e-03                           (NR   MIcro)
+    8     dE     5.003860e-06     7.727129e-03                           (NR   MIcro)
+    8     dE     1.806045e-06     5.485953e-04                           (NR   MIcro)
+    8     dE     1.752971e-06     2.314795e-05                           (NR   MIcro)
+    8     dE     1.752806e-06     2.724509e-06                           (NR   MIcro)
+    8     dE     1.752802e-06     2.171505e-06                           (NR   MIcro)
+    8     dE     1.752846e-06     8.572664e-06                           (NR   MIcro)
+    8     dE     1.752833e-06     1.211182e-06                           (NR   MIcro)
+    8     dE     1.752823e-06     7.278605e-06                           (NR   MIcro)
+    8     dE     1.752778e-06     3.559348e-06                           (NR   MIcro)
+    8     dE     1.752774e-06     3.055506e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+    9      -1639.794435574216     4.671809e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000193
+    9     dE    -1.551096e-07     5.123167e-04                           (NR   MIcro)
+    9     dE    -1.234699e-06     2.416128e-03                           (NR   MIcro)
+    9     dE    -4.741780e-06     2.330619e-03                           (NR   MIcro)
+    9     dE    -5.976178e-06     1.195075e-04                           (NR   MIcro)
+    9     dE    -5.980834e-06     1.765193e-05                           (NR   MIcro)
+    9     dE    -5.981425e-06     4.016211e-05                           (NR   MIcro)
+    9     dE    -5.977987e-06     3.572704e-05                           (NR   MIcro)
+    9     dE    -5.978249e-06     7.138568e-06                           (NR   MIcro)
+    9     dE    -5.978327e-06     1.828336e-05                           (NR   MIcro)
+    9     dE    -5.979681e-06     2.666020e-05                           (NR   MIcro)
+    9     dE    -5.979881e-06     5.733556e-06                           (NR   MIcro)
+    9     dE    -5.979887e-06     6.495791e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   10      -1639.794442861427     2.678725e-03                     0.691 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000083
+   10     dE    -8.041104e-07     1.848043e-03    -8.0411e-07      0.000 (TRAH MIcro)
+   10     dE    -1.205547e-06     4.028186e-04    -1.2055e-06      0.001 (TRAH MIcro)
+   10     dE    -1.233934e-06     5.257054e-04    -1.2339e-06      0.001 (TRAH MIcro)
+   10     dE    -2.177912e-04     5.112458e-02    -4.5359e-04      0.662 (TRAH MIcro)
+   10     dE    -8.279186e-04     1.128963e-02    -1.6942e-03      0.691 (TRAH MIcro)
+   10     dE    -8.362431e-04     1.016439e-02    -1.7119e-03      0.691 (TRAH MIcro)
+   10     dE    -8.667943e-04     8.397462e-03    -1.8190e-03      0.684 (TRAH MIcro)
+   10     dE    -9.124082e-04     2.443393e-03    -1.8795e-03      0.691 (TRAH MIcro)
+   10     dE    -9.130799e-04     1.702175e-03    -1.8810e-03      0.691 (TRAH MIcro)
+   10     dE    -9.133924e-04     2.085270e-03    -1.8817e-03      0.691 (TRAH MIcro)
+   10     dE    -1.900853e-04     4.615002e-04    -1.9235e-03      0.309 (TRAH MIcro)
+   10     dE    -1.915305e-04     1.086150e-04    -1.9240e-03      0.310 (TRAH MIcro)
+ ---------------------------------
+          TRAH Step control 
+ ---------------------------------
+  predicted energy change = -0.000192
+  actual energy  change   = 0.000029
+  energy change ratio     = -0.151815
+  old trust radius        = 0.691200
+  new trust radius        = 0.483840
+  reject step?            =  1
+   11      -1639.794442861427     4.671809e-04                     0.484 (TRAH MAcro)  Yes
+WARNING: 2 diagonal Hessian elements are negative!
+   12      -1639.794442861426     2.678725e-03                     0.484 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000083
+   12     dE    -8.050120e-07     1.897665e-03    -8.0501e-07      0.000 (TRAH MIcro)
+   12     dE    -1.206634e-06     3.499750e-04    -1.2066e-06      0.001 (TRAH MIcro)
+   12     dE    -1.235686e-06     5.301950e-04    -1.2357e-06      0.001 (TRAH MIcro)
+   12     dE    -1.255847e-04     3.692200e-02    -4.8177e-04      0.481 (TRAH MIcro)
+   12     dE    -4.165433e-04     6.903036e-03    -1.7229e-03      0.484 (TRAH MIcro)
+   12     dE    -4.201213e-04     6.516785e-03    -1.7385e-03      0.484 (TRAH MIcro)
+   12     dE    -1.282646e-04     2.891610e-03    -1.8654e-03      0.255 (TRAH MIcro)
+   12     dE    -1.719565e-04     9.656961e-04    -1.9158e-03      0.293 (TRAH MIcro)
+   12     dE    -1.737964e-04     6.633138e-04    -1.9176e-03      0.295 (TRAH MIcro)
+   12     dE    -1.745933e-04     6.369656e-04    -1.9180e-03      0.296 (TRAH MIcro)
+   12     dE    -1.904903e-04     4.949359e-04    -1.9237e-03      0.309 (TRAH MIcro)
+   12     dE    -1.923149e-04     1.301840e-04    -1.9243e-03      0.310 (TRAH MIcro)
+ ---------------------------------
+          TRAH Step control 
+ ---------------------------------
+  predicted energy change = -0.000192
+  actual energy  change   = 0.000029
+  energy change ratio     = -0.152771
+  old trust radius        = 0.483840
+  new trust radius        = 0.338688
+  reject step?            =  1
+   13      -1639.794442861426     4.671809e-04                     0.339 (TRAH MAcro)  Yes
+WARNING: 2 diagonal Hessian elements are negative!
+   14      -1639.794442861426     2.678725e-03                     0.339 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000083
+   14     dE    -8.046109e-07     1.880103e-03    -8.0461e-07      0.000 (TRAH MIcro)
+   14     dE    -1.206242e-06     3.965879e-04    -1.2062e-06      0.001 (TRAH MIcro)
+   14     dE    -1.233589e-06     4.642041e-04    -1.2336e-06      0.001 (TRAH MIcro)
+   14     dE    -3.191243e-05     1.659592e-02    -5.3685e-04      0.216 (TRAH MIcro)
+   14     dE    -8.645313e-05     3.365096e-03    -1.7843e-03      0.212 (TRAH MIcro)
+   14     dE    -8.925577e-05     2.689450e-03    -1.7971e-03      0.215 (TRAH MIcro)
+   14     dE    -1.256586e-04     3.008036e-03    -1.8618e-03      0.253 (TRAH MIcro)
+   14     dE    -1.694837e-04     9.431879e-04    -1.9147e-03      0.291 (TRAH MIcro)
+   14     dE    -1.708391e-04     7.219881e-04    -1.9159e-03      0.292 (TRAH MIcro)
+   14     dE    -1.718757e-04     6.866991e-04    -1.9164e-03      0.293 (TRAH MIcro)
+   14     dE    -1.907115e-04     4.942702e-04    -1.9238e-03      0.309 (TRAH MIcro)
+   14     dE    -1.925656e-04     1.216126e-04    -1.9245e-03      0.311 (TRAH MIcro)
+ ---------------------------------
+          TRAH Step control 
+ ---------------------------------
+  predicted energy change = -0.000193
+  actual energy  change   = 0.000029
+  energy change ratio     = -0.153016
+  old trust radius        = 0.338688
+  new trust radius        = 0.237082
+  reject step?            =  1
+   15      -1639.794442861426     4.671809e-04                     0.237 (TRAH MAcro)  Yes
+WARNING: 2 diagonal Hessian elements are negative!
+   16      -1639.794442861426     2.678725e-03                     0.237 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000083
+   16     dE    -8.042209e-07     1.856696e-03    -8.0422e-07      0.000 (TRAH MIcro)
+   16     dE    -1.205592e-06     3.632924e-04    -1.2056e-06      0.001 (TRAH MIcro)
+   16     dE    -1.233311e-06     4.833625e-04    -1.2333e-06      0.001 (TRAH MIcro)
+   16     dE    -3.459565e-05     1.723862e-02    -5.4964e-04      0.224 (TRAH MIcro)
+   16     dE    -8.973600e-05     2.860754e-03    -1.7969e-03      0.215 (TRAH MIcro)
+   16     dE    -9.225365e-05     2.342383e-03    -1.8083e-03      0.218 (TRAH MIcro)
+   16     dE    -1.113083e-04     2.628047e-03    -1.8655e-03      0.237 (TRAH MIcro)
+   16     dE    -1.144466e-04     6.208873e-04    -1.9317e-03      0.237 (TRAH MIcro)
+   16     dE    -1.145095e-04     4.577722e-04    -1.9331e-03      0.237 (TRAH MIcro)
+   16     dE    -1.145384e-04     5.926026e-04    -1.9338e-03      0.237 (TRAH MIcro)
+   16     dE    -1.147913e-04     3.035347e-04    -1.9407e-03      0.237 (TRAH MIcro)
+   16     dE    -1.148216e-04     5.126149e-05    -1.9416e-03      0.237 (TRAH MIcro)
+ ---------------------------------
+          TRAH Step control 
+ ---------------------------------
+  predicted energy change = -0.000115
+  actual energy  change   = 0.000008
+  energy change ratio     = -0.073134
+  old trust radius        = 0.237082
+  new trust radius        = 0.165957
+  reject step?            =  1
+   17      -1639.794442861426     4.671809e-04                     0.166 (TRAH MAcro)  Yes
+WARNING: 2 diagonal Hessian elements are negative!
+   18      -1639.794442861426     2.678725e-03                     0.166 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000083
+   18     dE    -8.046319e-07     1.884336e-03    -8.0463e-07      0.000 (TRAH MIcro)
+   18     dE    -1.206325e-06     3.892240e-04    -1.2063e-06      0.001 (TRAH MIcro)
+   18     dE    -1.234125e-06     4.888463e-04    -1.2341e-06      0.001 (TRAH MIcro)
+   18     dE    -2.169292e-05     1.266033e-02    -5.8452e-04      0.166 (TRAH MIcro)
+   18     dE    -5.539334e-05     2.263692e-03    -1.8180e-03      0.166 (TRAH MIcro)
+   18     dE    -5.574112e-05     2.036494e-03    -1.8312e-03      0.166 (TRAH MIcro)
+   18     dE    -5.729628e-05     1.715450e-03    -1.9022e-03      0.166 (TRAH MIcro)
+   18     dE    -5.862685e-05     3.967524e-04    -1.9636e-03      0.166 (TRAH MIcro)
+   18     dE    -5.866412e-05     2.832136e-04    -1.9648e-03      0.166 (TRAH MIcro)
+   18     dE    -5.867464e-05     3.260833e-04    -1.9655e-03      0.166 (TRAH MIcro)
+   18     dE    -5.880126e-05     1.982554e-04    -1.9742e-03      0.166 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   19      -1639.794443358768     3.203889e-03                     0.116 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000061
+   19     dE    -1.197687e-06     2.120352e-03    -1.1977e-06      0.000 (TRAH MIcro)
+   19     dE    -1.765878e-06     2.233886e-04    -1.7659e-06      0.001 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   20      -1639.794445123805     2.231042e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000149
+   20     dE    -4.531410e-08     1.032442e-03                           (NR   MIcro)
+   20     dE    -2.751962e-07     3.776705e-03                           (NR   MIcro)
+   20     dE     2.683897e-07     2.094510e-04                           (NR   MIcro)
+   20     dE     1.951296e-07     8.746499e-04                           (NR   MIcro)
+   20     dE    -2.753124e-07     9.391643e-04                           (NR   MIcro)
+   20     dE    -3.602596e-07     3.063066e-04                           (NR   MIcro)
+   20     dE    -3.672279e-07     9.035389e-05                           (NR   MIcro)
+   20     dE    -3.450203e-07     3.039290e-04                           (NR   MIcro)
+   20     dE    -3.517992e-07     4.428156e-05                           (NR   MIcro)
+   20     dE    -3.519081e-07     3.980420e-06                           (NR   MIcro)
+   20     dE    -3.519095e-07     3.396239e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   21      -1639.794445434262     2.418411e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000148
+   21     dE    -2.765137e-07     3.077946e-03                           (NR   MIcro)
+   21     dE     5.535015e-08     4.467338e-05                           (NR   MIcro)
+   21     dE     5.504251e-08     2.184535e-05                           (NR   MIcro)
+   21     dE     5.493419e-08     3.293720e-06                           (NR   MIcro)
+   21     dE     5.522054e-08     1.907211e-05                           (NR   MIcro)
+   21     dE     5.513124e-08     2.514728e-06                           (NR   MIcro)
+   21     dE     5.508412e-08     1.151786e-05                           (NR   MIcro)
+   21     dE     5.485158e-08     1.463909e-05                           (NR   MIcro)
+   21     dE     5.480909e-08     2.080583e-06                           (NR   MIcro)
+   21     dE     5.480817e-08     1.784693e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   22      -1639.794445320216     2.323670e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000150
+   22     dE     4.984795e-06     4.652729e-02                           (NR   MIcro)
+   22     dE     6.541398e-08     6.971167e-05                           (NR   MIcro)
+   22     dE     6.471777e-08     2.343622e-05                           (NR   MIcro)
+   22     dE     6.458052e-08     3.210131e-06                           (NR   MIcro)
+   22     dE     6.479700e-08     1.369699e-05                           (NR   MIcro)
+   22     dE     6.475258e-08     1.882025e-06                           (NR   MIcro)
+   22     dE     6.475193e-08     3.507149e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   23      -1639.794445185717     2.537425e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000150
+   23     dE    -7.814033e-06     6.782220e-02                           (NR   MIcro)
+   23     dE     7.745459e-08     8.162325e-05                           (NR   MIcro)
+   23     dE     7.650286e-08     2.630380e-05                           (NR   MIcro)
+   23     dE     7.632736e-08     3.956436e-06                           (NR   MIcro)
+   23     dE     7.664020e-08     1.745559e-05                           (NR   MIcro)
+   23     dE     7.657346e-08     3.127032e-06                           (NR   MIcro)
+   23     dE     7.657153e-08     6.562752e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   24      -1639.794445026572     2.787067e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000151
+   24     dE    -2.082352e-06     1.684281e-02                           (NR   MIcro)
+   24     dE     9.229343e-08     9.632714e-05                           (NR   MIcro)
+   24     dE     9.097265e-08     2.979213e-05                           (NR   MIcro)
+   24     dE     9.074473e-08     4.914090e-06                           (NR   MIcro)
+   24     dE     9.120535e-08     2.335482e-05                           (NR   MIcro)
+   24     dE     9.110382e-08     4.551288e-06                           (NR   MIcro)
+   24     dE     9.109889e-08     1.174606e-06                           (NR   MIcro)
+   24     dE     9.108851e-08     5.334235e-06                           (NR   MIcro)
+   24     dE     9.103616e-08     2.126940e-06                           (NR   MIcro)
+   24     dE     9.103497e-08     2.030030e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   25      -1639.794444837259     3.085158e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000152
+   25     dE    -1.234506e-06     9.299925e-03                           (NR   MIcro)
+   25     dE     1.107203e-07     1.150090e-04                           (NR   MIcro)
+   25     dE     1.088422e-07     3.411797e-05                           (NR   MIcro)
+   25     dE     1.085401e-07     5.873881e-06                           (NR   MIcro)
+   25     dE     1.091320e-07     1.942380e-05                           (NR   MIcro)
+   25     dE     1.090352e-07     2.102783e-06                           (NR   MIcro)
+   25     dE     1.090341e-07     6.830331e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   26      -1639.794444610395     3.428193e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000154
+   26     dE    -9.022212e-07     6.339221e-03                           (NR   MIcro)
+   26     dE     1.340769e-07     1.392084e-04                           (NR   MIcro)
+   26     dE     1.313363e-07     3.952993e-05                           (NR   MIcro)
+   26     dE     1.309277e-07     7.318946e-06                           (NR   MIcro)
+   26     dE     1.318241e-07     2.834861e-05                           (NR   MIcro)
+   26     dE     1.316585e-07     5.156455e-06                           (NR   MIcro)
+   26     dE     1.316527e-07     1.287308e-06                           (NR   MIcro)
+   26     dE     1.316437e-07     5.059866e-06                           (NR   MIcro)
+   26     dE     1.315829e-07     3.056886e-06                           (NR   MIcro)
+   26     dE     1.315808e-07     5.216888e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   27      -1639.794444336514     3.847658e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000155
+   27     dE    -7.095662e-07     4.663766e-03                           (NR   MIcro)
+   27     dE     1.640612e-07     1.716873e-04                           (NR   MIcro)
+   27     dE     1.599112e-07     4.655466e-05                           (NR   MIcro)
+   27     dE     1.593435e-07     8.929915e-06                           (NR   MIcro)
+   27     dE     1.606404e-07     3.496593e-05                           (NR   MIcro)
+   27     dE     1.603998e-07     6.816530e-06                           (NR   MIcro)
+   27     dE     1.603908e-07     8.983600e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   28      -1639.794444002508     4.350176e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000157
+   28     dE    -5.880770e-07     3.624143e-03                           (NR   MIcro)
+   28     dE     2.038033e-07     2.167146e-04                           (NR   MIcro)
+   28     dE     1.972354e-07     5.577261e-05                           (NR   MIcro)
+   28     dE     1.964234e-07     1.103507e-05                           (NR   MIcro)
+   28     dE     1.983555e-07     3.851891e-05                           (NR   MIcro)
+   28     dE     1.980011e-07     6.630065e-06                           (NR   MIcro)
+   28     dE     1.979913e-07     2.091714e-06                           (NR   MIcro)
+   28     dE     1.979748e-07     7.002762e-06                           (NR   MIcro)
+   28     dE     1.978370e-07     4.902118e-06                           (NR   MIcro)
+   28     dE     1.978314e-07     2.995643e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   29      -1639.794443590488     5.010823e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000160
+   29     dE    -4.893334e-07     2.842827e-03                           (NR   MIcro)
+   29     dE     2.582094e-07     2.832537e-04                           (NR   MIcro)
+   29     dE     2.471004e-07     6.895805e-05                           (NR   MIcro)
+   29     dE     2.458874e-07     1.319371e-05                           (NR   MIcro)
+   29     dE     2.486700e-07     4.272037e-05                           (NR   MIcro)
+   29     dE     2.481891e-07     3.479106e-06                           (NR   MIcro)
+   29     dE     2.481849e-07     1.413808e-06                           (NR   MIcro)
+   29     dE     2.481794e-07     5.060617e-06                           (NR   MIcro)
+   29     dE     2.481267e-07     5.196462e-06                           (NR   MIcro)
+   29     dE     2.481203e-07     3.289681e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   30      -1639.794443073687     5.883858e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000162
+   30     dE    -4.092573e-07     2.261902e-03                           (NR   MIcro)
+   30     dE     3.379478e-07     3.890422e-04                           (NR   MIcro)
+   30     dE     3.173466e-07     8.840339e-05                           (NR   MIcro)
+   30     dE     3.154342e-07     1.560051e-05                           (NR   MIcro)
+   30     dE     3.197231e-07     5.890461e-05                           (NR   MIcro)
+   30     dE     3.188405e-07     4.799535e-06                           (NR   MIcro)
+   30     dE     3.188332e-07     1.776903e-06                           (NR   MIcro)
+   30     dE     3.188277e-07     4.786583e-06                           (NR   MIcro)
+   30     dE     3.187527e-07     7.847870e-06                           (NR   MIcro)
+   30     dE     3.187377e-07     4.899446e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   31      -1639.794442409797     7.144995e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000166
+   31     dE    -3.335220e-07     1.781229e-03                           (NR   MIcro)
+   31     dE     4.690235e-07     5.819726e-04                           (NR   MIcro)
+   31     dE     4.244457e-07     1.203827e-04                           (NR   MIcro)
+   31     dE     4.211415e-07     1.755105e-05                           (NR   MIcro)
+   31     dE     4.280379e-07     9.398737e-05                           (NR   MIcro)
+   31     dE     4.260191e-07     7.092314e-06                           (NR   MIcro)
+   31     dE     4.260043e-07     2.207858e-06                           (NR   MIcro)
+   31     dE     4.259949e-07     6.299887e-06                           (NR   MIcro)
+   31     dE     4.258752e-07     1.079424e-05                           (NR   MIcro)
+   31     dE     4.258480e-07     1.011492e-06                           (NR   MIcro)
+   31     dE     4.258478e-07     1.843690e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   32      -1639.794441522812     9.208687e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000171
+   32     dE    -2.568471e-07     1.359668e-03                           (NR   MIcro)
+   32     dE     7.454453e-07     1.040198e-03                           (NR   MIcro)
+   32     dE     6.147953e-07     1.827527e-04                           (NR   MIcro)
+   32     dE     6.079522e-07     1.781211e-05                           (NR   MIcro)
+   32     dE     6.234960e-07     2.725238e-04                           (NR   MIcro)
+   32     dE     6.139416e-07     1.227375e-05                           (NR   MIcro)
+   32     dE     6.139027e-07     3.098926e-06                           (NR   MIcro)
+   32     dE     6.138926e-07     5.817364e-06                           (NR   MIcro)
+   32     dE     6.137334e-07     1.715463e-05                           (NR   MIcro)
+   32     dE     6.136477e-07     1.443764e-06                           (NR   MIcro)
+   32     dE     6.136473e-07     2.730859e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   33      -1639.794440244241     1.334334e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000177
+   33     dE    -1.766290e-07     9.625899e-04                           (NR   MIcro)
+   33     dE     2.053531e-06     3.463842e-03                           (NR   MIcro)
+   33     dE     1.099263e-06     3.619246e-04                           (NR   MIcro)
+   33     dE     1.075458e-06     1.721993e-05                           (NR   MIcro)
+   33     dE     1.074863e-06     3.253757e-05                           (NR   MIcro)
+   33     dE     1.077503e-06     3.149470e-05                           (NR   MIcro)
+   33     dE     1.077291e-06     4.513318e-06                           (NR   MIcro)
+   33     dE     1.077282e-06     4.045370e-06                           (NR   MIcro)
+   33     dE     1.077197e-06     1.767417e-05                           (NR   MIcro)
+   33     dE     1.077013e-06     3.251664e-06                           (NR   MIcro)
+   33     dE     1.077011e-06     6.497878e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   34      -1639.794437995898     2.690971e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000187
+   34     dE    -1.044980e-07     5.335722e-04                           (NR   MIcro)
+   34     dE    -1.319083e-06     3.093617e-03                           (NR   MIcro)
+   34     dE     1.025030e-05     4.804314e-03                           (NR   MIcro)
+   34     dE     7.033004e-06     3.592363e-04                           (NR   MIcro)
+   34     dE    -3.617913e-06     1.119764e-02                           (NR   MIcro)
+   34     dE     1.076583e-05     6.013150e-04                           (NR   MIcro)
+   34     dE     1.069055e-05     1.201191e-04                           (NR   MIcro)
+   34     dE     1.068352e-05     1.095609e-04                           (NR   MIcro)
+   34     dE     1.059813e-05     4.972670e-04                           (NR   MIcro)
+   34     dE     1.048530e-05     6.853590e-05                           (NR   MIcro)
+   34     dE     1.048445e-05     1.160572e-05                           (NR   MIcro)
+   34     dE     1.048442e-05     9.891652e-07                           (NR   MIcro)
+   35      -1639.794379209338     1.441443e-02                     0.139 (TRAH MAcro)   No
+WARNING : small    HOMO - LUMO gap : (op =  beta) 0.000006
+   35     dE    -2.422097e-05     1.226390e-02    -2.4221e-05      0.002 (TRAH MIcro)
+   35     dE    -4.030470e-05     9.408343e-03    -4.0257e-05      0.035 (TRAH MIcro)
+   35     dE    -4.242171e-05     8.115369e-03    -4.2362e-05      0.037 (TRAH MIcro)
+   35     dE    -5.370546e-05     1.125108e-03    -5.3610e-05      0.042 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   36      -1639.794433454914     1.187738e-03                     0.167 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000208
+   36     dE    -5.376145e-08     1.254722e-03    -5.3781e-08      0.000 (TRAH MIcro)
+   36     dE    -3.047663e-07     6.406479e-04    -3.0477e-07      0.002 (TRAH MIcro)
+   36     dE    -5.606429e-07     1.292865e-03    -5.6062e-07      0.007 (TRAH MIcro)
+   36     dE    -2.079668e-06     1.286259e-03    -2.0763e-06      0.040 (TRAH MIcro)
+   36     dE    -2.618757e-06     6.866074e-04    -2.6116e-06      0.052 (TRAH MIcro)
+   36     dE    -2.222712e-05     4.101661e-03    -5.8380e-04      0.167 (TRAH MIcro)
+   36     dE    -2.540668e-05     1.410946e-03    -7.0683e-04      0.167 (TRAH MIcro)
+   36     dE    -2.549926e-05     1.274162e-03    -7.1056e-04      0.167 (TRAH MIcro)
+   36     dE    -2.594742e-05     1.671399e-03    -7.3043e-04      0.167 (TRAH MIcro)
+   36     dE    -1.137590e-05     2.546056e-04    -8.9865e-04      0.095 (TRAH MIcro)
+   36     dE    -1.142970e-05     6.045966e-05    -8.9952e-04      0.095 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   37      -1639.794439567620     1.068010e-03                     0.167 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000151
+   37     dE    -1.208498e-07     2.024542e-03    -1.2085e-07      0.000 (TRAH MIcro)
+   37     dE    -2.818301e-07     1.043153e-03    -2.8183e-07      0.001 (TRAH MIcro)
+   37     dE    -1.890479e-06     2.523152e-03    -1.8869e-06      0.043 (TRAH MIcro)
+   37     dE    -4.712096e-06     3.466542e-03    -4.6487e-06      0.117 (TRAH MIcro)
+   37     dE    -1.247778e-05     3.602215e-03    -2.1677e-04      0.167 (TRAH MIcro)
+   37     dE    -3.364631e-05     3.054896e-03    -1.2826e-03      0.150 (TRAH MIcro)
+   37     dE    -3.656800e-05     1.420280e-03    -1.3082e-03      0.156 (TRAH MIcro)
+   37     dE    -3.706616e-05     1.439616e-03    -1.3108e-03      0.157 (TRAH MIcro)
+   37     dE    -4.202083e-05     1.237453e-03    -1.3295e-03      0.167 (TRAH MIcro)
+   37     dE    -4.249575e-05     2.323675e-04    -1.3535e-03      0.167 (TRAH MIcro)
+   37     dE    -4.250446e-05     3.304649e-05    -1.3539e-03      0.167 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   38      -1639.794440716566     3.323948e-03                     0.117 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000071
+   38     dE    -1.267617e-06     2.326744e-03    -1.2676e-06      0.000 (TRAH MIcro)
+   38     dE    -1.886072e-06     4.984917e-04    -1.8861e-06      0.001 (TRAH MIcro)
+   38     dE    -1.919220e-06     6.611212e-04    -1.9192e-06      0.002 (TRAH MIcro)
+   38     dE    -2.005176e-06     9.404397e-04    -2.0051e-06      0.006 (TRAH MIcro)
+   38     dE    -7.603500e-06     2.377647e-03    -3.0436e-04      0.110 (TRAH MIcro)
+   38     dE    -1.011740e-05     2.595024e-03    -4.4652e-04      0.117 (TRAH MIcro)
+   38     dE    -8.264739e-06     9.329354e-04    -8.5302e-04      0.078 (TRAH MIcro)
+   38     dE    -9.092613e-06     6.010199e-04    -8.6815e-04      0.083 (TRAH MIcro)
+   38     dE    -9.255769e-06     5.390808e-04    -8.7012e-04      0.084 (TRAH MIcro)
+   38     dE    -1.093441e-05     5.512542e-04    -8.8286e-04      0.094 (TRAH MIcro)
+   38     dE    -1.173369e-05     9.236602e-05    -8.8818e-04      0.098 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   39      -1639.794442324982     1.153735e-03                     0.082 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000133
+   39     dE    -1.528275e-07     1.057210e-03    -1.5283e-07      0.000 (TRAH MIcro)
+   39     dE    -2.532678e-07     4.372319e-04    -2.5327e-07      0.001 (TRAH MIcro)
+   39     dE    -5.933669e-07     9.213610e-04    -5.9322e-07      0.016 (TRAH MIcro)
+   39     dE    -1.242319e-06     5.738319e-04    -1.2396e-06      0.047 (TRAH MIcro)
+   39     dE    -2.738493e-06     3.225483e-03    -1.1621e-04      0.082 (TRAH MIcro)
+   39     dE    -6.114120e-06     1.861640e-03    -1.3028e-03      0.061 (TRAH MIcro)
+   39     dE    -8.563227e-06     6.484062e-04    -1.4163e-03      0.071 (TRAH MIcro)
+   39     dE    -8.715618e-06     4.853801e-04    -1.4210e-03      0.072 (TRAH MIcro)
+   39     dE    -9.027752e-06     4.978931e-04    -1.4250e-03      0.073 (TRAH MIcro)
+   39     dE    -1.031330e-05     2.586997e-04    -1.4378e-03      0.079 (TRAH MIcro)
+   39     dE    -1.052338e-05     4.140583e-05    -1.4397e-03      0.080 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   40      -1639.794442874897     7.862572e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000137
+   40     dE    -1.136411e-07     7.351543e-05                           (NR   MIcro)
+   40     dE    -1.303085e-07     2.446543e-04                           (NR   MIcro)
+   40     dE    -5.907412e-06     2.045652e-02                           (NR   MIcro)
+   40     dE     3.991272e-07     5.015675e-04                           (NR   MIcro)
+   40     dE     1.530543e-07     6.131422e-04                           (NR   MIcro)
+   40     dE    -2.208208e-08     2.556536e-04                           (NR   MIcro)
+   40     dE    -4.402380e-08     4.715948e-05                           (NR   MIcro)
+   40     dE    -4.805855e-08     1.071482e-04                           (NR   MIcro)
+   40     dE    -8.266218e-08     2.848381e-04                           (NR   MIcro)
+   40     dE    -1.082795e-07     4.941601e-05                           (NR   MIcro)
+   40     dE    -1.087270e-07     2.807518e-06                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   41      -1639.794442929547     3.048321e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000158
+   41     dE    -2.310880e-08     3.401721e-04                           (NR   MIcro)
+   41     dE     1.680890e-07     2.533324e-04                           (NR   MIcro)
+   41     dE     1.355800e-07     1.548299e-04                           (NR   MIcro)
+   41     dE     1.004730e-07     3.153620e-04                           (NR   MIcro)
+   41     dE     7.387276e-08     5.584629e-05                           (NR   MIcro)
+   41     dE     7.280362e-08     1.008997e-05                           (NR   MIcro)
+   41     dE     7.277011e-08     4.713109e-06                           (NR   MIcro)
+   41     dE     7.268013e-08     1.760308e-05                           (NR   MIcro)
+   41     dE     7.214736e-08     1.902718e-05                           (NR   MIcro)
+   41     dE     7.204760e-08     2.125700e-06                           (NR   MIcro)
+   41     dE     7.204689e-08     2.846507e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   42      -1639.794442769502     3.148126e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000159
+   42     dE    -3.547386e-08     4.427322e-04                           (NR   MIcro)
+   42     dE     1.581497e-07     2.171908e-04                           (NR   MIcro)
+   42     dE     1.478340e-07     1.213630e-04                           (NR   MIcro)
+   42     dE     1.410423e-07     9.452132e-05                           (NR   MIcro)
+   42     dE     1.148366e-07     5.667630e-05                           (NR   MIcro)
+   42     dE     1.136971e-07     7.196460e-06                           (NR   MIcro)
+   42     dE     1.136819e-07     3.160071e-06                           (NR   MIcro)
+   42     dE     1.136620e-07     7.733335e-06                           (NR   MIcro)
+   42     dE     1.134265e-07     1.100982e-05                           (NR   MIcro)
+   42     dE     1.134045e-07     1.809696e-06                           (NR   MIcro)
+   42     dE     1.134039e-07     1.352945e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   43      -1639.794442521140     4.068126e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000160
+   43     dE    -4.101076e-08     4.645218e-04                           (NR   MIcro)
+   43     dE     2.054566e-07     2.785214e-04                           (NR   MIcro)
+   43     dE     1.935096e-07     1.292456e-04                           (NR   MIcro)
+   43     dE     1.891056e-07     3.454900e-05                           (NR   MIcro)
+   43     dE     1.793468e-07     6.973102e-05                           (NR   MIcro)
+   43     dE     1.772459e-07     7.743557e-06                           (NR   MIcro)
+   43     dE     1.772189e-07     3.351905e-06                           (NR   MIcro)
+   43     dE     1.771057e-07     2.247887e-05                           (NR   MIcro)
+   43     dE     1.767727e-07     1.328870e-05                           (NR   MIcro)
+   43     dE     1.767401e-07     8.913928e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   44      -1639.794442137807     5.672809e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000161
+   44     dE    -4.191565e-08     4.406774e-04                           (NR   MIcro)
+   44     dE     3.232786e-07     4.494779e-04                           (NR   MIcro)
+   44     dE     2.961219e-07     1.894581e-04                           (NR   MIcro)
+   44     dE     2.891592e-07     1.470838e-05                           (NR   MIcro)
+   44     dE     2.883878e-07     3.507838e-05                           (NR   MIcro)
+   44     dE     2.866539e-07     3.175809e-05                           (NR   MIcro)
+   44     dE     2.864455e-07     6.468360e-06                           (NR   MIcro)
+   44     dE     2.863956e-07     9.727911e-06                           (NR   MIcro)
+   44     dE     2.857122e-07     3.520400e-05                           (NR   MIcro)
+   44     dE     2.854377e-07     6.823442e-06                           (NR   MIcro)
+   44     dE     2.854300e-07     3.766995e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   45      -1639.794441524956     8.894474e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000164
+   45     dE    -3.643264e-08     3.650819e-04                           (NR   MIcro)
+   45     dE     6.930996e-07     1.055873e-03                           (NR   MIcro)
+   45     dE     5.636570e-07     3.840994e-04                           (NR   MIcro)
+   45     dE     5.366638e-07     2.389646e-05                           (NR   MIcro)
+   45     dE     5.361677e-07     1.836083e-05                           (NR   MIcro)
+   45     dE     5.339032e-07     4.311781e-05                           (NR   MIcro)
+   45     dE     5.332633e-07     7.973727e-06                           (NR   MIcro)
+   45     dE     5.329592e-07     3.384360e-05                           (NR   MIcro)
+   45     dE     5.312462e-07     4.625690e-05                           (NR   MIcro)
+   45     dE     5.308484e-07     3.284584e-06                           (NR   MIcro)
+   45     dE     5.308459e-07     5.909833e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   46      -1639.794440401685     1.902763e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000169
+   46     dE    -2.902272e-08     2.217396e-04                           (NR   MIcro)
+   46     dE    -2.216238e-06     4.430988e-03                           (NR   MIcro)
+   46     dE     7.406826e-06     7.143883e-03                           (NR   MIcro)
+   46     dE     3.277735e-06     2.159620e-04                           (NR   MIcro)
+   46     dE     3.225803e-06     2.005129e-04                           (NR   MIcro)
+   46     dE     3.049189e-06     3.812342e-04                           (NR   MIcro)
+   46     dE     3.012968e-06     8.491724e-05                           (NR   MIcro)
+   46     dE     3.011363e-06     1.936631e-05                           (NR   MIcro)
+   46     dE     3.008806e-06     1.046395e-04                           (NR   MIcro)
+   46     dE     2.994939e-06     8.259216e-05                           (NR   MIcro)
+   46     dE     2.993836e-06     8.699170e-06                           (NR   MIcro)
+   46     dE     2.993816e-06     1.070722e-06                           (NR   MIcro)
+   46     dE     2.993813e-06     2.111762e-06                           (NR   MIcro)
+   46     dE     2.993766e-06     6.148633e-06                           (NR   MIcro)
+   46     dE     2.993757e-06     4.409282e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   47      -1639.794430828817     3.507206e-03                     0.057 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000137
+   47     dE    -1.490509e-06     4.416660e-03    -1.4905e-06      0.000 (TRAH MIcro)
+   47     dE    -2.387750e-06     3.156295e-03    -2.3877e-06      0.001 (TRAH MIcro)
+   47     dE    -5.924263e-06     3.230452e-03    -5.9225e-06      0.017 (TRAH MIcro)
+   47     dE    -7.895741e-06     1.136357e-03    -7.8903e-06      0.026 (TRAH MIcro)
+   47     dE    -8.110330e-06     2.370903e-04    -8.1043e-06      0.027 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   48      -1639.794439227886     2.492511e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000184
+   48     dE    -1.248965e-08     1.199485e-04                           (NR   MIcro)
+   48     dE    -1.750225e-08     9.148977e-05                           (NR   MIcro)
+   48     dE    -4.428717e-08     1.932487e-04                           (NR   MIcro)
+   48     dE    -6.064436e-08     6.386182e-05                           (NR   MIcro)
+   48     dE    -6.140256e-08     1.402924e-05                           (NR   MIcro)
+   48     dE    -6.212322e-08     6.055944e-05                           (NR   MIcro)
+   48     dE    -7.297951e-08     1.058302e-04                           (NR   MIcro)
+   48     dE    -7.507799e-08     1.809021e-05                           (NR   MIcro)
+   48     dE    -7.523944e-08     1.565332e-05                           (NR   MIcro)
+   48     dE    -7.737155e-08     7.296283e-05                           (NR   MIcro)
+   48     dE    -7.998571e-08     1.795576e-05                           (NR   MIcro)
+   48     dE    -8.005531e-08     2.067856e-06                           (NR   MIcro)
+   48     dE    -8.005761e-08     1.746160e-06                           (NR   MIcro)
+   48     dE    -8.009020e-08     8.700979e-06                           (NR   MIcro)
+   48     dE    -8.012557e-08     1.678075e-06                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   49      -1639.794439331093     3.633619e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000189
+   49     dE    -1.498631e-08     2.011264e-04                           (NR   MIcro)
+   49     dE    -5.506870e-08     8.016229e-05                           (NR   MIcro)
+   49     dE    -5.644569e-08     3.224654e-05                           (NR   MIcro)
+   49     dE    -5.669141e-08     1.436807e-05                           (NR   MIcro)
+   49     dE    -5.985659e-08     8.227443e-05                           (NR   MIcro)
+   49     dE    -6.976982e-08     3.781071e-05                           (NR   MIcro)
+   49     dE    -7.020295e-08     8.983932e-06                           (NR   MIcro)
+   49     dE    -7.040350e-08     2.710371e-05                           (NR   MIcro)
+   49     dE    -7.289978e-08     5.954799e-05                           (NR   MIcro)
+   49     dE    -7.392480e-08     5.607777e-06                           (NR   MIcro)
+   49     dE    -7.393319e-08     1.251014e-06                           (NR   MIcro)
+   49     dE    -7.394340e-08     6.717261e-06                           (NR   MIcro)
+   49     dE    -7.400993e-08     9.687711e-06                           (NR   MIcro)
+   49     dE    -7.403209e-08     1.100633e-06                           (NR   MIcro)
+   49     dE    -7.403248e-08     1.047582e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   50      -1639.794439435428     3.071394e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000189
+   50     dE    -1.715141e-08     2.223136e-04                           (NR   MIcro)
+   50     dE    -5.367567e-08     1.217078e-04                           (NR   MIcro)
+   50     dE    -5.607308e-08     4.540264e-05                           (NR   MIcro)
+   50     dE    -5.665571e-08     1.072341e-05                           (NR   MIcro)
+   50     dE    -6.032814e-08     9.325771e-05                           (NR   MIcro)
+   50     dE    -8.136009e-08     5.371881e-05                           (NR   MIcro)
+   50     dE    -8.227235e-08     5.487767e-06                           (NR   MIcro)
+   50     dE    -8.229429e-08     5.674402e-06                           (NR   MIcro)
+   50     dE    -8.252219e-08     2.867765e-05                           (NR   MIcro)
+   50     dE    -8.280069e-08     4.849916e-06                           (NR   MIcro)
+   50     dE    -8.280595e-08     7.582886e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   51      -1639.794439519758     4.642084e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000187
+   51     dE    -1.832456e-08     2.189355e-04                           (NR   MIcro)
+   51     dE    -7.192928e-08     9.411769e-05                           (NR   MIcro)
+   51     dE    -7.413523e-08     2.208957e-05                           (NR   MIcro)
+   51     dE    -7.453115e-08     4.024519e-05                           (NR   MIcro)
+   51     dE    -8.424149e-08     1.523997e-04                           (NR   MIcro)
+   51     dE    -1.141198e-07     1.053735e-04                           (NR   MIcro)
+   51     dE    -1.163892e-07     1.984316e-05                           (NR   MIcro)
+   51     dE    -1.166693e-07     1.954997e-05                           (NR   MIcro)
+   51     dE    -1.202922e-07     9.384777e-05                           (NR   MIcro)
+   51     dE    -1.234257e-07     2.782370e-05                           (NR   MIcro)
+   51     dE    -1.235551e-07     2.006051e-06                           (NR   MIcro)
+   51     dE    -1.235629e-07     4.647599e-06                           (NR   MIcro)
+   51     dE    -1.236941e-07     8.821618e-06                           (NR   MIcro)
+   51     dE    -1.237238e-07     1.630727e-06                           (NR   MIcro)
+   51     dE    -1.237245e-07     1.444910e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   52      -1639.794439616392     5.465392e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000187
+   52     dE    -1.472314e-08     1.842828e-04                           (NR   MIcro)
+   52     dE    -6.295535e-08     2.202674e-04                           (NR   MIcro)
+   52     dE    -7.167968e-08     7.119227e-05                           (NR   MIcro)
+   52     dE    -7.338179e-08     2.633608e-05                           (NR   MIcro)
+   52     dE    -9.488404e-08     2.353366e-04                           (NR   MIcro)
+   52     dE    -2.545108e-07     2.008780e-04                           (NR   MIcro)
+   52     dE    -2.665986e-07     3.122553e-05                           (NR   MIcro)
+   52     dE    -2.701168e-07     1.020056e-04                           (NR   MIcro)
+   52     dE    -3.101245e-07     2.208167e-04                           (NR   MIcro)
+   52     dE    -3.186458e-07     1.728126e-05                           (NR   MIcro)
+   52     dE    -3.187156e-07     2.929034e-06                           (NR   MIcro)
+   52     dE    -3.188029e-07     1.624876e-05                           (NR   MIcro)
+   52     dE    -3.192443e-07     1.590990e-05                           (NR   MIcro)
+   52     dE    -3.193099e-07     3.439350e-06                           (NR   MIcro)
+   52     dE    -3.193121e-07     3.464688e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   53      -1639.794438335724     5.602368e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000177
+   53     dE    -9.536395e-08     1.994968e-04                           (NR   MIcro)
+   53     dE    -4.091979e-07     8.081132e-04                           (NR   MIcro)
+   53     dE    -5.571883e-07     5.926749e-04                           (NR   MIcro)
+   53     dE    -6.388937e-07     1.146356e-04                           (NR   MIcro)
+   53     dE    -8.937143e-07     7.042741e-04                           (NR   MIcro)
+   53     dE    -1.569477e-06     3.168061e-04                           (NR   MIcro)
+   53     dE    -1.596440e-06     3.719962e-05                           (NR   MIcro)
+   53     dE    -1.598810e-06     8.383233e-05                           (NR   MIcro)
+   53     dE    -1.624139e-06     3.124447e-04                           (NR   MIcro)
+   53     dE    -1.661104e-06     4.212663e-05                           (NR   MIcro)
+   53     dE    -1.661616e-06     6.602531e-06                           (NR   MIcro)
+   53     dE    -1.661961e-06     3.138743e-05                           (NR   MIcro)
+   53     dE    -1.664028e-06     3.939754e-05                           (NR   MIcro)
+   53     dE    -1.664395e-06     7.565013e-06                           (NR   MIcro)
+   53     dE    -1.664405e-06     6.661230e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   54      -1639.794439237351     4.796684e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000177
+   54     dE    -5.042187e-08     9.166917e-05                           (NR   MIcro)
+   54     dE    -8.353140e-08     3.869765e-04                           (NR   MIcro)
+   54     dE    -1.620319e-07     4.584874e-04                           (NR   MIcro)
+   54     dE    -2.344486e-07     6.159417e-05                           (NR   MIcro)
+   54     dE    -2.573770e-07     2.102463e-04                           (NR   MIcro)
+   54     dE    -4.179931e-07     2.676494e-04                           (NR   MIcro)
+   54     dE    -4.392539e-07     3.595410e-05                           (NR   MIcro)
+   54     dE    -4.451834e-07     1.443809e-04                           (NR   MIcro)
+   54     dE    -5.299480e-07     4.878823e-04                           (NR   MIcro)
+   54     dE    -5.908095e-07     4.919757e-05                           (NR   MIcro)
+   54     dE    -5.915713e-07     1.258912e-05                           (NR   MIcro)
+   54     dE    -5.935014e-07     7.802081e-05                           (NR   MIcro)
+   54     dE    -6.014468e-07     4.641920e-05                           (NR   MIcro)
+   54     dE    -6.020705e-07     5.898863e-06                           (NR   MIcro)
+   54     dE    -6.020787e-07     6.884409e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   55      -1639.794439067917     2.614777e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000182
+   55     dE    -3.688055e-08     1.913489e-04                           (NR   MIcro)
+   55     dE    -2.447328e-07     4.549673e-04                           (NR   MIcro)
+   55     dE    -2.909429e-07     2.462777e-04                           (NR   MIcro)
+   55     dE    -3.052836e-07     8.660359e-05                           (NR   MIcro)
+   55     dE    -4.511454e-07     5.326685e-04                           (NR   MIcro)
+   55     dE    -7.749857e-07     2.341975e-04                           (NR   MIcro)
+   55     dE    -7.873935e-07     4.403103e-05                           (NR   MIcro)
+   55     dE    -7.879309e-07     1.733363e-05                           (NR   MIcro)
+   55     dE    -7.901718e-07     9.582169e-05                           (NR   MIcro)
+   55     dE    -8.010570e-07     5.418713e-05                           (NR   MIcro)
+   55     dE    -8.015326e-07     7.398188e-06                           (NR   MIcro)
+   55     dE    -8.015537e-07     3.326498e-06                           (NR   MIcro)
+   55     dE    -8.016906e-07     1.599082e-05                           (NR   MIcro)
+   55     dE    -8.018983e-07     4.655850e-06                           (NR   MIcro)
+   55     dE    -8.019027e-07     3.115739e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   56      -1639.794439446709     2.537539e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000182
+   56     dE    -2.105045e-08     9.788132e-05                           (NR   MIcro)
+   56     dE    -6.301323e-08     4.015741e-04                           (NR   MIcro)
+   56     dE    -1.212979e-07     2.851966e-04                           (NR   MIcro)
+   56     dE    -1.437704e-07     4.528493e-05                           (NR   MIcro)
+   56     dE    -1.714917e-07     2.390591e-04                           (NR   MIcro)
+   56     dE    -3.263383e-07     1.990019e-04                           (NR   MIcro)
+   56     dE    -3.388557e-07     3.492044e-05                           (NR   MIcro)
+   56     dE    -3.540370e-07     2.379881e-04                           (NR   MIcro)
+   56     dE    -5.564959e-07     2.218569e-04                           (NR   MIcro)
+   56     dE    -5.661624e-07     3.838541e-05                           (NR   MIcro)
+   56     dE    -5.665533e-07     1.389716e-05                           (NR   MIcro)
+   56     dE    -5.686332e-07     8.001876e-05                           (NR   MIcro)
+   56     dE    -5.750159e-07     3.995170e-05                           (NR   MIcro)
+   56     dE    -5.754317e-07     7.510128e-06                           (NR   MIcro)
+   56     dE    -5.754418e-07     1.049398e-06                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   57      -1639.794438235643     5.688804e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000177
+   57     dE    -9.789034e-08     2.017053e-04                           (NR   MIcro)
+   57     dE    -4.147784e-07     8.182416e-04                           (NR   MIcro)
+   57     dE    -5.659644e-07     6.034981e-04                           (NR   MIcro)
+   57     dE    -6.519373e-07     1.174456e-04                           (NR   MIcro)
+   57     dE    -9.016942e-07     7.099257e-04                           (NR   MIcro)
+   57     dE    -1.576508e-06     3.700507e-04                           (NR   MIcro)
+   57     dE    -1.609125e-06     6.899889e-05                           (NR   MIcro)
+   57     dE    -1.610778e-06     3.908138e-05                           (NR   MIcro)
+   57     dE    -1.622004e-06     2.134554e-04                           (NR   MIcro)
+   57     dE    -1.665372e-06     4.898435e-05                           (NR   MIcro)
+   57     dE    -1.665979e-06     9.218537e-06                           (NR   MIcro)
+   57     dE    -1.666066e-06     1.594093e-05                           (NR   MIcro)
+   57     dE    -1.666963e-06     4.079012e-05                           (NR   MIcro)
+   57     dE    -1.667932e-06     9.870560e-06                           (NR   MIcro)
+   57     dE    -1.667954e-06     8.711560e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   58      -1639.794439216668     4.622488e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000177
+   58     dE    -4.739424e-08     9.077571e-05                           (NR   MIcro)
+   58     dE    -8.049381e-08     3.852131e-04                           (NR   MIcro)
+   58     dE    -1.558575e-07     4.407792e-04                           (NR   MIcro)
+   58     dE    -2.206684e-07     5.767319e-05                           (NR   MIcro)
+   58     dE    -2.401957e-07     1.929007e-04                           (NR   MIcro)
+   58     dE    -3.704445e-07     2.330480e-04                           (NR   MIcro)
+   58     dE    -3.865573e-07     2.907386e-05                           (NR   MIcro)
+   58     dE    -3.913220e-07     1.234345e-04                           (NR   MIcro)
+   58     dE    -4.758704e-07     2.339007e-04                           (NR   MIcro)
+   58     dE    -4.864560e-07     3.736154e-05                           (NR   MIcro)
+   58     dE    -4.868202e-07     1.060392e-05                           (NR   MIcro)
+   58     dE    -4.878089e-07     5.752273e-05                           (NR   MIcro)
+   58     dE    -4.925437e-07     4.585616e-05                           (NR   MIcro)
+   58     dE    -4.931495e-07     9.508700e-06                           (NR   MIcro)
+   58     dE    -4.931648e-07     1.280243e-06                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   59      -1639.794439314416     1.494719e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000184
+   59     dE    -2.496836e-08     2.053865e-04                           (NR   MIcro)
+   59     dE    -1.699093e-07     2.637184e-04                           (NR   MIcro)
+   59     dE    -1.876223e-07     9.429343e-05                           (NR   MIcro)
+   59     dE    -1.908002e-07     8.283136e-05                           (NR   MIcro)
+   59     dE    -2.848224e-07     4.391817e-04                           (NR   MIcro)
+   59     dE    -4.687301e-07     2.521850e-04                           (NR   MIcro)
+   59     dE    -4.806974e-07     4.097016e-05                           (NR   MIcro)
+   59     dE    -4.811408e-07     8.598505e-06                           (NR   MIcro)
+   59     dE    -4.818260e-07     5.185004e-05                           (NR   MIcro)
+   59     dE    -4.863059e-07     3.480551e-05                           (NR   MIcro)
+   59     dE    -4.865085e-07     4.968292e-06                           (NR   MIcro)
+   59     dE    -4.865147e-07     1.120020e-06                           (NR   MIcro)
+   59     dE    -4.865222e-07     4.406650e-06                           (NR   MIcro)
+   59     dE    -4.865619e-07     4.435547e-06                           (NR   MIcro)
+   59     dE    -4.865679e-07     4.013294e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   60      -1639.794439524876     1.733128e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000184
+   60     dE    -1.509861e-08     1.116353e-04                           (NR   MIcro)
+   60     dE    -6.265825e-08     3.858647e-04                           (NR   MIcro)
+   60     dE    -1.053193e-07     2.008827e-04                           (NR   MIcro)
+   60     dE    -1.164342e-07     4.012154e-05                           (NR   MIcro)
+   60     dE    -1.476389e-07     2.563494e-04                           (NR   MIcro)
+   60     dE    -3.115898e-07     1.816328e-04                           (NR   MIcro)
+   60     dE    -3.228100e-07     3.863428e-05                           (NR   MIcro)
+   60     dE    -3.464101e-07     3.018951e-04                           (NR   MIcro)
+   60     dE    -5.984998e-07     1.925885e-04                           (NR   MIcro)
+   60     dE    -6.057611e-07     3.385463e-05                           (NR   MIcro)
+   60     dE    -6.060651e-07     1.349451e-05                           (NR   MIcro)
+   60     dE    -6.081315e-07     7.614094e-05                           (NR   MIcro)
+   60     dE    -6.133724e-07     3.177036e-05                           (NR   MIcro)
+   60     dE    -6.136340e-07     5.341905e-06                           (NR   MIcro)
+   60     dE    -6.136395e-07     8.177985e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   61      -1639.794437096902     9.263919e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000173
+   61     dE    -2.108012e-07     2.246411e-04                           (NR   MIcro)
+   61     dE    -5.900370e-07     1.033179e-03                           (NR   MIcro)
+   61     dE    -8.603759e-07     8.903906e-04                           (NR   MIcro)
+   61     dE    -1.063150e-06     1.460823e-04                           (NR   MIcro)
+   61     dE    -1.401182e-06     8.360502e-04                           (NR   MIcro)
+   61     dE    -2.438603e-06     4.661611e-04                           (NR   MIcro)
+   61     dE    -2.494563e-06     6.959616e-05                           (NR   MIcro)
+   61     dE    -2.497977e-06     8.444272e-05                           (NR   MIcro)
+   61     dE    -2.530393e-06     3.717890e-04                           (NR   MIcro)
+   61     dE    -2.637431e-06     7.025164e-05                           (NR   MIcro)
+   61     dE    -2.638819e-06     1.058406e-05                           (NR   MIcro)
+   61     dE    -2.639176e-06     3.570551e-05                           (NR   MIcro)
+   61     dE    -2.641872e-06     7.450731e-05                           (NR   MIcro)
+   61     dE    -2.643979e-06     1.506660e-05                           (NR   MIcro)
+   61     dE    -2.644024e-06     1.078297e-06                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   62      -1639.794438872323     7.098151e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000172
+   62     dE    -9.776037e-08     9.978783e-05                           (NR   MIcro)
+   62     dE    -1.276915e-07     3.671033e-04                           (NR   MIcro)
+   62     dE    -2.082028e-07     5.402112e-04                           (NR   MIcro)
+   62     dE    -3.410492e-07     7.603510e-05                           (NR   MIcro)
+   62     dE    -3.576350e-07     1.620211e-04                           (NR   MIcro)
+   62     dE    -4.830503e-07     2.812824e-04                           (NR   MIcro)
+   62     dE    -5.073962e-07     3.218811e-05                           (NR   MIcro)
+   62     dE    -5.100938e-07     8.356893e-05                           (NR   MIcro)
+   62     dE    -5.563507e-07     2.312661e-04                           (NR   MIcro)
+   62     dE    -5.665212e-07     3.452796e-05                           (NR   MIcro)
+   62     dE    -5.668301e-07     7.720747e-06                           (NR   MIcro)
+   62     dE    -5.672994e-07     3.983987e-05                           (NR   MIcro)
+   62     dE    -5.701703e-07     4.769087e-05                           (NR   MIcro)
+   62     dE    -5.707372e-07     1.056300e-05                           (NR   MIcro)
+   62     dE    -5.707573e-07     1.038085e-06                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   63      -1639.794439337074     5.871726e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000187
+   63     dE    -2.451281e-08     2.623372e-04                           (NR   MIcro)
+   63     dE    -1.038294e-07     1.184730e-04                           (NR   MIcro)
+   63     dE    -1.079393e-07     3.931830e-05                           (NR   MIcro)
+   63     dE    -1.091306e-07     7.215857e-05                           (NR   MIcro)
+   63     dE    -1.489386e-07     2.714217e-04                           (NR   MIcro)
+   63     dE    -2.039900e-07     1.115297e-04                           (NR   MIcro)
+   63     dE    -2.064345e-07     2.056086e-05                           (NR   MIcro)
+   63     dE    -2.066425e-07     1.359622e-05                           (NR   MIcro)
+   63     dE    -2.085505e-07     6.500920e-05                           (NR   MIcro)
+   63     dE    -2.104834e-07     1.172628e-05                           (NR   MIcro)
+   63     dE    -2.105084e-07     1.677582e-06                           (NR   MIcro)
+   63     dE    -2.105102e-07     1.788719e-06                           (NR   MIcro)
+   63     dE    -2.105289e-07     6.987220e-06                           (NR   MIcro)
+   63     dE    -2.105647e-07     2.234609e-06                           (NR   MIcro)
+   63     dE    -2.105661e-07     1.785559e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   64      -1639.794439498770     8.055931e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000187
+   64     dE    -1.202422e-08     1.453808e-04                           (NR   MIcro)
+   64     dE    -5.835029e-08     2.717490e-04                           (NR   MIcro)
+   64     dE    -7.300596e-08     9.171293e-05                           (NR   MIcro)
+   64     dE    -7.529371e-08     2.222108e-05                           (NR   MIcro)
+   64     dE    -8.497545e-08     1.475003e-04                           (NR   MIcro)
+   64     dE    -1.266233e-07     8.380842e-05                           (NR   MIcro)
+   64     dE    -1.288854e-07     1.734617e-05                           (NR   MIcro)
+   64     dE    -1.323145e-07     1.070838e-04                           (NR   MIcro)
+   64     dE    -1.611151e-07     4.431988e-05                           (NR   MIcro)
+   64     dE    -1.615028e-07     7.026444e-06                           (NR   MIcro)
+   64     dE    -1.615153e-07     2.990327e-06                           (NR   MIcro)
+   64     dE    -1.615917e-07     1.521364e-05                           (NR   MIcro)
+   64     dE    -1.618356e-07     7.241245e-06                           (NR   MIcro)
+   64     dE    -1.618483e-07     1.347575e-06                           (NR   MIcro)
+   64     dE    -1.618486e-07     1.431520e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   65      -1639.794439504661     9.627112e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000185
+   65     dE    -2.023725e-08     2.061447e-04                           (NR   MIcro)
+   65     dE    -1.193378e-07     1.687014e-04                           (NR   MIcro)
+   65     dE    -1.269812e-07     4.103145e-05                           (NR   MIcro)
+   65     dE    -1.304128e-07     1.352420e-04                           (NR   MIcro)
+   65     dE    -1.844211e-07     3.369241e-04                           (NR   MIcro)
+   65     dE    -3.036305e-07     1.147479e-04                           (NR   MIcro)
+   65     dE    -3.070931e-07     1.721622e-05                           (NR   MIcro)
+   65     dE    -3.073981e-07     2.808344e-05                           (NR   MIcro)
+   65     dE    -3.103254e-07     9.814235e-05                           (NR   MIcro)
+   65     dE    -3.149877e-07     1.127528e-05                           (NR   MIcro)
+   65     dE    -3.150233e-07     3.128882e-06                           (NR   MIcro)
+   65     dE    -3.150731e-07     1.532993e-05                           (NR   MIcro)
+   65     dE    -3.153810e-07     1.526466e-05                           (NR   MIcro)
+   65     dE    -3.154586e-07     2.255045e-06                           (NR   MIcro)
+   65     dE    -3.154597e-07     1.731145e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   66      -1639.794439600113     1.313036e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000185
+   66     dE    -1.370213e-08     1.297989e-04                           (NR   MIcro)
+   66     dE    -6.799259e-08     3.738073e-04                           (NR   MIcro)
+   66     dE    -1.027587e-07     1.611019e-04                           (NR   MIcro)
+   66     dE    -1.106013e-07     4.366007e-05                           (NR   MIcro)
+   66     dE    -1.628697e-07     3.474713e-04                           (NR   MIcro)
+   66     dE    -5.391750e-07     3.132612e-04                           (NR   MIcro)
+   66     dE    -5.731286e-07     7.413933e-05                           (NR   MIcro)
+   66     dE    -6.572380e-07     5.735679e-04                           (NR   MIcro)
+   66     dE    -2.339086e-06     7.063723e-04                           (NR   MIcro)
+   66     dE    -2.431130e-06     1.214303e-04                           (NR   MIcro)
+   66     dE    -2.434704e-06     3.808137e-05                           (NR   MIcro)
+   66     dE    -2.451350e-06     2.301846e-04                           (NR   MIcro)
+   66     dE    -2.504139e-06     1.282857e-04                           (NR   MIcro)
+   66     dE    -2.508344e-06     2.590458e-05                           (NR   MIcro)
+   66     dE    -2.508466e-06     3.068654e-06                           (NR   MIcro)
+WARNING: 1 diagonal Hessian elements are negative!
+   67      -1639.794316457036     1.906198e-02                     0.069 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000112
+   67     dE    -4.212198e-05     1.614669e-02    -4.2122e-05      0.002 (TRAH MIcro)
+   67     dE    -4.854328e-05     1.299147e-02    -4.8529e-05      0.017 (TRAH MIcro)
+   67     dE    -6.345204e-05     9.152031e-03    -6.3450e-05      0.006 (TRAH MIcro)
+   67     dE    -7.286870e-05     1.033610e-02    -7.2835e-05      0.021 (TRAH MIcro)
+   67     dE    -8.766708e-05     1.049069e-02    -8.7456e-05      0.049 (TRAH MIcro)
+   67     dE    -1.113012e-04     2.544507e-03    -2.7872e-03      0.069 (TRAH MIcro)
+   67     dE    -1.132032e-04     8.292514e-04    -3.0480e-03      0.069 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   68      -1639.794425908933     1.293872e-03                     0.083 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000217
+   68     dE    -3.595997e-08     2.771686e-03    -3.5960e-08      0.000 (TRAH MIcro)
+   68     dE    -4.295545e-07     2.333662e-03    -4.2955e-07      0.002 (TRAH MIcro)
+   68     dE    -2.108076e-06     3.097026e-03    -2.1069e-06      0.023 (TRAH MIcro)
+   68     dE    -4.408358e-06     2.144063e-03    -4.3960e-06      0.053 (TRAH MIcro)
+   68     dE    -5.994159e-06     7.021763e-04    -5.9618e-06      0.074 (TRAH MIcro)
+   68     dE    -8.354157e-06     2.878344e-03    -2.7903e-04      0.083 (TRAH MIcro)
+   68     dE    -1.132017e-05     9.033841e-04    -8.9654e-04      0.080 (TRAH MIcro)
+   68     dE    -8.536004e-06     6.975443e-04    -1.1841e-03      0.060 (TRAH MIcro)
+   68     dE    -8.359626e-06     8.030508e-04    -1.1937e-03      0.058 (TRAH MIcro)
+   68     dE    -1.194313e-05     2.397562e-04    -8.6415e-04      0.083 (TRAH MIcro)
+   68     dE    -1.195408e-05     7.269609e-05    -8.6093e-04      0.083 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   69      -1639.794433897290     8.823915e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000188
+   69     dE    -2.347428e-07     3.445981e-04                           (NR   MIcro)
+   69     dE    -8.986062e-07     1.468645e-03                           (NR   MIcro)
+   69     dE    -1.499761e-06     1.202778e-03                           (NR   MIcro)
+   69     dE    -1.954680e-06     2.598717e-04                           (NR   MIcro)
+   69     dE    -1.981502e-05     2.102259e-02                           (NR   MIcro)
+   69     dE     2.756693e-06     1.020939e-03                           (NR   MIcro)
+   69     dE     2.463542e-06     3.025553e-04                           (NR   MIcro)
+   69     dE     2.098424e-06     1.068883e-03                           (NR   MIcro)
+   69     dE     4.526926e-07     1.057940e-03                           (NR   MIcro)
+   69     dE     2.451676e-07     1.588858e-04                           (NR   MIcro)
+   69     dE     2.404936e-07     7.541714e-06                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   70      -1639.794432409983     3.901818e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000215
+   70     dE    -1.816314e-07     6.467834e-04                           (NR   MIcro)
+   70     dE    -1.457792e-06     1.038998e-03                           (NR   MIcro)
+   70     dE    -1.696153e-06     6.487775e-04                           (NR   MIcro)
+   70     dE    -1.868009e-06     4.402131e-04                           (NR   MIcro)
+   70     dE     3.249675e-05     1.712368e-02                           (NR   MIcro)
+   70     dE     7.678664e-06     6.077642e-04                           (NR   MIcro)
+   70     dE     7.592754e-06     8.513338e-05                           (NR   MIcro)
+   70     dE     7.591018e-06     3.138724e-05                           (NR   MIcro)
+   70     dE     7.587353e-06     1.197994e-04                           (NR   MIcro)
+   70     dE     7.558671e-06     9.081821e-05                           (NR   MIcro)
+   70     dE     7.557232e-06     1.401280e-05                           (NR   MIcro)
+   70     dE     7.557181e-06     2.783674e-06                           (NR   MIcro)
+   70     dE     7.557145e-06     9.422083e-06                           (NR   MIcro)
+   70     dE     7.556829e-06     1.304465e-05                           (NR   MIcro)
+   70     dE     7.556786e-06     1.351766e-06                           (NR   MIcro)
+WARNING: 1 diagonal Hessian elements are negative!
+   71      -1639.794413674631     7.961342e-03                     0.083 (TRAH MAcro)   No
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000069
+   71     dE    -7.371078e-06     6.787852e-03    -7.3711e-06      0.001 (TRAH MIcro)
+   71     dE    -7.400875e-06     6.746990e-03    -7.4009e-06      0.002 (TRAH MIcro)
+   71     dE    -1.124702e-05     4.126128e-03    -1.1247e-05      0.003 (TRAH MIcro)
+   71     dE    -1.344646e-05     4.776798e-03    -1.3444e-05      0.014 (TRAH MIcro)
+   71     dE    -1.628394e-05     4.695169e-03    -1.6269e-05      0.030 (TRAH MIcro)
+   71     dE    -1.914477e-05     1.651160e-03    -1.9105e-05      0.046 (TRAH MIcro)
+   71     dE    -1.973153e-05     1.570926e-03    -1.9689e-05      0.046 (TRAH MIcro)
+   71     dE    -2.130225e-05     1.659499e-03    -2.1266e-05      0.041 (TRAH MIcro)
+   71     dE    -2.182306e-05     3.622639e-04    -2.1788e-05      0.040 (TRAH MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   72      -1639.794435435709     4.409928e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000189
+   72     dE    -1.568201e-07     5.668911e-04                           (NR   MIcro)
+   72     dE    -5.947243e-07     8.042523e-04                           (NR   MIcro)
+   72     dE    -7.836310e-07     2.534123e-04                           (NR   MIcro)
+   72     dE    -7.952888e-07     1.128974e-04                           (NR   MIcro)
+   72     dE    -8.034094e-07     1.040149e-04                           (NR   MIcro)
+   72     dE    -9.381455e-07     9.388509e-04                           (NR   MIcro)
+   72     dE     1.153326e-06     2.195265e-03                           (NR   MIcro)
+   72     dE     5.359964e-07     1.377316e-04                           (NR   MIcro)
+   72     dE     4.208259e-07     6.273093e-04                           (NR   MIcro)
+   72     dE    -1.424408e-07     3.200051e-04                           (NR   MIcro)
+   72     dE    -1.668429e-07     3.345739e-05                           (NR   MIcro)
+   72     dE    -1.671276e-07     3.578309e-06                           (NR   MIcro)
+   72     dE    -1.671308e-07     5.693323e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   73      -1639.794436283443     7.151832e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000175
+   73     dE    -1.931091e-07     3.721061e-04                           (NR   MIcro)
+   73     dE    -6.575644e-07     7.525536e-04                           (NR   MIcro)
+   73     dE    -7.525618e-07     4.093449e-04                           (NR   MIcro)
+   73     dE    -7.845967e-07     1.909520e-05                           (NR   MIcro)
+   73     dE    -7.875542e-07     9.411925e-05                           (NR   MIcro)
+   73     dE    -1.034232e-06     1.013346e-03                           (NR   MIcro)
+   73     dE     1.661676e-06     1.428797e-03                           (NR   MIcro)
+   73     dE     5.323383e-07     1.145148e-03                           (NR   MIcro)
+   73     dE    -5.557723e-07     9.311632e-04                           (NR   MIcro)
+   73     dE    -7.182894e-07     6.085399e-05                           (NR   MIcro)
+   73     dE    -7.192532e-07     6.582177e-06                           (NR   MIcro)
+   73     dE    -7.192684e-07     3.971151e-06                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   74      -1639.794437626669     1.283193e-04                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000183
+   74     dE    -2.375188e-07     8.464057e-04                           (NR   MIcro)
+   74     dE    -5.840361e-07     2.987652e-04                           (NR   MIcro)
+   74     dE    -5.976410e-07     1.075679e-04                           (NR   MIcro)
+   74     dE    -6.001635e-07     6.934500e-06                           (NR   MIcro)
+   74     dE    -6.001818e-07     4.290866e-06                           (NR   MIcro)
+   74     dE    -6.002296e-07     1.333664e-05                           (NR   MIcro)
+   74     dE    -6.007845e-07     1.827021e-05                           (NR   MIcro)
+   74     dE    -6.008877e-07     2.645780e-06                           (NR   MIcro)
+   74     dE    -6.009022e-07     6.027429e-06                           (NR   MIcro)
+   74     dE    -6.030471e-07     2.717448e-04                           (NR   MIcro)
+   74     dE    -6.004003e-07     3.450003e-06                           (NR   MIcro)
+   74     dE    -6.004030e-07     2.770523e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   75      -1639.794438755782     7.186206e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000177
+   75     dE    -2.307595e-07     8.088947e-04                           (NR   MIcro)
+   75     dE    -4.770692e-07     2.463128e-04                           (NR   MIcro)
+   75     dE    -4.863221e-07     6.856933e-05                           (NR   MIcro)
+   75     dE    -4.874588e-07     2.996000e-06                           (NR   MIcro)
+   75     dE    -4.874627e-07     8.337865e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   76      -1639.794439662355     6.413842e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000172
+   76     dE    -1.692051e-07     7.002572e-04                           (NR   MIcro)
+   76     dE    -3.668807e-07     2.526525e-04                           (NR   MIcro)
+   76     dE    -3.767398e-07     6.586945e-05                           (NR   MIcro)
+   76     dE    -3.778051e-07     3.132013e-06                           (NR   MIcro)
+   76     dE    -3.778103e-07     1.322882e-06                           (NR   MIcro)
+   76     dE    -3.778455e-07     1.013278e-05                           (NR   MIcro)
+   76     dE    -3.779376e-07     3.258468e-06                           (NR   MIcro)
+   76     dE    -3.779419e-07     1.383583e-06                           (NR   MIcro)
+   76     dE    -3.781193e-07     5.403598e-05                           (NR   MIcro)
+   76     dE    -3.778386e-07     4.920606e-06                           (NR   MIcro)
+   76     dE    -3.778434e-07     3.994131e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   77      -1639.794440356172     5.627597e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000168
+   77     dE    -1.171209e-07     5.897577e-04                           (NR   MIcro)
+   77     dE    -2.674641e-07     2.521382e-04                           (NR   MIcro)
+   77     dE    -2.774035e-07     6.220916e-05                           (NR   MIcro)
+   77     dE    -2.783454e-07     2.981043e-06                           (NR   MIcro)
+   77     dE    -2.783488e-07     5.913166e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   78      -1639.794440861333     4.823150e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000166
+   78     dE    -7.645834e-08     4.810262e-04                           (NR   MIcro)
+   78     dE    -1.849494e-07     2.412574e-04                           (NR   MIcro)
+   78     dE    -1.942030e-07     5.759048e-05                           (NR   MIcro)
+   78     dE    -1.950056e-07     2.859785e-06                           (NR   MIcro)
+   78     dE    -1.950092e-07     8.394018e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   79      -1639.794441211413     4.054666e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000165
+   79     dE    -4.736177e-08     3.817200e-04                           (NR   MIcro)
+   79     dE    -1.213874e-07     2.226174e-04                           (NR   MIcro)
+   79     dE    -1.294195e-07     5.208005e-05                           (NR   MIcro)
+   79     dE    -1.300680e-07     2.718485e-06                           (NR   MIcro)
+   79     dE    -1.300714e-07     9.800145e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   80      -1639.794441442631     3.342329e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000164
+   80     dE    -2.793053e-08     2.950043e-04                           (NR   MIcro)
+   80     dE    -7.577184e-08     1.975102e-04                           (NR   MIcro)
+   80     dE    -8.223104e-08     4.577866e-05                           (NR   MIcro)
+   80     dE    -8.272386e-08     2.559145e-06                           (NR   MIcro)
+   80     dE    -8.272679e-08     1.066525e-06                           (NR   MIcro)
+   80     dE    -8.272994e-08     3.811134e-06                           (NR   MIcro)
+   80     dE    -8.276354e-08     4.946138e-06                           (NR   MIcro)
+   80     dE    -8.277083e-08     4.314660e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   81      -1639.794441588428     2.709792e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000164
+   81     dE    -1.576048e-08     2.226660e-04                           (NR   MIcro)
+   81     dE    -4.509420e-08     1.691448e-04                           (NR   MIcro)
+   81     dE    -4.993305e-08     3.871474e-05                           (NR   MIcro)
+   81     dE    -5.027469e-08     1.943974e-06                           (NR   MIcro)
+   81     dE    -5.027606e-08     1.856226e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   82      -1639.794441676356     2.146063e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000164
+   82     dE    -8.576685e-09     1.647744e-04                           (NR   MIcro)
+   82     dE    -2.576478e-08     1.385492e-04                           (NR   MIcro)
+   82     dE    -2.908424e-08     3.181776e-05                           (NR   MIcro)
+   82     dE    -2.931133e-08     1.583524e-06                           (NR   MIcro)
+   82     dE    -2.931225e-08     1.739735e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   83      -1639.794441727287     1.665023e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000164
+   83     dE    -4.530849e-09     1.198692e-04                           (NR   MIcro)
+   83     dE    -1.418330e-08     1.100729e-04                           (NR   MIcro)
+   83     dE    -1.632515e-08     2.536778e-05                           (NR   MIcro)
+   83     dE    -1.646745e-08     1.274334e-06                           (NR   MIcro)
+   83     dE    -1.646804e-08     1.518901e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   84      -1639.794441755750     1.267094e-05                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000165
+   84     dE    -2.339641e-09     8.611120e-05                           (NR   MIcro)
+   84     dE    -7.575981e-09     8.495646e-05                           (NR   MIcro)
+   84     dE    -8.878005e-09     1.966618e-05                           (NR   MIcro)
+   84     dE    -8.962530e-09     1.000407e-06                           (NR   MIcro)
+   84     dE    -8.962890e-09     1.336742e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   85      -1639.794441771173     9.475178e-06                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000165
+   85     dE    -1.188368e-09     6.131563e-05                           (NR   MIcro)
+   85     dE    -3.952690e-09     6.398592e-05                           (NR   MIcro)
+   85     dE    -4.704121e-09     1.488251e-05                           (NR   MIcro)
+   85     dE    -4.752053e-09     7.784195e-07                           (NR   MIcro)
+WARNING: 2 diagonal Hessian elements are negative!
+   86      -1639.794441779324     7.183828e-06                           (NR   MAcro)
+WARNING : negative HOMO - LUMO gap : (op =  beta) -0.000165
+
+               *****************************************************
+               *                     SUCCESS                       *
+               *           SCF CONVERGED AFTER 965 CYCLES          *
+               *****************************************************
+
+
+----------------
+TOTAL SCF ENERGY
+----------------
+
+Total Energy       :        -1639.79444178 Eh          -44621.07525 eV
+
+Components:
+Nuclear Repulsion  :            0.00000000 Eh               0.00000 eV
+Electronic Energy  :        -1639.79444178 Eh          -44621.07525 eV
+One Electron Energy:        -2260.51338195 Eh          -61511.69632 eV
+Two Electron Energy:          620.71894017 Eh           16890.62106 eV
+CPCM Dielectric    :           -0.62436455 Eh             -16.98982 eV
+
+Virial components:
+Potential Energy   :        -3276.74168064 Eh          -89164.67417 eV
+Kinetic Energy     :         1636.94723886 Eh           44543.59892 eV
+Virial Ratio       :            2.00173934
+
+
+DFT components:
+N(Alpha)           :       14.000000008260 electrons
+N(Beta)            :       13.000000008256 electrons
+N(Total)           :       27.000000016515 electrons
+E(X)               :      -64.995087589483 Eh       
+E(C)               :       -1.287874951814 Eh       
+E(XC)              :      -66.282962541298 Eh       
+DFET-embed. en.    :        0.000000000000 Eh       
+CPCM Solvation Model Properties:
+Surface-charge          :           -2.00327229
+Charge-correction       :            0.00101988 Eh               0.02775 eV
+Free-energy (cav+disp)  :  This term is not implemented in the current solvation scheme
+
+---------------
+SCF CONVERGENCE
+---------------
+
+  Last Energy change         ...   -8.1511e-09  Tolerance :   1.0000e-08
+  Last Orbital Gradient      ...    7.1838e-06  Tolerance :   1.0000e-05
+  Last Orbital Rotation      ...    1.8133e-03
+
+             **** THE GBW FILE WAS UPDATED (cu2+.gbw) ****
+             **** DENSITY cu2+.scfp WAS UPDATED ****
+             **** ENERGY FILE WAS UPDATED (cu2+.en.tmp) ****
+----------------------
+UHF SPIN CONTAMINATION
+----------------------
+
+Warning: in a DFT calculation there is little theoretical justification to 
+         calculate <S**2> as in Hartree-Fock theory. We will do it anyways
+         but you should keep in mind that the values have only limited relevance
+
+Expectation value of <S**2>     :     0.750306
+Ideal value S*(S+1) for S=0.5   :     0.750000
+Deviation                       :     0.000306
+
+             **** THE GBW FILE WAS UPDATED (cu2+.gbw) ****
+             **** DENSITY cu2+.scfp WAS UPDATED ****
+----------------
+ORBITAL ENERGIES
+----------------
+                 SPIN UP ORBITALS
+  NO   OCC          E(Eh)            E(eV) 
+   0   1.0000    -321.801563     -8756.6657 
+   1   1.0000     -38.581611     -1049.8590 
+   2   1.0000     -33.879709      -921.9138 
+   3   1.0000     -33.864169      -921.4909 
+   4   1.0000     -33.864128      -921.4898 
+   5   1.0000      -4.420366      -120.2843 
+   6   1.0000      -3.003586       -81.7317 
+   7   1.0000      -2.925605       -79.6098 
+   8   1.0000      -2.925399       -79.6042 
+   9   1.0000      -0.551420       -15.0049 
+  10   1.0000      -0.493805       -13.4371 
+  11   1.0000      -0.493734       -13.4352 
+  12   1.0000      -0.466570       -12.6960 
+  13   1.0000      -0.466570       -12.6960 
+  14   0.0000      -0.194771        -5.3000 
+  15   0.0000       0.032074         0.8728 
+  16   0.0000       0.041354         1.1253 
+  17   0.0000       0.041379         1.1260 
+  18   0.0000       0.097234         2.6459 
+  19   0.0000       0.216021         5.8782 
+  20   0.0000       0.216709         5.8969 
+  21   0.0000       0.216711         5.8970 
+  22   0.0000       0.217437         5.9168 
+  23   0.0000       0.217440         5.9168 
+  24   0.0000       0.767040        20.8722 
+  25   0.0000       0.778214        21.1763 
+  26   0.0000       0.778234        21.1768 
+  27   0.0000       0.785447        21.3731 
+  28   0.0000       0.785449        21.3732 
+  29   0.0000       1.739587        47.3366 
+  30   0.0000       1.778055        48.3833 
+  31   0.0000       1.778159        48.3862 
+  32   0.0000       2.557740        69.5996 
+  33   0.0000       3.272084        89.0379 
+  34   0.0000       3.307115        89.9912 
+  35   0.0000       3.307162        89.9925 
+  36   0.0000       3.324715        90.4701 
+  37   0.0000       3.324716        90.4701 
+  38   0.0000       5.296153       144.1157 
+  39   0.0000       5.316726       144.6755 
+  40   0.0000       5.316822       144.6781 
+  41   0.0000       5.361964       145.9065 
+  42   0.0000       5.361965       145.9065 
+  43   0.0000       5.376884       146.3125 
+  44   0.0000       5.376884       146.3125 
+
+                 SPIN DOWN ORBITALS
+  NO   OCC          E(Eh)            E(eV) 
+   0   1.0000    -321.801310     -8756.6588 
+   1   1.0000     -38.558312     -1049.2250 
+   2   1.0000     -33.852957      -921.1858 
+   3   1.0000     -33.852956      -921.1858 
+   4   1.0000     -33.850154      -921.1095 
+   5   1.0000      -4.373500      -119.0090 
+   6   1.0000      -2.924523       -79.5803 
+   7   1.0000      -2.896593       -78.8203 
+   8   1.0000      -2.896492       -78.8175 
+   9   1.0000      -0.474076       -12.9003 
+  10   1.0000      -0.473941       -12.8966 
+  11   1.0000      -0.438373       -11.9287 
+  12   1.0000      -0.438370       -11.9286 
+  13   0.0000      -0.438535       -11.9331 
+  14   0.0000      -0.185602        -5.0505 
+  15   0.0000       0.045738         1.2446 
+  16   0.0000       0.045739         1.2446 
+  17   0.0000       0.047135         1.2826 
+  18   0.0000       0.098923         2.6918 
+  19   0.0000       0.217391         5.9155 
+  20   0.0000       0.217395         5.9156 
+  21   0.0000       0.218116         5.9352 
+  22   0.0000       0.218117         5.9353 
+  23   0.0000       0.224888         6.1195 
+  24   0.0000       0.782534        21.2938 
+  25   0.0000       0.782567        21.2947 
+  26   0.0000       0.792702        21.5705 
+  27   0.0000       0.792703        21.5705 
+  28   0.0000       0.798890        21.7389 
+  29   0.0000       1.786549        48.6145 
+  30   0.0000       1.794711        48.8366 
+  31   0.0000       1.794746        48.8375 
+  32   0.0000       2.590945        70.5032 
+  33   0.0000       3.321431        90.3807 
+  34   0.0000       3.321519        90.3831 
+  35   0.0000       3.345890        91.0463 
+  36   0.0000       3.345891        91.0463 
+  37   0.0000       3.357497        91.3621 
+  38   0.0000       5.368908       146.0954 
+  39   0.0000       5.368935       146.0962 
+  40   0.0000       5.372287       146.1874 
+  41   0.0000       5.372449       146.1918 
+  42   0.0000       5.388832       146.6376 
+  43   0.0000       5.406282       147.1124 
+  44   0.0000       5.406287       147.1125 
+
+                    ********************************
+                    * MULLIKEN POPULATION ANALYSIS *
+                    ********************************
+
+--------------------------------------------
+MULLIKEN ATOMIC CHARGES AND SPIN POPULATIONS
+--------------------------------------------
+   0 Cu:    2.000000    1.000000
+Sum of atomic charges         :    2.0000000
+Sum of atomic spin populations:    1.0000000
+
+-----------------------------------------------------
+MULLIKEN REDUCED ORBITAL CHARGES AND SPIN POPULATIONS
+-----------------------------------------------------
+CHARGE
+  0 Cus       :     5.999964  s :     5.999964
+      pz      :     3.999975  p :    11.999898
+      px      :     3.999962
+      py      :     3.999962
+      dz2     :     1.930616  d :     9.000036
+      dxz     :     1.799775
+      dyz     :     1.800038
+      dx2y2   :     2.000000
+      dxy     :     1.469608
+      f0      :     0.000013  f :     0.000102
+      f+1     :     0.000007
+      f-1     :     0.000007
+      f+2     :     0.000006
+      f-2     :     0.000031
+      f+3     :     0.000019
+      f-3     :     0.000019
+
+SPIN
+  0 Cus       :     0.000014  s :     0.000014
+      pz      :    -0.000008  p :    -0.000060
+      px      :    -0.000026
+      py      :    -0.000026
+      dz2     :     0.069386  d :     0.999986
+      dxz     :     0.200230
+      dyz     :     0.199967
+      dx2y2   :     0.000000
+      dxy     :     0.530404
+      f0      :     0.000013  f :     0.000060
+      f+1     :    -0.000001
+      f-1     :    -0.000001
+      f+2     :    -0.000001
+      f-2     :     0.000028
+      f+3     :     0.000011
+      f-3     :     0.000011
+
+
+                     *******************************
+                     * LOEWDIN POPULATION ANALYSIS *
+                     *******************************
+
+-------------------------------------------
+LOEWDIN ATOMIC CHARGES AND SPIN POPULATIONS
+-------------------------------------------
+   0 Cu:    2.000000    1.000000
+
+----------------------------------------------------
+LOEWDIN REDUCED ORBITAL CHARGES AND SPIN POPULATIONS
+----------------------------------------------------
+CHARGE
+  0 Cus       :     5.999964  s :     5.999964
+      pz      :     3.999975  p :    11.999898
+      px      :     3.999962
+      py      :     3.999962
+      dz2     :     1.930616  d :     9.000036
+      dxz     :     1.799775
+      dyz     :     1.800038
+      dx2y2   :     2.000000
+      dxy     :     1.469608
+      f0      :     0.000013  f :     0.000102
+      f+1     :     0.000007
+      f-1     :     0.000007
+      f+2     :     0.000006
+      f-2     :     0.000031
+      f+3     :     0.000019
+      f-3     :     0.000019
+
+SPIN
+  0 Cus       :     0.000014  s :     0.000014
+      pz      :    -0.000008  p :    -0.000060
+      px      :    -0.000026
+      py      :    -0.000026
+      dz2     :     0.069386  d :     0.999986
+      dxz     :     0.200230
+      dyz     :     0.199967
+      dx2y2   :     0.000000
+      dxy     :     0.530404
+      f0      :     0.000013  f :     0.000060
+      f+1     :    -0.000001
+      f-1     :    -0.000001
+      f+2     :    -0.000001
+      f-2     :     0.000028
+      f+3     :     0.000011
+      f-3     :     0.000011
+
+
+                      *****************************
+                      * MAYER POPULATION ANALYSIS *
+                      *****************************
+
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0 Cu    27.0000    29.0000     2.0000     1.0006     0.0000     1.0006
+
+  Mayer bond orders larger than 0.100000
+
+
+-------
+TIMINGS
+-------
+
+Total SCF time: 0 days 0 hours 3 min 54 sec 
+
+Total time                  ....     234.722 sec
+Sum of individual times     ....     218.520 sec  ( 93.1%)
+
+Fock matrix formation       ....      32.813 sec  ( 14.0%)
+  Split-RI-J                ....      18.490 sec  ( 56.3% of F)
+  XC integration            ....      10.081 sec  ( 30.7% of F)
+    Basis function eval.    ....       0.618 sec  (  6.1% of XC)
+    Density eval.           ....       0.617 sec  (  6.1% of XC)
+    XC-Functional eval.     ....       0.169 sec  (  1.7% of XC)
+    XC-Potential eval.      ....       0.632 sec  (  6.3% of XC)
+Diagonalization             ....       0.410 sec  (  0.2%)
+Density matrix formation    ....       5.136 sec  (  2.2%)
+Population analysis         ....       0.024 sec  (  0.0%)
+Initial guess               ....       0.020 sec  (  0.0%)
+Orbital Transformation      ....      55.521 sec  ( 23.7%)
+Orbital Orthonormalization  ....       0.000 sec  (  0.0%)
+DIIS solution               ....       1.151 sec  (  0.5%)
+Grid generation             ....       0.220 sec  (  0.1%)
+
+Maximum memory used throughout the entire SCF-calculation: 7.5 MB
+
+
+-------------------------------------------------------------------------------
+                          DFT DISPERSION CORRECTION                            
+                                                                               
+                              DFTD3 V3.1  Rev 1                                
+                          USING Becke-Johnson damping                          
+-------------------------------------------------------------------------------
+The PBE functional is recognized
+Active option DFTDOPT                   ...         4   
+
+molecular C6(AA) [au] = 332.271407 
+
+
+            DFT-D V3
+ parameters
+ s6 scaling factor         :     1.0000 
+ a1 scaling factor         :     0.4289 
+ s8 scaling factor         :     0.7875 
+ a2 scaling factor         :     4.4407 
+ ad hoc parameters k1-k3   :    16.0000     1.3333    -4.0000 
+
+ Edisp/kcal,au: -0.000000000000  -0.000000000000 
+ E6   /kcal   :  -0.000000000 
+ E8   /kcal   :  -0.000000000 
+ % E8         :          -nan 
+
+-------------------------   ----------------
+Dispersion correction            0.000000000
+-------------------------   ----------------
+
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY     -1639.794441779324
+-------------------------   --------------------
+
+No protocol specified
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+------------------------------------------------------------------------------
+                         ORCA SCF GRADIENT CALCULATION
+------------------------------------------------------------------------------
+
+Gradient of the Kohn-Sham DFT energy:
+Kohn-Sham wavefunction type      ... UKS
+Hartree-Fock exchange scaling    ...    0.000
+Number of operators              ...    2
+Number of atoms                  ...    1
+Basis set dimensions             ...   45
+Integral neglect threshold       ... 2.5e-11
+Integral primitive cutoff        ... 2.5e-12
+SHARK Integral package           ... ON
+
+Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
+HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
+RI-J gradient            (SHARK) ... done (  0.2 sec)
+Exchange-correlation gradient    ... done
+Dispersion correction            ... done
+
+------------------
+CARTESIAN GRADIENT
+------------------
+
+   1   Cu  :    0.000000000    0.000000000   -0.000000000
+
+Difference to translation invariance:
+           :    0.0000000002    0.0000000001   -0.0000000000
+
+Difference to rotation invariance:
+           :    0.0000000000    0.0000000000    0.0000000017
+
+Norm of the cartesian gradient     ...    0.0000000002
+RMS gradient                       ...    0.0000000001
+MAX gradient                       ...    0.0000000002
+
+-------
+TIMINGS
+-------
+
+Total SCF gradient time            ...        0.755 sec
+
+One electron gradient       ....       0.003 sec  (  0.4%)
+RI-J Coulomb gradient       ....       0.187 sec  ( 24.8%)
+XC gradient                 ....       0.021 sec  (  2.8%)
+CPCM gradient               ....       0.084 sec  ( 11.1%)
+   A-Matrix (El+Nuc)        ....       0.000 sec  (  0.0%)
+   Potential                ....       0.084 sec  ( 11.1%)
+
+Maximum memory used throughout the entire SCFGRAD-calculation: 25.4 MB
+
+                            ***************************************
+                            *     ORCA property calculations      *
+                            ***************************************
+
+                                    ---------------------
+                                    Active property flags
+                                    ---------------------
+   (+) Dipole Moment
+
+
+------------------------------------------------------------------------------
+                       ORCA ELECTRIC PROPERTIES CALCULATION
+------------------------------------------------------------------------------
+
+Dipole Moment Calculation                       ... on
+Quadrupole Moment Calculation                   ... off
+Polarizability Calculation                      ... off
+GBWName                                         ... cu2+.gbw
+Electron density                                ... cu2+.scfp
+The origin for moment calculation is the CENTER OF MASS  = ( 5.281178, -5.302508  0.059945)
+
+-------------
+DIPOLE MOMENT
+-------------
+                                X             Y             Z
+Electronic contribution:     -0.00000       0.00000      -0.00000
+Nuclear contribution   :      0.00000      -0.00000       0.00000
+                        -----------------------------------------
+Total Dipole Moment    :     -0.00000       0.00000      -0.00000
+                        -----------------------------------------
+Magnitude (a.u.)       :      0.00000
+Magnitude (Debye)      :      0.00000
+
+
+
+--------------------
+Rotational spectrum 
+--------------------
+ 
+Rotational constants in cm-1:     0.000000     0.000000     0.000000 
+Rotational constants in MHz :     0.000000     0.000000     0.000000 
+
+ Dipole components along the rotational axes: 
+x,y,z [a.u.] :    -0.000000    -0.000000    -0.000000 
+x,y,z [Debye]:    -0.000000    -0.000000    -0.000000 
+
+ 
+
+----------------------------------------------------------------------------
+                           ORCA NUMERICAL FREQUENCIES
+                              (16-process run)
+----------------------------------------------------------------------------
+
+Number of atoms                ... 1
+Central differences            ... used
+Number of displacements        ... 6
+Numerical increment            ... 5.000e-03 bohr
+IR-spectrum generation         ... on
+Raman-spectrum generation      ... off
+Surface Crossing Hessian       ... off
+
+The output will be reduced. Please look at the following files:
+SCF program output             ... >cu2+.lastscf
+Integral program output        ... >cu2+.lastint
+Gradient program output        ... >cu2+.lastgrad
+Dipole moment program output   ... >cu2+.lastmom
+AutoCI program output          ... >cu2+.lastautoci
+
+No protocol specified
+No protocol specified
+No protocol specified
+	<< Calculating on displaced geometry   3 (of   6) >>
+	<< Calculating on displaced geometry   1 (of   6) >>
+	<< Calculating on displaced geometry   4 (of   6) >>
+	<< Calculating on displaced geometry   5 (of   6) >>
+	<< Calculating on displaced geometry   2 (of   6) >>
+	<< Calculating on displaced geometry   6 (of   6) >>
+
+-----------------------
+VIBRATIONAL FREQUENCIES
+-----------------------
+
+Scaling factor for frequencies =  1.000000000 (already applied!)
+
+   0:         0.00 cm**-1
+   1:         0.00 cm**-1
+   2:         0.00 cm**-1
+
+
+------------
+NORMAL MODES
+------------
+
+These modes are the cartesian displacements weighted by the diagonal matrix
+M(i,i)=1/sqrt(m[i]) where m[i] is the mass of the displaced atom
+Thus, these vectors are normalized but *not* orthogonal
+
+                  0          1          2    
+      0       0.000000   0.000000   0.000000
+      1       0.000000   0.000000   0.000000
+      2       0.000000   0.000000   0.000000
+
+
+-----------
+IR SPECTRUM
+-----------
+
+ Mode   freq       eps      Int      T**2         TX        TY        TZ
+       cm**-1   L/(mol*cm) km/mol    a.u.
+----------------------------------------------------------------------------
+
+* The epsilon (eps) is given for a Dirac delta lineshape.
+** The dipole moment derivative (T) already includes vibrational overlap.
+
+ÿÿÿÿThe total number of vibrations considered is 0
+
+
+--------------------------
+THERMOCHEMISTRY AT 298.15K
+--------------------------
+
+Temperature         ... 298.15 K
+Pressure            ... 1.00 atm
+Total Mass          ... 63.55 AMU
+The molecule is recognized as being linear
+
+Throughout the following assumptions are being made:
+  (1) The electronic state is orbitally nondegenerate
+      but the spin degeneracy is treated
+  (2) There are no thermally accessible electronically excited states
+  (3) Hindered rotations indicated by low frequency modes are not
+      treated as such but are treated as vibrations and this may
+      cause some error
+  (4) All equations used are the standard statistical mechanics
+      equations for an ideal gas
+  (5) All vibrations are strictly harmonic
+
+
+------------
+INNER ENERGY
+------------
+
+The inner energy is: U= E(el) + E(ZPE) + E(vib) + E(rot) + E(trans)
+    E(el)   - is the total energy from the electronic structure calculation
+              = E(kin-el) + E(nuc-el) + E(el-el) + E(nuc-nuc)
+    E(ZPE)  - the the zero temperature vibrational energy from the frequency calculation
+    E(vib)  - the the finite temperature correction to E(ZPE) due to population
+              of excited vibrational states
+    E(rot)  - is the rotational thermal energy
+    E(trans)- is the translational thermal energy
+
+Summary of contributions to the inner energy U:
+Electronic energy                ...  -1639.79444178 Eh
+Zero point energy                ...      0.00000000 Eh       0.00 kcal/mol
+Thermal vibrational correction   ...      0.00000000 Eh       0.00 kcal/mol
+Thermal rotational correction    ...      0.00000000 Eh       0.00 kcal/mol
+Thermal translational correction ...      0.00141627 Eh       0.89 kcal/mol
+-----------------------------------------------------------------------
+Total thermal energy                  -1639.79302551 Eh
+
+
+Summary of corrections to the electronic energy:
+(perhaps to be used in another calculation)
+Total thermal correction                  0.00141627 Eh       0.89 kcal/mol
+Non-thermal (ZPE) correction              0.00000000 Eh       0.00 kcal/mol
+-----------------------------------------------------------------------
+Total correction                          0.00141627 Eh       0.89 kcal/mol
+
+
+--------
+ENTHALPY
+--------
+
+The enthalpy is H = U + kB*T
+                kB is Boltzmann's constant
+Total free energy                 ...  -1639.79302551 Eh 
+Thermal Enthalpy correction       ...      0.00094421 Eh       0.59 kcal/mol
+-----------------------------------------------------------------------
+Total Enthalpy                    ...  -1639.79208130 Eh
+
+
+Note: Rotational entropy computed according to Herzberg 
+Infrared and Raman Spectra, Chapter V,1, Van Nostrand Reinhold, 1945 
+Point Group:  Kh, Symmetry Number:   1  
+Rotational constants in cm-1:     0.000000     0.000000     0.000000 
+
+Vibrational entropy computed according to the QRRHO of S. Grimme
+Chem.Eur.J. 2012 18 9955
+
+
+-------
+ENTROPY
+-------
+
+The entropy contributions are T*S = T*(S(el)+S(vib)+S(rot)+S(trans))
+     S(el)   - electronic entropy
+     S(vib)  - vibrational entropy
+     S(rot)  - rotational entropy
+     S(trans)- translational entropy
+The entropies will be listed as multiplied by the temperature to get
+units of energy
+
+Electronic entropy                ...      0.00065446 Eh      0.41 kcal/mol
+Vibrational entropy               ...      0.00000000 Eh      0.00 kcal/mol
+Rotational entropy                ...      0.00000000 Eh      0.00 kcal/mol
+Translational entropy             ...      0.01822919 Eh     11.44 kcal/mol
+-----------------------------------------------------------------------
+Final entropy term                ...      0.01888364 Eh     11.85 kcal/mol
+
+
+-------------------
+GIBBS FREE ENERGY
+-------------------
+
+The Gibbs free energy is G = H - T*S
+
+Total enthalpy                    ...  -1639.79208130 Eh 
+Total entropy correction          ...     -0.01888364 Eh    -11.85 kcal/mol
+-----------------------------------------------------------------------
+Final Gibbs free energy         ...  -1639.81096494 Eh
+
+For completeness - the Gibbs free energy minus the electronic energy
+G-E(el)                           ...     -0.01652316 Eh    -10.37 kcal/mol
+
+
+No protocol specified
+
+Timings for individual modules:
+
+Sum of individual times         ...      692.653 sec (=  11.544 min)
+GTO integral calculation        ...        2.166 sec (=   0.036 min)   0.3 %
+SCF iterations                  ...      456.599 sec (=   7.610 min)  65.9 %
+SCF Gradient evaluation         ...        3.254 sec (=   0.054 min)   0.5 %
+Numerical frequency calculation ...      230.635 sec (=   3.844 min)  33.3 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 0 days 0 hours 7 minutes 49 seconds 971 msec

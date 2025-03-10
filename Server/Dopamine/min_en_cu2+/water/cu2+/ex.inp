@@ -1,6 +1,6 @@
 ! PBE D3 def2-TZVP slowconv numfreq PModel NOAUTOSTART cpcm(water)
 %pal nprocs=16 end
-%geom maxiter=150 end
+%geom maxiter=200 end
 %base "cu2+"
 *xyz 2 2
   Cu  2.79467885448518     -2.80596664371773      0.03172156093816

@@ -155,6 +155,10 @@ Your calculation utilizes the auxiliary basis: def2/J
                        Please study these warnings very carefully!
 ================================================================================
 
+WARNING: Old DensityContainer found on disk!
+         Will remove this file - 
+         If you want to keep old densities, please start your calculation with a different basename. 
+
 WARNING: Gradients needed for Numerical Frequencies
   ===> : Setting RunTyp to EnGrad
 
@@ -172,7 +176,7 @@ INFO   : the flag for use of the SHARK integral package has been found!
                                        INPUT FILE
 ================================================================================
 NAME = ex.inp
-|  1> ! PBE D3 def2-TZVP numfreq PModel NOAUTOSTART cpcm(water)
+|  1> ! PBE D3 def2-TZVP numfreq slowconv PModel NOAUTOSTART cpcm(water)
 |  2> %pal nprocs=16 end
 |  3> %geom maxiter=150 end
 |  4> %base "neutral"
@@ -283,7 +287,7 @@ Integral threshold                          ...     2.500000e-11
 Primitive cut-off                           ...     2.500000e-12
 Primitive pair pre-selection threshold      ...     2.500000e-12
 
-Calculating pre-screening integrals         ... done (  0.0 sec) Dimension = 15
+Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 15
 Organizing shell pair data                  ... done (  0.0 sec)
 Shell pair information
 Total number of shell pairs                 ...       120
@@ -348,7 +352,7 @@ General Settings:
 
 Convergence Acceleration:
  DIIS                   CNVDIIS         .... on
-   Start iteration      DIISMaxIt       ....    12
+   Start iteration      DIISMaxIt       ....     0
    Startup error        DIISStart       ....  0.200000
    # of expansion vecs  DIISMaxEq       ....     5
    Bias factor          DIISBfac        ....   1.050
@@ -375,13 +379,13 @@ Convergence Acceleration:
  SOSCF                  CNVSOSCF        .... off
  Level Shifting         CNVShift        .... on
    Level shift para.    LevelShift      ....    0.2500
-   Turn off err/grad.   ShiftErr        ....    0.0010
+   Turn off err/grad.   ShiftErr        ....    0.0000
  Zerner damping         CNVZerner       .... off
  Static damping         CNVDamp         .... on
-   Fraction old density DampFac         ....    0.7000
+   Fraction old density DampFac         ....    0.8500
    Max. Damping (<1)    DampMax         ....    0.9800
    Min. Damping (>=0)   DampMin         ....    0.0000
-   Turn off err/grad.   DampErr         ....    0.1000
+   Turn off err/grad.   DampErr         ....    0.0300
  Fernandez-Rico         CNVRico         .... off
 
 SCF Procedure:
@@ -406,9 +410,9 @@ Time for diagonalization                   ...    0.001 sec
 Threshold for overlap eigenvalues          ... 1.000e-08
 Number of eigenvalues below threshold      ... 0
 Time for construction of square roots      ...    0.001 sec
-Total time needed                          ...    0.001 sec
+Total time needed                          ...    0.002 sec
 
-Time for model grid setup =    0.039 sec
+Time for model grid setup =    0.040 sec
 
 ------------------------------
 INITIAL GUESS: MODEL POTENTIAL
@@ -452,7 +456,7 @@ Total number of grid points                  ...    11336
 Total number of batches                      ...      178
 Average number of points per batch           ...       63
 Average number of grid points per atom       ...    11336
-Time for grid setup =    0.153 sec
+Time for grid setup =    0.144 sec
 
 
 --------------------
@@ -478,22 +482,39 @@ SCF ITERATIONS
 --------------
 ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
                ***  Starting incremental Fock matrix formation  ***
-  0  -1640.1890652117   0.000000000000 0.06163493  0.00227508  0.2460756 0.7000
-  1  -1640.2106524222  -0.021587210417 0.04726288  0.00095475  0.0448993 0.7000
+  0  -1640.1890652117   0.000000000000 0.03081746  0.00113754  0.2460756 0.8500
+  1  -1640.2126058304  -0.023540618674 0.03558613  0.00094240  0.1113649 0.8500
                                ***Turning on DIIS***
-  2  -1640.2198988401  -0.009246417968 0.09784559  0.00200606  0.0452573 0.0000
-  3  -1640.2403266183  -0.020427778152 0.00739608  0.00058562  0.0926338 0.0000
-  4  -1640.2460886987  -0.005762080440 0.00495638  0.00014588  0.0170490 0.0000
-  5  -1640.2463102786  -0.000221579848 0.00180742  0.00003778  0.0021679 0.0000
-  6  -1640.2463150588  -0.000004780254 0.00162223  0.00003112  0.0002435 0.0000
-  7  -1640.2463154460  -0.000000387160 0.00009578  0.00000223  0.0000781 0.0000
-  8  -1640.2463154580  -0.000000012074 0.00000795  0.00000051  0.0000214 0.0000
-  9  -1640.2463154592  -0.000000001198 0.00000411  0.00000010  0.0000019 0.0000
-                            ***DIIS convergence achieved***
+  2  -1640.2182277297  -0.005621899271 0.19517123  0.00406770  0.0218484 0.0000
+  3  -1640.2151847418   0.003042987887 0.00221205  0.00015033  0.1921456 0.8500
+  4  -1640.2206794433  -0.005494701546 0.00324098  0.00018705  0.1717289 0.8500
+  5  -1640.2262788226  -0.005599379277 0.00351845  0.00018508  0.1484809 0.8500
+  6  -1640.2309061364  -0.004627313775 0.00345706  0.00017008  0.1268007 0.8500
+  7  -1640.2345192747  -0.003613138357 0.00503893  0.00019741  0.1076174 0.8500
+  8  -1640.2378584774  -0.003339202668 0.00516921  0.00017863  0.0854586 0.8500
+  9  -1640.2401975501  -0.002339072734 0.00460664  0.00015018  0.0671699 0.8500
+ 10  -1640.2417897571  -0.001592206955 0.00383124  0.00012224  0.0528325 0.8500
+ 11  -1640.2428881445  -0.001098387395 0.00306371  0.00009791  0.0416696 0.8500
+ 12  -1640.2436636177  -0.000775473215 0.00238901  0.00007779  0.0329577 0.8500
+ 13  -1640.2442250314  -0.000561413672 0.01227349  0.00041165  0.0261316 0.0000
+ 14  -1640.2462392860  -0.002014254575 0.00186697  0.00005703  0.0094888 0.0000
+ 15  -1640.2463056993  -0.000066413317 0.00168274  0.00003684  0.0030274 0.0000
+ 16  -1640.2463144030  -0.000008703766 0.00085127  0.00001735  0.0008894 0.0000
+ 17  -1640.2463153438  -0.000000940787 0.00041038  0.00000806  0.0002385 0.0000
+ 18  -1640.2463154454  -0.000000101574 0.00019227  0.00000367  0.0000602 0.0000
+ 19  -1640.2463154572  -0.000000011827 0.00009166  0.00000172  0.0000160 0.0000
+               *** Restarting incremental Fock matrix formation ***
+                                   *** Resetting DIIS ***
+ 20  -1640.2463154589  -0.000000001676 0.00004824  0.00000090  0.0000052 0.0000
+ 21  -1640.2463154590  -0.000000000114 0.00002244  0.00000042  0.0000162 0.0000
+ 22  -1640.2463154592  -0.000000000211 0.00000972  0.00000018  0.0000063 0.0000
+ 23  -1640.2463154593  -0.000000000034 0.00000464  0.00000009  0.0000025 0.0000
+ 24  -1640.2463154593  -0.000000000010 0.00000237  0.00000004  0.0000010 0.0000
+                 **** Energy Check signals convergence ****
 
                *****************************************************
                *                     SUCCESS                       *
-               *           SCF CONVERGED AFTER  10 CYCLES          *
+               *           SCF CONVERGED AFTER  25 CYCLES          *
                *****************************************************
 
 
@@ -506,37 +527,37 @@ Total Energy       :        -1640.24631546 Eh          -44633.37136 eV
 Components:
 Nuclear Repulsion  :            0.00000000 Eh               0.00000 eV
 Electronic Energy  :        -1640.24631546 Eh          -44633.37136 eV
-One Electron Energy:        -2286.90995974 Eh          -62229.98372 eV
-Two Electron Energy:          646.66364428 Eh           17596.61236 eV
-CPCM Dielectric    :           -0.00182811 Eh              -0.04975 eV
+One Electron Energy:        -2286.90996396 Eh          -62229.98383 eV
+Two Electron Energy:          646.66364850 Eh           17596.61247 eV
+CPCM Dielectric    :           -0.00182810 Eh              -0.04975 eV
 
 Virial components:
-Potential Energy   :        -3278.06107973 Eh          -89200.57685 eV
-Kinetic Energy     :         1637.81476427 Eh           44567.20549 eV
+Potential Energy   :        -3278.06108168 Eh          -89200.57690 eV
+Kinetic Energy     :         1637.81476622 Eh           44567.20554 eV
 Virial Ratio       :            2.00148463
 
 
 DFT components:
-N(Alpha)           :       15.000000070386 electrons
-N(Beta)            :       14.000000008518 electrons
-N(Total)           :       29.000000078904 electrons
-E(X)               :      -65.568240087607 Eh       
-E(C)               :       -1.342414308584 Eh       
-E(XC)              :      -66.910654396191 Eh       
+N(Alpha)           :       15.000000070385 electrons
+N(Beta)            :       14.000000008514 electrons
+N(Total)           :       29.000000078899 electrons
+E(X)               :      -65.568240295591 Eh       
+E(C)               :       -1.342414310299 Eh       
+E(XC)              :      -66.910654605890 Eh       
 DFET-embed. en.    :        0.000000000000 Eh       
 CPCM Solvation Model Properties:
-Surface-charge          :           -0.10841478
-Charge-correction       :            0.00182811 Eh               0.04975 eV
+Surface-charge          :           -0.10841446
+Charge-correction       :            0.00182810 Eh               0.04975 eV
 Free-energy (cav+disp)  :  This term is not implemented in the current solvation scheme
 
 ---------------
 SCF CONVERGENCE
 ---------------
 
-  Last Energy change         ...    2.7671e-10  Tolerance :   1.0000e-08
-  Last MAX-Density change    ...    1.3961e-06  Tolerance :   1.0000e-07
-  Last RMS-Density change    ...    3.3721e-08  Tolerance :   5.0000e-09
-  Last DIIS Error            ...    4.4373e-07  Tolerance :   5.0000e-07
+  Last Energy change         ...   -1.9525e-09  Tolerance :   1.0000e-08
+  Last MAX-Density change    ...    1.2934e-06  Tolerance :   1.0000e-07
+  Last RMS-Density change    ...    2.3995e-08  Tolerance :   5.0000e-09
+  Last DIIS Error            ...    4.1667e-07  Tolerance :   5.0000e-07
 
              **** THE GBW FILE WAS UPDATED (neutral.gbw) ****
              **** DENSITY neutral.scfp WAS UPDATED ****
@@ -561,10 +582,10 @@ ORBITAL ENERGIES
                  SPIN UP ORBITALS
   NO   OCC          E(Eh)            E(eV) 
    0   1.0000    -321.454527     -8747.2224 
-   1   1.0000     -38.214908     -1039.8805 
-   2   1.0000     -33.506456      -911.7570 
-   3   1.0000     -33.506456      -911.7570 
-   4   1.0000     -33.506456      -911.7570 
+   1   1.0000     -38.214907     -1039.8805 
+   2   1.0000     -33.506455      -911.7570 
+   3   1.0000     -33.506455      -911.7570 
+   4   1.0000     -33.506455      -911.7570 
    5   1.0000      -4.047639      -110.1419 
    6   1.0000      -2.583663       -70.3050 
    7   1.0000      -2.583663       -70.3050 
@@ -574,11 +595,11 @@ ORBITAL ENERGIES
   11   1.0000      -0.163432        -4.4472 
   12   1.0000      -0.163432        -4.4472 
   13   1.0000      -0.163432        -4.4472 
-  14   1.0000      -0.149256        -4.0614 
+  14   1.0000      -0.149256        -4.0615 
   15   0.0000       0.069919         1.9026 
   16   0.0000       0.069919         1.9026 
   17   0.0000       0.069919         1.9026 
-  18   0.0000       0.089326         2.4307 
+  18   0.0000       0.089325         2.4307 
   19   0.0000       0.180062         4.8997 
   20   0.0000       0.180062         4.8997 
   21   0.0000       0.180062         4.8997 
@@ -589,15 +610,15 @@ ORBITAL ENERGIES
   26   0.0000       0.862364        23.4661 
   27   0.0000       0.862364        23.4661 
   28   0.0000       0.862364        23.4661 
-  29   0.0000       2.004380        54.5419 
-  30   0.0000       2.004380        54.5419 
-  31   0.0000       2.004380        54.5419 
+  29   0.0000       2.004379        54.5419 
+  30   0.0000       2.004379        54.5419 
+  31   0.0000       2.004379        54.5419 
   32   0.0000       2.830447        77.0204 
   33   0.0000       3.575704        97.2999 
   34   0.0000       3.575704        97.2999 
   35   0.0000       3.575704        97.2999 
-  36   0.0000       3.575704        97.2999 
-  37   0.0000       3.575704        97.2999 
+  36   0.0000       3.575705        97.2999 
+  37   0.0000       3.575705        97.2999 
   38   0.0000       5.696365       155.0060 
   39   0.0000       5.696365       155.0060 
   40   0.0000       5.696365       155.0060 
@@ -613,20 +634,20 @@ ORBITAL ENERGIES
    2   1.0000     -33.507359      -911.7816 
    3   1.0000     -33.507359      -911.7816 
    4   1.0000     -33.507359      -911.7816 
-   5   1.0000      -4.049365      -110.1888 
-   6   1.0000      -2.584817       -70.3365 
-   7   1.0000      -2.584817       -70.3365 
-   8   1.0000      -2.584817       -70.3365 
+   5   1.0000      -4.049366      -110.1888 
+   6   1.0000      -2.584818       -70.3365 
+   7   1.0000      -2.584818       -70.3365 
+   8   1.0000      -2.584818       -70.3365 
    9   1.0000      -0.158170        -4.3040 
   10   1.0000      -0.158170        -4.3040 
   11   1.0000      -0.158170        -4.3040 
   12   1.0000      -0.158170        -4.3040 
   13   1.0000      -0.158170        -4.3040 
   14   0.0000      -0.113904        -3.0995 
-  15   0.0000       0.107523         2.9259 
-  16   0.0000       0.107523         2.9259 
-  17   0.0000       0.107523         2.9259 
-  18   0.0000       0.119320         3.2469 
+  15   0.0000       0.107524         2.9259 
+  16   0.0000       0.107524         2.9259 
+  17   0.0000       0.107524         2.9259 
+  18   0.0000       0.119321         3.2469 
   19   0.0000       0.211045         5.7428 
   20   0.0000       0.211045         5.7428 
   21   0.0000       0.211045         5.7428 
@@ -637,9 +658,9 @@ ORBITAL ENERGIES
   26   0.0000       0.895447        24.3664 
   27   0.0000       0.895447        24.3664 
   28   0.0000       0.895447        24.3664 
-  29   0.0000       2.018572        54.9281 
-  30   0.0000       2.018572        54.9281 
-  31   0.0000       2.018572        54.9281 
+  29   0.0000       2.018573        54.9282 
+  30   0.0000       2.018573        54.9282 
+  31   0.0000       2.018573        54.9282 
   32   0.0000       2.840058        77.2819 
   33   0.0000       3.587053        97.6087 
   34   0.0000       3.587053        97.6087 
@@ -688,12 +709,12 @@ CHARGE
 
 SPIN
   0 Cus       :     1.000000  s :     1.000000
-      pz      :    -0.000000  p :    -0.000000
-      px      :    -0.000000
-      py      :    -0.000000
-      dz2     :    -0.000000  d :     0.000000
-      dxz     :     0.000000
-      dyz     :     0.000000
+      pz      :    -0.000000  p :     0.000000
+      px      :     0.000000
+      py      :     0.000000
+      dz2     :    -0.000000  d :    -0.000000
+      dxz     :    -0.000000
+      dyz     :    -0.000000
       dx2y2   :     0.000000
       dxy     :     0.000000
       f0      :    -0.000000  f :    -0.000000
@@ -737,12 +758,12 @@ CHARGE
 
 SPIN
   0 Cus       :     1.000000  s :     1.000000
-      pz      :    -0.000000  p :    -0.000000
-      px      :    -0.000000
-      py      :    -0.000000
-      dz2     :    -0.000000  d :     0.000000
-      dxz     :     0.000000
-      dyz     :     0.000000
+      pz      :    -0.000000  p :     0.000000
+      px      :     0.000000
+      py      :     0.000000
+      dz2     :    -0.000000  d :    -0.000000
+      dxz     :    -0.000000
+      dyz     :    -0.000000
       dx2y2   :     0.000000
       dxy     :     0.000000
       f0      :    -0.000000  f :    -0.000000
@@ -775,26 +796,26 @@ SPIN
 TIMINGS
 -------
 
-Total SCF time: 0 days 0 hours 0 min 1 sec 
+Total SCF time: 0 days 0 hours 0 min 4 sec 
 
-Total time                  ....       1.540 sec
-Sum of individual times     ....       1.446 sec  ( 93.9%)
+Total time                  ....       4.012 sec
+Sum of individual times     ....       3.900 sec  ( 97.2%)
 
-Fock matrix formation       ....       1.169 sec  ( 75.9%)
-  Split-RI-J                ....       0.037 sec  (  3.1% of F)
-  XC integration            ....       0.079 sec  (  6.8% of F)
-    Basis function eval.    ....       0.011 sec  ( 13.6% of XC)
-    Density eval.           ....       0.010 sec  ( 12.8% of XC)
-    XC-Functional eval.     ....       0.007 sec  (  8.8% of XC)
-    XC-Potential eval.      ....       0.008 sec  ( 10.5% of XC)
-Diagonalization             ....       0.034 sec  (  2.2%)
-Density matrix formation    ....       0.002 sec  (  0.1%)
-Population analysis         ....       0.003 sec  (  0.2%)
-Initial guess               ....       0.007 sec  (  0.5%)
+Fock matrix formation       ....       2.914 sec  ( 72.6%)
+  Split-RI-J                ....       0.134 sec  (  4.6% of F)
+  XC integration            ....       0.268 sec  (  9.2% of F)
+    Basis function eval.    ....       0.030 sec  ( 11.4% of XC)
+    Density eval.           ....       0.033 sec  ( 12.4% of XC)
+    XC-Functional eval.     ....       0.022 sec  (  8.3% of XC)
+    XC-Potential eval.      ....       0.025 sec  (  9.2% of XC)
+Diagonalization             ....       0.088 sec  (  2.2%)
+Density matrix formation    ....       0.005 sec  (  0.1%)
+Population analysis         ....       0.004 sec  (  0.1%)
+Initial guess               ....       0.009 sec  (  0.2%)
 Orbital Transformation      ....       0.000 sec  (  0.0%)
 Orbital Orthonormalization  ....       0.000 sec  (  0.0%)
-DIIS solution               ....       0.040 sec  (  2.6%)
-Grid generation             ....       0.192 sec  ( 12.5%)
+DIIS solution               ....       0.696 sec  ( 17.3%)
+Grid generation             ....       0.184 sec  (  4.6%)
 
 Maximum memory used throughout the entire SCF-calculation: 7.5 MB
 
@@ -830,7 +851,7 @@ Dispersion correction            0.000000000
 
 
 -------------------------   --------------------
-FINAL SINGLE POINT ENERGY     -1640.246315458969
+FINAL SINGLE POINT ENERGY     -1640.246315461231
 -------------------------   --------------------
 
 No protocol specified
@@ -856,7 +877,7 @@ SHARK Integral package           ... ON
 
 Nuc. rep. gradient       (SHARK) ... done (  0.0 sec)
 HCore & Overlap gradient (SHARK) ... done (  0.0 sec)
-RI-J gradient            (SHARK) ... done (  0.1 sec)
+RI-J gradient            (SHARK) ... done (  0.2 sec)
 Exchange-correlation gradient    ... done
 Dispersion correction            ... done
 
@@ -880,14 +901,14 @@ MAX gradient                       ...    0.0000000002
 TIMINGS
 -------
 
-Total SCF gradient time            ...        0.389 sec
+Total SCF gradient time            ...        0.470 sec
 
-One electron gradient       ....       0.002 sec  (  0.6%)
-RI-J Coulomb gradient       ....       0.119 sec  ( 30.6%)
-XC gradient                 ....       0.013 sec  (  3.2%)
-CPCM gradient               ....       0.059 sec  ( 15.1%)
+One electron gradient       ....       0.003 sec  (  0.6%)
+RI-J Coulomb gradient       ....       0.183 sec  ( 38.8%)
+XC gradient                 ....       0.022 sec  (  4.6%)
+CPCM gradient               ....       0.061 sec  ( 12.9%)
    A-Matrix (El+Nuc)        ....       0.000 sec  (  0.0%)
-   Potential                ....       0.059 sec  ( 15.1%)
+   Potential                ....       0.060 sec  ( 12.8%)
 
 Maximum memory used throughout the entire SCFGRAD-calculation: 25.4 MB
 
@@ -916,10 +937,10 @@ The origin for moment calculation is the CENTER OF MASS  = ( 5.281178, -5.302508
 DIPOLE MOMENT
 -------------
                                 X             Y             Z
-Electronic contribution:      0.00000      -0.00000       0.00000
+Electronic contribution:     -0.00000       0.00000       0.00000
 Nuclear contribution   :      0.00000      -0.00000       0.00000
                         -----------------------------------------
-Total Dipole Moment    :      0.00000      -0.00000       0.00000
+Total Dipole Moment    :     -0.00000       0.00000       0.00000
                         -----------------------------------------
 Magnitude (a.u.)       :      0.00000
 Magnitude (Debye)      :      0.00000
@@ -934,8 +955,8 @@ Rotational constants in cm-1:     0.000000     0.000000     0.000000
 Rotational constants in MHz :     0.000000     0.000000     0.000000 
 
  Dipole components along the rotational axes: 
-x,y,z [a.u.] :     0.000000     0.000000     0.000000 
-x,y,z [Debye]:     0.000000     0.000000     0.000000 
+x,y,z [a.u.] :    -0.000000     0.000000    -0.000000 
+x,y,z [Debye]:    -0.000000     0.000000    -0.000000 
 
  
 
@@ -962,11 +983,11 @@ AutoCI program output          ... >neutral.lastautoci
 No protocol specified
 No protocol specified
 No protocol specified
-	<< Calculating on displaced geometry   6 (of   6) >>
-	<< Calculating on displaced geometry   1 (of   6) >>
 	<< Calculating on displaced geometry   5 (of   6) >>
-	<< Calculating on displaced geometry   2 (of   6) >>
+	<< Calculating on displaced geometry   1 (of   6) >>
 	<< Calculating on displaced geometry   4 (of   6) >>
+	<< Calculating on displaced geometry   6 (of   6) >>
+	<< Calculating on displaced geometry   2 (of   6) >>
 	<< Calculating on displaced geometry   3 (of   6) >>
 
 -----------------------
@@ -1120,10 +1141,10 @@ No protocol specified
 
 Timings for individual modules:
 
-Sum of individual times         ...       14.971 sec (=   0.250 min)
-GTO integral calculation        ...        1.318 sec (=   0.022 min)   8.8 %
-SCF iterations                  ...        4.022 sec (=   0.067 min)  26.9 %
-SCF Gradient evaluation         ...        1.977 sec (=   0.033 min)  13.2 %
-Numerical frequency calculation ...        7.654 sec (=   0.128 min)  51.1 %
+Sum of individual times         ...       21.629 sec (=   0.360 min)
+GTO integral calculation        ...        1.417 sec (=   0.024 min)   6.5 %
+SCF iterations                  ...        8.416 sec (=   0.140 min)  38.9 %
+SCF Gradient evaluation         ...        2.012 sec (=   0.034 min)   9.3 %
+Numerical frequency calculation ...        9.783 sec (=   0.163 min)  45.2 %
                              ****ORCA TERMINATED NORMALLY****
-TOTAL RUN TIME: 0 days 0 hours 0 minutes 12 seconds 21 msec
+TOTAL RUN TIME: 0 days 0 hours 0 minutes 16 seconds 772 msec

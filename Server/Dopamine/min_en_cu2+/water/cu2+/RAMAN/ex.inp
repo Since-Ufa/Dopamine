@@ -1,8 +1,0 @@
-! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
-%pal nprocs=16 end
-%geom maxiter=150 end
-%elprop Polar 1 end
-%base "cu2+"
-*xyz 2 2
-  Cu  2.79467885448518     -2.80596664371773      0.03172156093816
-*
