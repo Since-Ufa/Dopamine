@@ -1,6 +1,19 @@
-! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+# opt in PBE-D3/def2tzvp
+
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
 %pal nprocs=16 end
-%geom maxiter=150 end
 %base "neutral"
 *xyz 0 2
   C   -0.00614811122097     -0.82893725347370     -0.58637597993230
@@ -28,11 +41,24 @@
   Cu  -4.37737036377797     -0.84897520485248      1.70395034878802
 *
 
+
+
 $new_job
 
-! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
 %pal nprocs=16 end
-%geom maxiter=150 end
 %base "protonated"
 *xyz 1 2
   C   -1.19045091050516     -1.61001719193666      0.22247098560725
@@ -61,11 +87,24 @@ $new_job
   Cu  -4.45812964780624      1.12140837213344      1.51848307432370
 *
 
+
+
 $new_job
 
-! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
 %pal nprocs=16 end
-%geom maxiter=150 end
 %base "deprotonated"
 *xyz -1 2
   O   2.33277325832595     -1.91989475780160     -0.11089043041771
@@ -92,11 +131,24 @@ $new_job
   Cu  4.90885034816680     -0.54958357290292     -0.78193044884687
 *
 
+
+
 $new_job
 
-! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
 %pal nprocs=16 end
-%geom maxiter=150 end
 %base "2x_deprotonated"
 *xyz -2 2
   O   -2.28203318375591     -2.00211639444840      0.23779352929311
@@ -122,11 +174,24 @@ $new_job
   Cu  -4.18135664032477     -1.45570233190042     -0.39561391479035
 *
 
+
+
 $new_job
 
-! PBE D3 def2-TZVP opt numfreq PModel NOAUTOSTART cpcm(water)
+! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+
+%tddft
+ nroots 12
+ maxdim 60
+ triplets false
+end
+
+%output
+Print[ P_Basis ] 2
+Print[ P_MOs ] 1
+end
+
 %pal nprocs=16 end
-%geom maxiter=150 end
 %base "zwitterione"
 *xyz 0 2
   O   2.68755082528105     -2.28815399110541     -0.03157657258383
