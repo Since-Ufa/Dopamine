@@ -1,0 +1,146 @@
+-------------------------------------------------------------
+----------------------- !PROPERTIES! ------------------------
+-------------------------------------------------------------
+# -----------------------------------------------------------
+$ PAL_Flags
+   description: The PAL Flags
+   geom. index: 1
+   prop. index: 1
+        Diskflag:     2
+# -----------------------------------------------------------
+$ SCF_Energy
+   description: The SCF energy
+   geom. index: 1
+   prop. index: 1
+        SCF Energy:    -1640.4461417888
+# -----------------------------------------------------------
+$ DFT_Energy
+   description: The DFT energy
+   geom. index: 1
+   prop. index: 1
+   Number of Alpha Electrons                 15.0000001340 
+   Number of Beta  Electrons                 14.0000000085 
+   Total number of  Electrons                29.0000001425 
+   Exchange energy                            0.0000000000 
+   Correlation energy                         0.0000000000 
+   Correlation energy NL                      0.0000000000 
+   Exchange-Correlation energy              -31.7429238127 
+   Embedding correction                       0.0000000000 
+   Total DFT Energy (No VdW correction)   -1640.4461417888 
+# -----------------------------------------------------------
+$ Solvation_Details
+   description: Details concerning solvation
+   geom. index: 1
+   prop. index: 1
+     Epsilon:               80.4000000000
+     Refrac:                 1.3300000000
+     RSolv:                  1.3000000000
+     Surface Type:                      2
+     Number of Points:                110
+     Surface Area:         126.6561159650
+     Dielectric Energy:     -0.0024059241
+# -----------------------------------------------------------
+$ CIS_ABS
+   description: The CIS absorption spectrum 
+   geom. index: 1
+   prop. index: 1
+        Number of roots:  12
+        The CIS Absorption Spectrum :
+                  0          1          2          3          4          5    
+      0       0.080067   0.000000   0.000000   0.000000  -0.000000   0.000000
+      1       0.080067   0.000000   0.000000   0.000000   0.000000   0.000000
+      2       0.080067   0.000000   0.000000  -0.000000  -0.000000  -0.000000
+      3       0.080067   0.000000   0.000000  -0.000000   0.000000  -0.000000
+      4       0.080067   0.000000   0.000000  -0.000000  -0.000000   0.000000
+      5       0.204106   0.210334   1.545773  -0.239648  -0.910472   0.812024
+      6       0.204106   0.210331   1.545748   1.078641  -0.544748  -0.292459
+      7       0.204106   0.210331   1.545747  -0.569957  -0.648113  -0.894900
+      8       0.244868   0.000000   0.000000   0.000000   0.000002  -0.000002
+      9       0.273818   0.000432   0.002367  -0.039231  -0.014704  -0.024736
+     10       0.273818   0.000432   0.002367   0.027368  -0.031989  -0.024390
+     11       0.273818   0.000433   0.002370  -0.008897  -0.033599   0.034083
+        The CIS Absorption Spectrum (Velocity):
+                  0          1          2          3          4          5    
+      0       0.080067   0.000000   0.000000  -0.000000   0.000000  -0.000000
+      1       0.080067   0.000000   0.000000  -0.000000  -0.000000  -0.000000
+      2       0.080067   0.000000   0.000000   0.000000   0.000000   0.000000
+      3       0.080067   0.000000   0.000000   0.000000  -0.000000   0.000000
+      4       0.080067   0.000000   0.000000   0.000000   0.000000  -0.000000
+      5       0.204106   0.011044   0.003381   0.011208   0.042582  -0.037978
+      6       0.204106   0.011044   0.003381  -0.050447   0.025477   0.013678
+      7       0.204106   0.011044   0.003381   0.026656   0.030312   0.041854
+      8       0.244868   0.000000   0.000000  -0.000000  -0.000001   0.000001
+      9       0.273818   0.001374   0.000564   0.019157   0.007180   0.012079
+     10       0.273818   0.001374   0.000564  -0.013364   0.015621   0.011910
+     11       0.273818   0.001374   0.000565   0.004343   0.016399  -0.016636
+# -----------------------------------------------------------
+$ CIS_CD
+   description: The CIS CD spectrum 
+   geom. index: 1
+   prop. index: 1
+        Number of roots:  12
+        The CIS CD Spectrum:
+                  0          1          2          3    
+      0      -0.000000  -0.000000   0.000001   0.000000
+      1      -0.000000  -0.000001   0.000000  -0.000000
+      2       0.000000   0.000013  -0.000002   0.000001
+      3      -0.000000  -0.000000  -0.000009  -0.000009
+      4       0.000000  -0.000000  -0.000001  -0.000001
+      5      -0.000000   0.000000  -0.000000  -0.000000
+      6       0.000000   0.000001   0.000001   0.000001
+      7      -0.000000   0.000001  -0.000001  -0.000000
+      8       0.000000   0.000000  -0.000000  -0.000000
+      9       0.000000  -0.000000   0.000000   0.000000
+     10      -0.000000  -0.000000  -0.000000  -0.000000
+     11      -0.000000  -0.000000   0.000000   0.000000
+# -----------------------------------------------------------
+$ Calculation_Info
+   description: Details of the calculation
+   geom. index: 1
+   prop. index: 1
+     Multiplicity:                          2
+     Charge:                                0
+     number of atoms:                       1
+     number of electrons:                   0
+     number of frozen core electrons:       1
+     number of correlated electrons:        0
+     number of basis functions:             45
+     number of aux C basis functions:       0
+     number of aux J basis functions:       91
+     number of aux JK basis functions:      0
+     number of aux CABS basis functions:    0
+     Total Energy                           -1640.366075
+# -----------------------------------------------------------
+$ SCF_Electric_Properties
+   description: The SCF Calculated Electric Properties
+   geom. index: 1
+   prop. index: 1
+       Filename                          : cu0.scfp 
+       Do Dipole Moment Calculation      : true 
+       Do Quadrupole Moment Calculation  : false 
+       Do Polarizability Calculation     : false 
+** Dipole moment part of electric properties **
+        Magnitude of dipole moment (Debye) :        0.0000239516
+        Electronic Contribution:
+                  0    
+      0       0.000001
+      1       0.000006
+      2      -0.000007
+        Nuclear Contribution:
+                  0    
+      0       0.000000
+      1      -0.000000
+      2       0.000000
+        Total Dipole moment:
+                  0    
+      0       0.000001
+      1       0.000006
+      2      -0.000007
+# -------------------------------------------------------------
+----------------------- !GEOMETRIES! ------------------------
+# -------------------------------------------------------------
+------------------------ !GEOMETRY! -------------------------
+    Number of atoms:    1 
+    Geometry Index:     1 
+    Coordinates:
+               0 Cu     2.794678854485   -2.805966643718    0.031721560938

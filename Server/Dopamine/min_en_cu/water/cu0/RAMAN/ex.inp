@@ -1,4 +1,4 @@
-! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) numfreq
 %pal nprocs=16 end
 %geom maxiter=150 end
 %elprop Polar 1 end

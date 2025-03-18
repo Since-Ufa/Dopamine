@@ -1,0 +1,1662 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                                            #,                                       
+                                            ###                                      
+                                            ####                                     
+                                            #####                                    
+                                            ######                                   
+                                           ########,                                 
+                                     ,,################,,,,,                         
+                               ,,#################################,,                 
+                          ,,##########################################,,             
+                       ,#########################################, ''#####,          
+                    ,#############################################,,   '####,        
+                  ,##################################################,,,,####,       
+                ,###########''''           ''''###############################       
+              ,#####''   ,,,,##########,,,,          '''####'''          '####       
+            ,##' ,,,,###########################,,,                        '##       
+           ' ,,###''''                  '''############,,,                           
+         ,,##''                                '''############,,,,        ,,,,,,###''
+      ,#''                                            '''#######################'''  
+     '                                                          ''''####''''         
+             ,#######,   #######,   ,#######,      ##                                
+            ,#'     '#,  ##    ##  ,#'     '#,    #''#        ######   ,####,        
+            ##       ##  ##   ,#'  ##            #'  '#       #        #'  '#        
+            ##       ##  #######   ##           ,######,      #####,   #    #        
+            '#,     ,#'  ##    ##  '#,     ,#' ,#      #,         ##   #,  ,#        
+             '#######'   ##     ##  '#######'  #'      '#     #####' # '####'        
+
+
+
+                  #######################################################
+                  #                        -***-                        #
+                  #          Department of theory and spectroscopy      #
+                  #    Directorship and core code : Frank Neese         #
+                  #        Max Planck Institute fuer Kohlenforschung    #
+                  #                Kaiser Wilhelm Platz 1               #
+                  #                 D-45470 Muelheim/Ruhr               #
+                  #                      Germany                        #
+                  #                                                     #
+                  #                  All rights reserved                #
+                  #                        -***-                        #
+                  #######################################################
+
+
+                         Program Version 5.0.2 -  RELEASE  -
+
+
+ With contributions from (in alphabetic order):
+   Daniel Aravena         : Magnetic Suceptibility
+   Michael Atanasov       : Ab Initio Ligand Field Theory (pilot matlab implementation)
+   Alexander A. Auer      : GIAO ZORA, VPT2 properties, NMR spectrum
+   Ute Becker             : Parallelization
+   Giovanni Bistoni       : ED, misc. LED, open-shell LED, HFLD
+   Martin Brehm           : Molecular dynamics
+   Dmytro Bykov           : SCF Hessian
+   Vijay G. Chilkuri      : MRCI spin determinant printing, contributions to CSF-ICE
+   Dipayan Datta          : RHF DLPNO-CCSD density
+   Achintya Kumar Dutta   : EOM-CC, STEOM-CC
+   Dmitry Ganyushin       : Spin-Orbit,Spin-Spin,Magnetic field MRCI
+   Miquel Garcia          : C-PCM and meta-GGA Hessian, CC/C-PCM, Gaussian charge scheme
+   Yang Guo               : DLPNO-NEVPT2, F12-NEVPT2, CIM, IAO-localization
+   Andreas Hansen         : Spin unrestricted coupled pair/coupled cluster methods
+   Benjamin Helmich-Paris : MC-RPA, TRAH-SCF, COSX integrals
+   Lee Huntington         : MR-EOM, pCC
+   Robert Izsak           : Overlap fitted RIJCOSX, COSX-SCS-MP3, EOM
+   Marcus Kettner         : VPT2
+   Christian Kollmar      : KDIIS, OOCD, Brueckner-CCSD(T), CCSD density, CASPT2, CASPT2-K
+   Simone Kossmann        : Meta GGA functionals, TD-DFT gradient, OOMP2, MP2 Hessian
+   Martin Krupicka        : Initial AUTO-CI
+   Lucas Lang             : DCDCAS
+   Marvin Lechner         : AUTO-CI (C++ implementation), FIC-MRCC
+   Dagmar Lenk            : GEPOL surface, SMD
+   Dimitrios Liakos       : Extrapolation schemes; Compound Job, initial MDCI parallelization
+   Dimitrios Manganas     : Further ROCIS development; embedding schemes
+   Dimitrios Pantazis     : SARC Basis sets
+   Anastasios Papadopoulos: AUTO-CI, single reference methods and gradients
+   Taras Petrenko         : DFT Hessian,TD-DFT gradient, ASA, ECA, R-Raman, ABS, FL, XAS/XES, NRVS
+   Peter Pinski           : DLPNO-MP2, DLPNO-MP2 Gradient
+   Christoph Reimann      : Effective Core Potentials
+   Marius Retegan         : Local ZFS, SOC
+   Christoph Riplinger    : Optimizer, TS searches, QM/MM, DLPNO-CCSD(T), (RO)-DLPNO pert. Triples
+   Tobias Risthaus        : Range-separated hybrids, TD-DFT gradient, RPA, STAB
+   Michael Roemelt        : Original ROCIS implementation
+   Masaaki Saitow         : Open-shell DLPNO-CCSD energy and density
+   Barbara Sandhoefer     : DKH picture change effects
+   Avijit Sen             : IP-ROCIS
+   Kantharuban Sivalingam : CASSCF convergence, NEVPT2, FIC-MRCI
+   Bernardo de Souza      : ESD, SOC TD-DFT
+   Georgi Stoychev        : AutoAux, RI-MP2 NMR, DLPNO-MP2 response
+   Willem Van den Heuvel  : Paramagnetic NMR
+   Boris Wezisla          : Elementary symmetry handling
+   Frank Wennmohs         : Technical directorship
+
+
+ We gratefully acknowledge several colleagues who have allowed us to
+ interface, adapt or use parts of their codes:
+   Stefan Grimme, W. Hujo, H. Kruse, P. Pracht,  : VdW corrections, initial TS optimization,
+                  C. Bannwarth, S. Ehlert          DFT functionals, gCP, sTDA/sTD-DF
+   Ed Valeev, F. Pavosevic, A. Kumar             : LibInt (2-el integral package), F12 methods
+   Garnet Chan, S. Sharma, J. Yang, R. Olivares  : DMRG
+   Ulf Ekstrom                                   : XCFun DFT Library
+   Mihaly Kallay                                 : mrcc  (arbitrary order and MRCC methods)
+   Jiri Pittner, Ondrej Demel                    : Mk-CCSD
+   Frank Weinhold                                : gennbo (NPA and NBO analysis)
+   Christopher J. Cramer and Donald G. Truhlar   : smd solvation model
+   Lars Goerigk                                  : TD-DFT with DH, B97 family of functionals
+   V. Asgeirsson, H. Jonsson                     : NEB implementation
+   FAccTs GmbH                                   : IRC, NEB, NEB-TS, DLPNO-Multilevel, CI-OPT
+                                                   MM, QMMM, 2- and 3-layer-ONIOM, Crystal-QMMM,
+                                                   LR-CPCM, SF, NACMEs, symmetry and pop. for TD-DFT,
+                                                   nearIR, NL-DFT gradient (VV10), updates on ESD,
+                                                   ML-optimized integration grids
+   S Lehtola, MJT Oliveira, MAL Marques          : LibXC Library
+   Liviu Ungur et al                             : ANISO software
+
+
+ Your calculation uses the libint2 library for the computation of 2-el integrals
+ For citations please refer to: http://libint.valeyev.net
+
+ Your ORCA version has been built with support for libXC version: 5.1.0
+ For citations please refer to: https://tddft.org/programs/libxc/
+
+ This ORCA versions uses:
+   CBLAS   interface :  Fast vector & matrix operations
+   LAPACKE interface :  Fast linear algebra routines
+   SCALAPACK package :  Parallel linear algebra routines
+   Shared memory     :  Shared parallel matrices
+   BLAS/LAPACK       :  OpenBLAS 0.3.15  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell SINGLE_THREADED
+        Core in use  :  Haswell
+   Copyright (c) 2011-2014, The OpenBLAS Project
+
+
+Your calculation utilizes the atom-pairwise dispersion correction
+with the Becke-Johnson damping scheme (D3BJ)
+Cite in your paper:
+S.Grimme, S.Ehrlich, L.Goerigk, J Comput Chem, (2011), 32, 1456–1465 
+S.Grimme, J.Antony, S.Ehrlich and H.Krieg, J.Chem.Phys., 132, (2010), 154104 
+   
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: your system is open-shell and RHF/RKS was chosen
+  ===> : WILL SWITCH to UHF/UKS
+
+
+WARNING: The environment variable RSH_COMMAND is not set!
+  ===> : All Displacements for the Numerical Hessian or Gradient calculation
+         will be started on localhost
+
+INFO   : the flag for use of the SHARK integral package has been found!
+
+Your calculation utilizes the atom-pairwise dispersion correction
+with the Becke-Johnson damping scheme (D3BJ)
+Cite in your paper:
+S.Grimme, S.Ehrlich, L.Goerigk, J Comput Chem, (2011), 32, 1456–1465 
+S.Grimme, J.Antony, S.Ehrlich and H.Krieg, J.Chem.Phys., 132, (2010), 154104 
+   
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: MOInp is set but Guess=PModel. MOInp will be ignored!
+         To read the initial guess from a file you must also specify
+         'MORead' in the simple input or 'Guess MORead' in the %scf block
+
+
+WARNING: The environment variable RSH_COMMAND is not set!
+  ===> : All Displacements for the Numerical Hessian or Gradient calculation
+         will be started on localhost
+
+INFO   : the flag for use of the SHARK integral package has been found!
+
+Your calculation utilizes the atom-pairwise dispersion correction
+with the Becke-Johnson damping scheme (D3BJ)
+Cite in your paper:
+S.Grimme, S.Ehrlich, L.Goerigk, J Comput Chem, (2011), 32, 1456–1465 
+S.Grimme, J.Antony, S.Ehrlich and H.Krieg, J.Chem.Phys., 132, (2010), 154104 
+   
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: MOInp is set but Guess=PModel. MOInp will be ignored!
+         To read the initial guess from a file you must also specify
+         'MORead' in the simple input or 'Guess MORead' in the %scf block
+
+
+WARNING: The environment variable RSH_COMMAND is not set!
+  ===> : All Displacements for the Numerical Hessian or Gradient calculation
+         will be started on localhost
+
+INFO   : the flag for use of the SHARK integral package has been found!
+
+Your calculation utilizes the atom-pairwise dispersion correction
+with the Becke-Johnson damping scheme (D3BJ)
+Cite in your paper:
+S.Grimme, S.Ehrlich, L.Goerigk, J Comput Chem, (2011), 32, 1456–1465 
+S.Grimme, J.Antony, S.Ehrlich and H.Krieg, J.Chem.Phys., 132, (2010), 154104 
+   
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: MOInp is set but Guess=PModel. MOInp will be ignored!
+         To read the initial guess from a file you must also specify
+         'MORead' in the simple input or 'Guess MORead' in the %scf block
+
+
+WARNING: The environment variable RSH_COMMAND is not set!
+  ===> : All Displacements for the Numerical Hessian or Gradient calculation
+         will be started on localhost
+
+INFO   : the flag for use of the SHARK integral package has been found!
+
+Your calculation utilizes the atom-pairwise dispersion correction
+with the Becke-Johnson damping scheme (D3BJ)
+Cite in your paper:
+S.Grimme, S.Ehrlich, L.Goerigk, J Comput Chem, (2011), 32, 1456–1465 
+S.Grimme, J.Antony, S.Ehrlich and H.Krieg, J.Chem.Phys., 132, (2010), 154104 
+   
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: MOInp is set but Guess=PModel. MOInp will be ignored!
+         To read the initial guess from a file you must also specify
+         'MORead' in the simple input or 'Guess MORead' in the %scf block
+
+
+WARNING: The environment variable RSH_COMMAND is not set!
+  ===> : All Displacements for the Numerical Hessian or Gradient calculation
+         will be started on localhost
+
+INFO   : the flag for use of the SHARK integral package has been found!
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = ex.inp
+|  1> # preopt in PBE-D3
+|  2> 
+|  3> ! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+|  4> %pal nprocs=16 end
+|  5> %geom maxiter=150 end
+|  6> %elprop Polar 1 end
+|  7> %base "neutral"
+|  8> *xyz 0 2
+|  9>   C   0.36155783373033     -0.84266425160740      0.10632195889037
+| 10>   C   0.23789774949207      1.54494914410031      1.56795492142917
+| 11>   C   -0.66775958904524     -0.64346920930404      1.03245414283843
+| 12>   C   1.33789228613758      0.13449534941839     -0.12219042255710
+| 13>   C   1.27354923055793      1.33545573968636      0.61913985026386
+| 14>   C   -0.74377974909341      0.55570993215416      1.76519937912846
+| 15>   O   -1.74633608161699      0.77395951834365      2.65987288391575
+| 16>   O   -1.64583685641164     -1.55940566715766      1.30427441964882
+| 17>   C   2.39771159183331     -0.06595773511273     -1.17750707364268
+| 18>   C   3.84070900242522     -0.16168879777872     -0.67871407914250
+| 19>   N   4.08022408216829     -1.39108929045118      0.12137827091675
+| 20>   H   0.39077058447984     -1.78224872322530     -0.45202203861472
+| 21>   H   0.12148806358757      2.50957478444296      2.06531316868932
+| 22>   H   1.96677506058865      2.14900737204258      0.40055496246785
+| 23>   H   -2.30411539887919     -0.02982944830508      2.69413650921312
+| 24>   H   -1.51752226014466     -2.35819385962701      0.75882386211176
+| 25>   H   2.36089127059371      0.77911538789538     -1.88408321066948
+| 26>   H   2.16367866953878     -0.97112900210521     -1.76066765256794
+| 27>   H   4.51035102303409     -0.14004189075873     -1.55368775095088
+| 28>   H   4.08611217202722      0.70437545789363     -0.04353830502556
+| 29>   H   5.08839418696169     -1.57220787574126      0.15233941399281
+| 30>   H   3.67193533651437     -2.19592274367158     -0.36519864345271
+| 31>   Cu  3.55686032453669     -1.31765653842503      2.10124081602754
+| 32>   Cu  2.07919482733419     -1.35114682912646      4.05258418907129
+| 33>   Cu  3.80643232372844     -2.99307831790315      4.02716385687743
+| 34>   Cu  4.70824845069464     -0.81266816403527      4.27997858946784
+| 35>   Cu  1.85648795280153      0.56388092910702      2.63090654613730
+| 36>   Cu  4.28297988557985      1.02222984489070      2.86797200493982
+| 37>   Cu  2.90634885631299      0.70936965027381      4.92704028900434
+| 38>   Cu  3.32100948853193     -1.40319465091311      6.15135939559137
+| 39> *
+| 40> 
+| 41> 
+| 42> $new_job
+| 43> 
+| 44> ! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+| 45> %pal nprocs=16 end
+| 46> %geom maxiter=150 end
+| 47> %elprop Polar 1 end
+| 48> %base "protonated"
+| 49> *xyz 1 2
+| 50>   C   0.59006536615162      1.88958081085873     -1.15885693195252
+| 51>   C   0.07690497711520     -0.59960691515894      0.03313347790817
+| 52>   C   1.51193493795089      0.83977255746799     -1.30312180968546
+| 53>   C   -0.60167473065884      1.68235947818359     -0.41210112276620
+| 54>   C   -0.85750703265074      0.43358145242845      0.19179852204071
+| 55>   C   1.24474555808082     -0.41252058014529     -0.70874319424383
+| 56>   O   2.68249897780722      0.92863257816087     -1.99400623305554
+| 57>   O   2.11984399735345     -1.44432669477252     -0.85262721319378
+| 58>   C   -2.11058131451040      0.21422511064677      1.00442552126707
+| 59>   C   -3.07803815162260     -0.81885347854158      0.43260455372876
+| 60>   N   -3.73035939959344     -0.33973600154006     -0.82798139579581
+| 61>   H   -3.04309465549307     -0.19203472327305     -1.62098636828179
+| 62>   H   -4.42260527793141     -1.01996487060112     -1.17021359376708
+| 63>   H   -4.21933337398051      0.55501417129122     -0.68559566162080
+| 64>   H   0.83958558758068      2.88053063766030     -1.54381438605796
+| 65>   H   -0.09589689069828     -1.57857271589907      0.48495322601414
+| 66>   H   -1.27258832612774      2.52341173380186     -0.23000101834351
+| 67>   H   2.77562413711380      1.81645643198247     -2.38947912088803
+| 68>   H   2.87081545667896     -1.13588347902046     -1.39992401084669
+| 69>   H   -2.64009160353587      1.16983776060021      1.14015206737888
+| 70>   H   -1.83848758265996     -0.14314472077446      2.01000671377776
+| 71>   H   -2.57287047875257     -1.76165453967691      0.18714824258959
+| 72>   H   -3.88301376561922     -1.02677658868949      1.14747985177381
+| 73>   Cu  -2.93702016349293      0.95384996665685     -3.92932389359831
+| 74>   Cu  -1.64532012699973     -1.04557521880294     -3.57083261395142
+| 75>   Cu  -3.45425325637195     -0.95783619389104     -5.29312923710250
+| 76>   Cu  -2.06667703631039      0.85373963618483     -6.20774972472767
+| 77>   Cu  -0.96205511756043      1.11606145655069     -2.51081948088202
+| 78>   Cu  -1.29772340971378      2.58463596388572     -4.63555326307141
+| 79>   Cu  -0.14509614141235      0.45512822212734     -4.73280594249919
+| 80>   Cu  -1.08813360613629     -1.39409963970099     -5.96350503514720
+| 81> *
+| 82> 
+| 83> 
+| 84> $new_job
+| 85> 
+| 86> ! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+| 87> %pal nprocs=16 end
+| 88> %geom maxiter=150 end
+| 89> %elprop Polar 1 end
+| 90> %base "deprotonated"
+| 91> *xyz -1 2
+| 92>   O   -0.01466628551165     -3.05498166444095     -1.58058669348403
+| 93>   O   1.61359259492255     -1.36231466601792     -2.65484283292418
+| 94>   N   -4.40707727122392      0.75322987741986     -0.13270088155237
+| 95>   C   -2.24851028369075      0.45760545396882      1.11311067475783
+| 96>   C   -1.27588690526608      0.02397305332553      0.04180466512635
+| 97>   C   -3.70182430069081      0.00842652842616      0.94229614886481
+| 98>   C   -1.14031598635756     -1.34525729541778     -0.29552673229297
+| 99>   C   -0.42368484809317      0.94834311463936     -0.58617677675490
+|100>   C   -0.19812941366389     -1.75285982888227     -1.22374395969170
+|101>   C   0.56260723661921      0.54122957721463     -1.54421292599845
+|102>   C   0.73083333335523     -0.84358935447647     -1.87070948923250
+|103>   H   -2.22154441293338      1.55549842390289      1.20825872510218
+|104>   H   -1.91238344188881      0.05911879177876      2.08679887646942
+|105>   H   -4.23005641978918      0.14329040346078      1.90092936381165
+|106>   H   -3.74665823314676     -1.06028563002304      0.68911424752782
+|107>   H   -1.78108986757908     -2.09500221432680      0.17628087949325
+|108>   H   -0.47211080341782      1.99984500361371     -0.29332847355450
+|109>   H   1.29127068707250      1.26457203364103     -1.91892250572042
+|110>   H   -4.43750393181562      1.74729484634629      0.11795439497443
+|111>   H   -5.38534634202694      0.44868433111514     -0.15881567249286
+|112>   H   0.75563455094729     -2.95620571027094     -2.21795884584217
+|113>   Cu  -3.72382797010915      0.63750788871075     -2.04898573502042
+|114>   Cu  -2.86588770387947      1.91802759345983     -3.96840183984259
+|115>   Cu  -1.21430682249431      0.74331405136939     -2.66798626921073
+|116>   Cu  -2.73541897933061     -0.63629473874176     -3.92940575569642
+|117>   Cu  -5.21389829007265      1.74354613837011     -3.87687373087226
+|118>   Cu  -5.08191021513223     -0.69379638627880     -3.82311887310229
+|119>   Cu  -3.96908444566077      0.55070818159949     -5.69044988123857
+|120>   Cu  -1.51090941814197      0.67731175651420     -5.51308686560324
+|121> *
+|122> 
+|123> $new_job
+|124> 
+|125> ! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+|126> %pal nprocs=16 end
+|127> %geom maxiter=150 end
+|128> %elprop Polar 1 end
+|129> %base "2x_deprotonated"
+|130> *xyz -2 2
+|131>   O   -0.98241636268846     -1.66681015704679     -1.96208609003687
+|132>   O   -1.28858903263868      0.89673930609653     -3.16411066806965
+|133>   N   3.64596639378742     -1.80039772203556      0.21777823671767
+|134>   C   2.37562624147098      0.14433523970281      1.15497777016429
+|135>   C   1.46167415283169      0.33480709000490     -0.02951347149356
+|136>   C   3.75118570429437     -0.45563381261748      0.83924441879430
+|137>   C   0.54681742632226     -0.67426557132474     -0.39731440022426
+|138>   C   1.52530026200654      1.48722678389788     -0.83302177778368
+|139>   C   -0.29124004450545     -0.60302405286992     -1.54207951361204
+|140>   C   0.62825970278114      1.65084056847942     -1.93558673951791
+|141>   C   -0.39570877544806      0.69097857094737     -2.27043430175093
+|142>   H   2.55730895735207      1.11069603589772      1.65197596634643
+|143>   H   1.88139547252295     -0.50628735283130      1.89668578128047
+|144>   H   4.33779121773856     -0.50584328141105      1.77260690872868
+|145>   H   4.28855167641302      0.19437506816797      0.13180588403973
+|146>   H   0.51503724268966     -1.60319231811137      0.18146407282662
+|147>   H   2.20500389063636      2.30044321791280     -0.56718830813463
+|148>   H   0.60324914179323      2.60803260091939     -2.46534810686039
+|149>   H   3.00994415747458     -2.38197329271599      0.77318708023677
+|150>   H   4.55856355197708     -2.26328241130543      0.26549241644318
+|151>   Cu  3.18978607263208     -1.80742164974967     -1.79457712863978
+|152>   Cu  4.10733968450870     -0.57781163059521     -3.73196320731418
+|153>   Cu  5.00907124408729     -2.76831029222784     -3.40001363348257
+|154>   Cu  2.69119280196541     -2.96175519261198     -3.91090559440847
+|155>   Cu  2.17119343180020      0.38214454216884     -2.71947136145776
+|156>   Cu  0.81810308205075     -1.87069765666600     -2.95824865983268
+|157>   Cu  2.03438190437168     -0.87775098391444     -4.91067058857149
+|158>   Cu  4.07178281177240     -2.04867970716080     -5.68312357538713
+|159> *
+|160> 
+|161> $new_job
+|162> 
+|163> ! B3LYP D3 TightSCF def2-TZVP slowconv PModel cpcm(water) opt numfreq
+|164> %pal nprocs=16 end
+|165> %geom maxiter=150 end
+|166> %elprop Polar 1 end
+|167> %base "zwitterione"
+|168> *xyz 0 2
+|169>   O   3.12774142577740     -0.20024893892754      1.45208012248391
+|170>   C   2.08508976764879      0.33471824219850      0.76316711085260
+|171>   C   0.92768914302146     -0.36511469343791      0.46464700317490
+|172>   C   -0.10998493946728      0.25034480045723     -0.27805749930215
+|173>   C   -1.35280597358329     -0.52647084487246     -0.63519614696333
+|174>   C   -2.41816681607009     -0.60339105288896      0.45798503761272
+|175>   N   -3.02760938433859      0.73524250407457      0.73439459341440
+|176>   H   -3.82054520145845      0.65773723710012      1.38537900993765
+|177>   H   -2.32716840559853      1.37165745966841      1.21216419095065
+|178>   H   -3.36142646539527      1.19436892943410     -0.12383703949623
+|179>   C   0.05114068753717      1.58892839347068     -0.67389299284960
+|180>   C   1.23442133226142      2.33004449411500     -0.35426611334131
+|181>   C   2.31802746993277      1.70455599102447      0.34228274965682
+|182>   O   3.46368684571980      2.21932139789053      0.63121353448252
+|183>   H   3.76344189697308      0.57927247939403      1.44090929513447
+|184>   H   0.82504117870624     -1.40371315190768      0.79031250341085
+|185>   H   -1.81071648706239     -0.10456924510510     -1.54485162291877
+|186>   H   -1.08514873325356     -1.56854710752468     -0.87024097393344
+|187>   H   -3.23325018273556     -1.27493633158161      0.16243156805791
+|188>   H   -1.99325108370320     -0.94626955413233      1.41327462037956
+|189>   H   -0.71377364306375      2.05770473382687     -1.29800786233978
+|190>   H   1.38564785996654      3.32619446333592     -0.77682312997887
+|191>   Cu  -1.74760940200189      2.95035327171503      2.98541909047371
+|192>   Cu  -0.80351700203422      3.64374276669397      5.13054046266731
+|193>   Cu  -2.28965966495140      1.68564209522196      4.92763389696710
+|194>   Cu  -0.62220696538102      0.82607067785432      3.22140468120863
+|195>   Cu  -0.10030572831270      4.68431442213606      2.97749922052795
+|196>   Cu  0.00422807662972      2.51865732504754      1.37629379241650
+|197>   Cu  0.90964401766427      2.63770907708662      3.67625062739603
+|198>   Cu  0.10400592557263      1.37362642063218      5.53681527491710
+|199> *
+|200> 
+|201>                          ****END OF INPUT****
+================================================================================
+
+
+                 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+                 $ THERE ARE  5 JOBS TO BE PROCESSED THIS RUN $
+                 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+
+
+
+
+                 $$$$$$$$$$$$$$$$  JOB NUMBER  1 $$$$$$$$$$$$$$
+
+
+                       *****************************
+                       * Geometry Optimization Run *
+                       *****************************
+
+Geometry optimization settings:
+Update method            Update   .... BFGS
+Choice of coordinates    CoordSys .... Z-matrix Internals
+Initial Hessian          InHess   .... Almoef's Model
+
+Convergence Tolerances:
+Energy Change            TolE     ....  5.0000e-06 Eh
+Max. Gradient            TolMAXG  ....  3.0000e-04 Eh/bohr
+RMS Gradient             TolRMSG  ....  1.0000e-04 Eh/bohr
+Max. Displacement        TolMAXD  ....  4.0000e-03 bohr
+RMS Displacement         TolRMSD  ....  2.0000e-03 bohr
+Strict Convergence                ....  False
+------------------------------------------------------------------------------
+                        ORCA OPTIMIZATION COORDINATE SETUP
+------------------------------------------------------------------------------
+
+The optimization will be done in new redundant internal coordinates
+Making redundant internal coordinates   ...  (new redundants) done
+Evaluating the initial hessian          ...  (Almloef) done
+Evaluating the coordinates              ...  done
+Calculating the B-matrix                .... done
+Calculating the G-matrix                .... done
+Diagonalizing the G-matrix              .... done
+The first mode is                       ....  790
+The number of degrees of freedom        ....   84
+
+    -----------------------------------------------------------------
+                    Redundant Internal Coordinates
+
+
+    -----------------------------------------------------------------
+         Definition                    Initial Value    Approx d2E/dq
+    -----------------------------------------------------------------
+      1. B(C   2,C   0)                  1.3989         0.604721   
+      2. B(C   3,C   0)                  1.4001         0.602033   
+      3. B(C   4,C   1)                  1.4201         0.559372   
+      4. B(C   4,C   3)                  1.4128         0.574587   
+      5. B(C   5,C   2)                  1.4074         0.586146   
+      6. B(C   5,C   1)                  1.4075         0.585791   
+      7. B(O   6,C   5)                  1.3613         0.621774   
+      8. B(O   7,C   2)                  1.3673         0.608303   
+      9. B(C   8,C   3)                  1.5090         0.403530   
+     10. B(C   9,C   8)                  1.5298         0.373889   
+     11. B(N  10,C   9)                  1.4863         0.392929   
+     12. B(H  11,C   0)                  1.0934         0.355692   
+     13. B(H  12,C   1)                  1.0915         0.358093   
+     14. B(H  13,C   4)                  1.0910         0.358824   
+     15. B(H  14,O   6)                  0.9790         0.484967   
+     16. B(H  15,O   7)                  0.9757         0.490767   
+     17. B(H  16,C   8)                  1.1022         0.344369   
+     18. B(H  17,C   8)                  1.1019         0.344697   
+     19. B(H  18,C   9)                  1.1020         0.344534   
+     20. B(H  19,C   9)                  1.1017         0.344953   
+     21. B(H  20,N  10)                  1.0248         0.409843   
+     22. B(H  21,N  10)                  1.0253         0.409077   
+     23. B(Cu 22,N  10)                  2.0492         0.502705   
+     24. B(Cu 23,Cu 22)                  2.4479         1.312591   
+     25. B(Cu 24,Cu 23)                  2.3833         1.664574   
+     26. B(Cu 24,Cu 22)                  2.5649         0.854230   
+     27. B(Cu 25,Cu 24)                  2.3731         1.728189   
+     28. B(Cu 25,Cu 23)                  2.6932         0.533013   
+     29. B(Cu 25,Cu 22)                  2.5155         1.024159   
+     30. B(Cu 26,C   4)                  2.2321         0.286628   
+     31. B(Cu 26,C   1)                  2.1708         0.359097   
+     32. B(Cu 26,Cu 25)                  3.5703         0.021257   
+     33. B(Cu 26,Cu 23)                  2.3954         1.591786   
+     34. B(Cu 26,Cu 22)                  2.5908         0.776721   
+     35. B(Cu 26,C   5)                  2.7406         0.044265   
+     36. B(Cu 27,Cu 26)                  2.4808         1.163477   
+     37. B(Cu 27,Cu 25)                  2.3540         1.853261   
+     38. B(Cu 27,Cu 23)                  3.4486         0.033236   
+     39. B(Cu 27,Cu 22)                  2.5671         0.847111   
+     40. B(Cu 28,Cu 27)                  2.4965         1.097893   
+     41. B(Cu 28,Cu 26)                  2.5290         0.974677   
+     42. B(Cu 28,Cu 25)                  2.4458         1.322708   
+     43. B(Cu 28,Cu 23)                  2.3863         1.645896   
+     44. B(Cu 28,Cu 22)                  3.5380         0.023936   
+     45. B(Cu 29,Cu 28)                  2.4767         1.181127   
+     46. B(Cu 29,Cu 25)                  2.4032         1.547185   
+     47. B(Cu 29,Cu 24)                  2.6973         0.525087   
+     48. B(Cu 29,Cu 23)                  2.4392         1.355393   
+     49. A(C   2,C   0,C   3)          121.4515         0.429846   
+     50. A(C   3,C   0,H  11)          119.8536         0.350428   
+     51. A(C   2,C   0,H  11)          118.6931         0.350692   
+     52. A(C   5,C   1,Cu 26)           97.6881         0.436692   
+     53. A(C   4,C   1,C   5)          119.9057         0.421819   
+     54. A(C   5,C   1,H  12)          118.8731         0.349211   
+     55. A(H  12,C   1,Cu 26)          104.8214         0.358015   
+     56. A(C   4,C   1,Cu 26)           73.5438         0.433079   
+     57. A(C   4,C   1,H  12)          120.8360         0.346507   
+     58. A(C   0,C   2,O   7)          124.2347         0.427835   
+     59. A(C   0,C   2,C   5)          120.3822         0.427790   
+     60. A(C   5,C   2,O   7)          115.3818         0.425451   
+     61. A(C   0,C   3,C   4)          118.4161         0.425926   
+     62. A(C   4,C   3,C   8)          120.7884         0.396758   
+     63. A(C   0,C   3,C   8)          120.7430         0.400026   
+     64. A(C   1,C   4,H  13)          119.1604         0.346626   
+     65. A(C   1,C   4,Cu 26)           68.8555         0.415965   
+     66. A(C   3,C   4,Cu 26)           99.6245         0.417957   
+     67. A(C   1,C   4,C   3)          120.6102         0.420367   
+     68. A(H  13,C   4,Cu 26)          105.8074         0.344752   
+     69. A(C   3,C   4,H  13)          119.9886         0.348196   
+     70. A(C   2,C   5,Cu 26)           96.6471         0.305511   
+     71. A(C   1,C   5,O   6)          119.5416         0.427077   
+     72. A(C   1,C   5,Cu 26)           51.7164         0.305481   
+     73. A(O   6,C   5,Cu 26)          119.3845         0.306616   
+     74. A(C   1,C   5,C   2)          119.2228         0.425360   
+     75. A(C   2,C   5,O   6)          121.2355         0.427123   
+     76. A(C   5,O   6,H  14)          108.1181         0.365897   
+     77. A(C   2,O   7,H  15)          110.0725         0.365270   
+     78. A(C   3,C   8,C   9)          116.2812         0.368236   
+     79. A(C   9,C   8,H  17)          108.7535         0.322046   
+     80. A(C   3,C   8,H  17)          109.2730         0.326105   
+     81. A(C   3,C   8,H  16)          108.8459         0.326054   
+     82. A(H  16,C   8,H  17)          106.4677         0.286842   
+     83. A(C   9,C   8,H  16)          106.7696         0.321996   
+     84. A(N  10,C   9,H  19)          107.6978         0.322781   
+     85. A(C   8,C   9,H  19)          110.4204         0.322085   
+     86. A(C   8,C   9,N  10)          112.2905         0.364275   
+     87. A(N  10,C   9,H  18)          110.2269         0.322717   
+     88. A(C   8,C   9,H  18)          108.2443         0.322021   
+     89. A(H  18,C   9,H  19)          107.8762         0.286896   
+     90. A(H  20,N  10,H  21)          105.5076         0.297967   
+     91. A(C   9,N  10,Cu 22)          116.6999         0.426973   
+     92. A(H  21,N  10,Cu 22)          112.6404         0.382967   
+     93. A(C   9,N  10,H  20)          108.7235         0.329249   
+     94. A(H  20,N  10,Cu 22)          103.2032         0.383092   
+     95. A(C   9,N  10,H  21)          109.2489         0.329147   
+     96. A(Cu 25,Cu 22,Cu 28)           43.7264         0.394804   
+     97. A(Cu 23,Cu 22,Cu 28)           42.2827         0.412470   
+     98. A(N  10,Cu 22,Cu 28)          147.0537         0.321520   
+     99. A(Cu 25,Cu 22,Cu 27)           55.1703         0.774509   
+    100. A(Cu 26,Cu 22,Cu 27)           57.4945         0.732917   
+    101. A(Cu 23,Cu 22,Cu 25)           65.7081         0.845938   
+    102. A(N  10,Cu 22,Cu 27)          104.4178         0.610231   
+    103. A(N  10,Cu 22,Cu 25)          136.6459         0.633110   
+    104. A(N  10,Cu 22,Cu 24)          132.6273         0.611219   
+    105. A(Cu 26,Cu 22,Cu 28)           45.5679         0.376250   
+    106. A(Cu 27,Cu 22,Cu 28)           44.8656         0.381946   
+    107. A(Cu 23,Cu 22,Cu 24)           56.7178         0.815485   
+    108. A(N  10,Cu 22,Cu 23)          157.4961         0.664542   
+    109. A(Cu 23,Cu 22,Cu 27)           86.8544         0.814110   
+    110. A(Cu 25,Cu 22,Cu 26)           88.7130         0.761181   
+    111. A(Cu 24,Cu 22,Cu 26)          112.6283         0.734138   
+    112. A(Cu 24,Cu 22,Cu 25)           55.6829         0.775809   
+    113. A(Cu 23,Cu 22,Cu 26)           56.6866         0.800011   
+    114. A(N  10,Cu 22,Cu 26)          113.0279         0.600097   
+    115. A(Cu 24,Cu 22,Cu 28)           78.0185         0.382501   
+    116. A(Cu 24,Cu 22,Cu 27)          110.0966         0.746930   
+    117. A(Cu 26,Cu 23,Cu 28)           63.8585         0.969340   
+    118. A(Cu 25,Cu 23,Cu 28)           57.1844         0.776238   
+    119. A(Cu 24,Cu 23,Cu 28)          110.3392         0.978295   
+    120. A(Cu 22,Cu 23,Cu 28)           94.0748         0.931740   
+    121. A(Cu 22,Cu 23,Cu 29)          112.2633         0.895501   
+    122. A(Cu 27,Cu 23,Cu 28)           46.3796         0.455726   
+    123. A(Cu 24,Cu 23,Cu 29)           68.0070         0.940054   
+    124. A(Cu 24,Cu 23,Cu 25)           55.3322         0.777995   
+    125. A(Cu 26,Cu 23,Cu 27)           46.0008         0.452962   
+    126. A(Cu 24,Cu 23,Cu 27)           90.4207         0.456664   
+    127. A(Cu 22,Cu 23,Cu 25)           58.3531         0.741926   
+    128. A(Cu 22,Cu 23,Cu 27)           48.0113         0.437417   
+    129. A(Cu 27,Cu 23,Cu 29)           89.1354         0.439956   
+    130. A(Cu 25,Cu 23,Cu 29)           55.5730         0.746686   
+    131. A(Cu 25,Cu 23,Cu 26)           88.9128         0.771058   
+    132. A(Cu 24,Cu 23,Cu 26)          127.7216         0.971592   
+    133. A(Cu 22,Cu 23,Cu 26)           64.6647         0.925388   
+    134. A(Cu 28,Cu 23,Cu 29)           61.7484         0.937883   
+    135. A(Cu 22,Cu 23,Cu 24)           64.1156         0.933895   
+    136. A(Cu 26,Cu 23,Cu 29)          125.1036         0.931485   
+    137. A(Cu 25,Cu 23,Cu 27)           42.9120         0.373127   
+    138. A(Cu 23,Cu 24,Cu 25)           68.9775         0.988170   
+    139. A(Cu 22,Cu 24,Cu 25)           61.1041         0.862153   
+    140. A(Cu 25,Cu 24,Cu 29)           56.1453         0.781517   
+    141. A(Cu 22,Cu 24,Cu 29)          100.8827         0.679429   
+    142. A(Cu 23,Cu 24,Cu 29)           56.9815         0.775663   
+    143. A(Cu 22,Cu 24,Cu 23)           59.1666         0.855617   
+    144. A(Cu 24,Cu 25,Cu 28)          108.6625         0.942580   
+    145. A(Cu 23,Cu 25,Cu 28)           55.0820         0.743062   
+    146. A(Cu 22,Cu 25,Cu 28)           90.9658         0.847254   
+    147. A(Cu 23,Cu 25,Cu 24)           55.6903         0.783869   
+    148. A(Cu 22,Cu 25,Cu 24)           63.2130         0.894562   
+    149. A(Cu 26,Cu 25,Cu 27)           43.7899         0.429464   
+    150. A(Cu 24,Cu 25,Cu 27)          125.7068         1.010290   
+    151. A(Cu 23,Cu 25,Cu 27)           85.9200         0.794945   
+    152. A(Cu 22,Cu 25,Cu 27)           63.5294         0.907403   
+    153. A(Cu 22,Cu 25,Cu 23)           55.9388         0.706268   
+    154. A(Cu 23,Cu 25,Cu 29)           56.8470         0.766684   
+    155. A(Cu 24,Cu 25,Cu 29)           68.7653         0.973409   
+    156. A(Cu 27,Cu 25,Cu 29)          123.6657         0.987506   
+    157. A(Cu 24,Cu 25,Cu 26)           90.0863         0.424122   
+    158. A(Cu 23,Cu 25,Cu 26)           42.1302         0.345790   
+    159. A(Cu 22,Cu 25,Cu 29)          111.1566         0.874640   
+    160. A(Cu 22,Cu 25,Cu 26)           46.5073         0.386696   
+    161. A(Cu 28,Cu 25,Cu 29)           61.4208         0.921471   
+    162. A(Cu 26,Cu 25,Cu 29)           89.6184         0.415834   
+    163. A(Cu 27,Cu 25,Cu 28)           62.6473         0.956186   
+    164. A(Cu 26,Cu 25,Cu 28)           45.0741         0.404441   
+    165. A(C   1,Cu 26,C   4)           37.6007         0.430577   
+    166. A(Cu 25,Cu 26,Cu 27)           41.0461         0.395415   
+    167. A(Cu 23,Cu 26,Cu 27)           90.0031         0.902868   
+    168. A(Cu 22,Cu 26,Cu 27)           60.7746         0.780867   
+    169. A(C   5,Cu 26,Cu 27)          163.4914         0.414027   
+    170. A(C   4,Cu 26,Cu 27)          106.1235         0.585064   
+    171. A(C   1,Cu 26,Cu 27)          133.8374         0.611029   
+    172. A(Cu 23,Cu 26,Cu 25)           48.9571         0.417943   
+    173. A(Cu 22,Cu 26,Cu 25)           44.7797         0.368634   
+    174. A(C   5,Cu 26,Cu 25)          154.5023         0.220367   
+    175. A(C   4,Cu 26,Cu 25)          139.3031         0.289495   
+    176. A(C   1,Cu 26,Cu 25)          174.8734         0.299990   
+    177. A(Cu 22,Cu 26,Cu 23)           58.6487         0.831734   
+    178. A(C   5,Cu 26,Cu 23)          105.8608         0.437924   
+    179. A(C   4,Cu 26,Cu 23)          146.6713         0.621535   
+    180. A(C   1,Cu 26,Cu 23)          136.1576         0.649409   
+    181. A(C   5,Cu 26,Cu 22)          123.7776         0.385619   
+    182. A(C   4,Cu 26,Cu 22)          103.7795         0.541707   
+    183. A(C   1,Cu 26,Cu 22)          135.8480         0.565402   
+    184. A(Cu 27,Cu 26,Cu 28)           59.7715         0.817348   
+    185. A(Cu 25,Cu 26,Cu 28)           43.2160         0.383378   
+    186. A(Cu 23,Cu 26,Cu 28)           57.8958         0.870897   
+    187. A(Cu 22,Cu 26,Cu 28)           87.4174         0.753689   
+    188. A(C   5,Cu 26,Cu 28)          132.9102         0.401259   
+    189. A(C   4,Cu 26,Cu 28)          155.0721         0.565577   
+    190. A(C   1,Cu 26,Cu 28)          136.7297         0.590522   
+    191. A(C   4,Cu 26,C   5)           57.8962         0.301674   
+    192. A(C   1,Cu 26,C   5)           30.5955         0.312806   
+    193. A(Cu 25,Cu 27,Cu 26)           95.1641         0.931372   
+    194. A(Cu 23,Cu 27,Cu 26)           43.9960         0.428036   
+    195. A(Cu 22,Cu 27,Cu 26)           61.7309         0.794586   
+    196. A(Cu 23,Cu 27,Cu 25)           51.1680         0.465709   
+    197. A(Cu 22,Cu 27,Cu 25)           61.3002         0.872991   
+    198. A(Cu 22,Cu 27,Cu 23)           45.1343         0.404538   
+    199. A(Cu 26,Cu 27,Cu 28)           61.0733         0.837239   
+    200. A(Cu 25,Cu 27,Cu 28)           60.4765         0.920383   
+    201. A(Cu 23,Cu 27,Cu 28)           43.7860         0.423613   
+    202. A(Cu 22,Cu 27,Cu 28)           88.6329         0.785381   
+    203. A(Cu 22,Cu 28,Cu 23)           43.6424         0.429468   
+    204. A(Cu 27,Cu 28,Cu 29)          114.9793         0.839793   
+    205. A(Cu 26,Cu 28,Cu 29)          117.9867         0.819834   
+    206. A(Cu 25,Cu 28,Cu 29)           58.4408         0.872126   
+    207. A(Cu 23,Cu 28,Cu 29)           60.1755         0.911849   
+    208. A(Cu 22,Cu 28,Cu 29)           82.8390         0.404835   
+    209. A(Cu 26,Cu 28,Cu 27)           59.1551         0.807846   
+    210. A(Cu 25,Cu 28,Cu 27)           56.8762         0.859280   
+    211. A(Cu 23,Cu 28,Cu 27)           89.8343         0.898351   
+    212. A(Cu 22,Cu 28,Cu 27)           46.5015         0.399654   
+    213. A(Cu 25,Cu 28,Cu 26)           91.7099         0.838803   
+    214. A(Cu 23,Cu 28,Cu 26)           58.2457         0.876835   
+    215. A(Cu 22,Cu 28,Cu 26)           47.0148         0.391396   
+    216. A(Cu 23,Cu 28,Cu 25)           67.7336         0.933206   
+    217. A(Cu 22,Cu 28,Cu 25)           45.3078         0.413033   
+    218. A(Cu 25,Cu 29,Cu 28)           60.1383         0.900410   
+    219. A(Cu 24,Cu 29,Cu 28)           98.2564         0.724357   
+    220. A(Cu 23,Cu 29,Cu 28)           58.0761         0.876465   
+    221. A(Cu 24,Cu 29,Cu 25)           55.0894         0.764391   
+    222. A(Cu 23,Cu 29,Cu 25)           67.5800         0.926083   
+    223. A(Cu 23,Cu 29,Cu 24)           55.0115         0.744459   
+    224. D(C   5,C   2,C   0,H  11)   -179.6468         0.025231   
+    225. D(O   7,C   2,C   0,H  11)      0.7784         0.025231   
+    226. D(C   5,C   2,C   0,C   3)     -0.1411         0.025231   
+    227. D(O   7,C   2,C   0,C   3)   -179.7158         0.025231   
+    228. D(C   4,C   3,C   0,C   2)      0.6956         0.024995   
+    229. D(C   4,C   3,C   0,H  11)   -179.8042         0.024995   
+    230. D(C   8,C   3,C   0,C   2)   -176.6872         0.024995   
+    231. D(C   8,C   3,C   0,H  11)      2.8130         0.024995   
+    232. D(H  13,C   4,C   1,Cu 26)    -96.8145         0.024983   
+    233. D(H  13,C   4,C   3,C   0)   -174.6071         0.024607   
+    234. D(Cu 26,C   4,C   1,H  12)     97.7188         0.024983   
+    235. D(C   1,C   4,C   3,C   0)     -0.2913         0.024607   
+    236. D(H  13,C   4,C   1,C   5)    173.6994         0.024983   
+    237. D(Cu 26,C   4,C   3,C   8)   -111.8621         0.024607   
+    238. D(Cu 26,C   4,C   3,C   0)     70.7564         0.024607   
+    239. D(H  13,C   4,C   1,H  12)      0.9043         0.024983   
+    240. D(H  13,C   4,C   3,C   8)      2.7744         0.024607   
+    241. D(C   3,C   4,C   1,Cu 26)     88.8232         0.024983   
+    242. D(C   3,C   4,C   1,C   5)     -0.6630         0.024983   
+    243. D(C   1,C   4,C   3,C   8)    177.0902         0.024607   
+    244. D(Cu 26,C   4,C   1,C   5)    -89.4861         0.024983   
+    245. D(C   3,C   4,C   1,H  12)   -173.4580         0.024983   
+    246. D(O   6,C   5,C   1,Cu 26)    105.7347         0.027536   
+    247. D(Cu 26,C   5,C   2,O   7)    129.2918         0.025660   
+    248. D(C   2,C   5,C   1,C   4)      1.2139         0.027536   
+    249. D(O   6,C   5,C   2,C   0)    179.2589         0.025660   
+    250. D(C   2,C   5,C   1,Cu 26)    -74.1833         0.027536   
+    251. D(Cu 26,C   5,C   1,C   4)     75.3972         0.027536   
+    252. D(C   1,C   5,C   2,O   7)    178.7864         0.025660   
+    253. D(C   2,C   5,C   1,H  12)    174.1500         0.027536   
+    254. D(Cu 26,C   5,C   2,C   0)    -50.3191         0.025660   
+    255. D(O   6,C   5,C   2,O   7)     -1.1302         0.025660   
+    256. D(O   6,C   5,C   1,H  12)     -5.9320         0.027536   
+    257. D(O   6,C   5,C   1,C   4)   -178.8681         0.027536   
+    258. D(Cu 26,C   5,C   1,H  12)   -111.6667         0.027536   
+    259. D(C   1,C   5,C   2,C   0)     -0.8245         0.025660   
+    260. D(H  14,O   6,C   5,Cu 26)   -117.2664         0.031319   
+    261. D(H  14,O   6,C   5,C   1)   -177.3891         0.031319   
+    262. D(H  14,O   6,C   5,C   2)      2.5272         0.031319   
+    263. D(H  15,O   7,C   2,C   0)     -0.1837         0.027076   
+    264. D(H  15,O   7,C   2,C   5)   -179.7777         0.027076   
+    265. D(C   9,C   8,C   3,C   0)   -115.7291         0.012075   
+    266. D(H  16,C   8,C   3,C   0)    123.7024         0.012075   
+    267. D(H  17,C   8,C   3,C   0)      7.8111         0.012075   
+    268. D(H  17,C   8,C   3,C   4)   -169.5093         0.012075   
+    269. D(H  16,C   8,C   3,C   4)    -53.6180         0.012075   
+    270. D(C   9,C   8,C   3,C   4)     66.9505         0.012075   
+    271. D(N  10,C   9,C   8,H  17)    -56.5990         0.011161   
+    272. D(H  18,C   9,C   8,H  16)    -49.2078         0.011161   
+    273. D(H  18,C   9,C   8,C   3)   -170.8811         0.011161   
+    274. D(N  10,C   9,C   8,C   3)     67.2100         0.011161   
+    275. D(H  19,C   9,C   8,H  16)     68.6713         0.011161   
+    276. D(H  18,C   9,C   8,H  17)     65.3100         0.011161   
+    277. D(H  19,C   9,C   8,C   3)    -53.0019         0.011161   
+    278. D(N  10,C   9,C   8,H  16)   -171.1168         0.011161   
+    279. D(H  19,C   9,C   8,H  17)   -176.8109         0.011161   
+    280. D(Cu 22,N  10,C   9,C   8)    -83.1524         0.014117   
+    281. D(H  20,N  10,C   9,H  18)     39.9440         0.014117   
+    282. D(H  20,N  10,C   9,H  19)    -77.5052         0.014117   
+    283. D(H  21,N  10,C   9,C   8)     46.0478         0.014117   
+    284. D(Cu 22,N  10,C   9,H  19)     38.6255         0.014117   
+    285. D(H  21,N  10,C   9,H  19)    167.8256         0.014117   
+    286. D(H  20,N  10,C   9,C   8)    160.7169         0.014117   
+    287. D(H  21,N  10,C   9,H  18)    -74.7252         0.014117   
+    288. D(Cu 22,N  10,C   9,H  18)    156.0747         0.014117   
+    289. D(Cu 24,Cu 22,N  10,H  21)     56.1395         0.002989   
+    290. D(Cu 24,Cu 22,N  10,H  20)    -57.1518         0.002989   
+    291. D(Cu 28,Cu 22,N  10,C   9)    -21.9498         0.002989   
+    292. D(Cu 23,Cu 22,N  10,H  21)    -49.7063         0.002989   
+    293. D(Cu 23,Cu 22,N  10,C   9)     77.8545         0.002989   
+    294. D(Cu 26,Cu 22,N  10,C   9)     20.0779         0.002989   
+    295. D(Cu 28,Cu 22,N  10,H  21)   -149.5106         0.002989   
+    296. D(Cu 25,Cu 22,N  10,H  21)    138.0197         0.002989   
+    297. D(Cu 25,Cu 22,N  10,H  20)     24.7284         0.002989   
+    298. D(Cu 26,Cu 22,N  10,H  20)    139.2257         0.002989   
+    299. D(Cu 27,Cu 22,N  10,H  21)   -167.9039         0.002989   
+    300. D(Cu 28,Cu 22,N  10,H  20)     97.1980         0.002989   
+    301. D(Cu 27,Cu 22,N  10,C   9)    -40.3431         0.002989   
+    302. D(Cu 26,Cu 22,N  10,H  21)   -107.4829         0.002989   
+    303. D(Cu 23,Cu 22,N  10,H  20)   -162.9976         0.002989   
+    304. D(Cu 25,Cu 22,N  10,C   9)    -94.4195         0.002989   
+    305. D(Cu 27,Cu 22,N  10,H  20)     78.8047         0.002989   
+    306. D(Cu 24,Cu 22,N  10,C   9)   -176.2997         0.002989   
+    307. D(Cu 27,Cu 23,Cu 22,Cu 24)    116.5973         0.002669   
+    308. D(Cu 27,Cu 23,Cu 22,Cu 25)     52.9322         0.002669   
+    309. D(Cu 27,Cu 23,Cu 22,Cu 26)    -52.5622         0.002669   
+    310. D(Cu 27,Cu 23,Cu 22,Cu 28)      5.9418         0.002669   
+    311. D(Cu 28,Cu 23,Cu 22,Cu 24)    110.6554         0.002669   
+    312. D(Cu 29,Cu 23,Cu 22,Cu 26)   -119.5828         0.002669   
+    313. D(Cu 28,Cu 23,Cu 22,Cu 26)    -58.5040         0.002669   
+    314. D(Cu 28,Cu 23,Cu 22,Cu 27)     -5.9418         0.002669   
+    315. D(Cu 29,Cu 23,Cu 22,Cu 25)    -14.0885         0.002669   
+    316. D(Cu 26,Cu 23,Cu 22,Cu 28)     58.5040         0.002669   
+    317. D(Cu 29,Cu 23,Cu 22,Cu 27)    -67.0206         0.002669   
+    318. D(Cu 27,Cu 23,Cu 22,N  10)   -121.2564         0.002669   
+    319. D(Cu 25,Cu 23,Cu 22,Cu 26)   -105.4944         0.002669   
+    320. D(Cu 24,Cu 23,Cu 22,Cu 28)   -110.6554         0.002669   
+    321. D(Cu 26,Cu 23,Cu 22,Cu 24)    169.1595         0.002669   
+    322. D(Cu 24,Cu 23,Cu 22,Cu 25)    -63.6651         0.002669   
+    323. D(Cu 24,Cu 23,Cu 22,Cu 26)   -169.1595         0.002669   
+    324. D(Cu 25,Cu 23,Cu 22,N  10)   -174.1885         0.002669   
+    325. D(Cu 26,Cu 23,Cu 22,N  10)    -68.6942         0.002669   
+    326. D(Cu 25,Cu 23,Cu 22,Cu 27)    -52.9322         0.002669   
+    327. D(Cu 29,Cu 23,Cu 22,Cu 28)    -61.0788         0.002669   
+    328. D(Cu 24,Cu 23,Cu 22,N  10)    122.1464         0.002669   
+    329. D(Cu 24,Cu 23,Cu 22,Cu 27)   -116.5973         0.002669   
+    330. D(Cu 28,Cu 23,Cu 22,N  10)   -127.1982         0.002669   
+    331. D(Cu 28,Cu 23,Cu 22,Cu 25)     46.9904         0.002669   
+    332. D(Cu 25,Cu 23,Cu 22,Cu 24)     63.6651         0.002669   
+    333. D(Cu 29,Cu 23,Cu 22,N  10)    171.7230         0.002669   
+    334. D(Cu 25,Cu 23,Cu 22,Cu 28)    -46.9904         0.002669   
+    335. D(Cu 29,Cu 23,Cu 22,Cu 24)     49.5766         0.002669   
+    336. D(Cu 26,Cu 23,Cu 22,Cu 25)    105.4944         0.002669   
+    337. D(Cu 26,Cu 23,Cu 22,Cu 27)     52.5622         0.002669   
+    338. D(Cu 25,Cu 24,Cu 22,Cu 26)    -71.7000         0.001950   
+    339. D(Cu 29,Cu 24,Cu 22,Cu 23)    -40.4488         0.001950   
+    340. D(Cu 25,Cu 24,Cu 22,N  10)    124.6281         0.001950   
+    341. D(Cu 23,Cu 24,Cu 22,Cu 27)     71.9365         0.001950   
+    342. D(Cu 23,Cu 24,Cu 22,N  10)   -153.8678         0.001950   
+    343. D(Cu 23,Cu 24,Cu 22,Cu 25)     81.5041         0.001950   
+    344. D(Cu 25,Cu 24,Cu 22,Cu 28)    -41.4462         0.001950   
+    345. D(Cu 25,Cu 24,Cu 22,Cu 23)    -81.5041         0.001950   
+    346. D(Cu 29,Cu 24,Cu 22,N  10)    165.6835         0.001950   
+    347. D(Cu 25,Cu 24,Cu 22,Cu 27)     -9.5677         0.001950   
+    348. D(Cu 22,Cu 24,Cu 23,Cu 28)    -84.5120         0.003107   
+    349. D(Cu 25,Cu 24,Cu 23,Cu 28)    -16.4428         0.003107   
+    350. D(Cu 25,Cu 24,Cu 23,Cu 27)     26.4147         0.003107   
+    351. D(Cu 29,Cu 24,Cu 23,Cu 26)    118.1423         0.003107   
+    352. D(Cu 29,Cu 24,Cu 23,Cu 27)     88.8976         0.003107   
+    353. D(Cu 23,Cu 24,Cu 22,Cu 28)     40.0579         0.001950   
+    354. D(Cu 23,Cu 24,Cu 22,Cu 26)      9.8041         0.001950   
+    355. D(Cu 29,Cu 24,Cu 22,Cu 28)     -0.3909         0.001950   
+    356. D(Cu 22,Cu 24,Cu 23,Cu 25)    -68.0692         0.003107   
+    357. D(Cu 22,Cu 24,Cu 23,Cu 26)    -12.4098         0.003107   
+    358. D(Cu 29,Cu 24,Cu 23,Cu 28)     46.0401         0.003107   
+    359. D(Cu 22,Cu 24,Cu 23,Cu 27)    -41.6546         0.003107   
+    360. D(Cu 22,Cu 24,Cu 23,Cu 29)   -130.5521         0.003107   
+    361. D(Cu 25,Cu 24,Cu 23,Cu 22)     68.0692         0.003107   
+    362. D(Cu 29,Cu 24,Cu 23,Cu 22)    130.5521         0.003107   
+    363. D(Cu 25,Cu 24,Cu 23,Cu 26)     55.6594         0.003107   
+    364. D(Cu 25,Cu 24,Cu 23,Cu 29)    -62.4829         0.003107   
+    365. D(Cu 29,Cu 24,Cu 22,Cu 25)     41.0553         0.001950   
+    366. D(Cu 29,Cu 24,Cu 23,Cu 25)     62.4829         0.003107   
+    367. D(Cu 29,Cu 24,Cu 22,Cu 27)     31.4877         0.001950   
+    368. D(Cu 29,Cu 24,Cu 22,Cu 26)    -30.6447         0.001950   
+    369. D(Cu 29,Cu 25,Cu 23,Cu 22)   -164.1506         0.001713   
+    370. D(Cu 29,Cu 25,Cu 23,Cu 27)    135.2681         0.001713   
+    371. D(Cu 29,Cu 25,Cu 24,Cu 23)     63.5677         0.003227   
+    372. D(Cu 29,Cu 25,Cu 24,Cu 22)    129.0447         0.003227   
+    373. D(Cu 28,Cu 25,Cu 24,Cu 22)     81.3392         0.003227   
+    374. D(Cu 27,Cu 25,Cu 24,Cu 29)   -116.9440         0.003227   
+    375. D(Cu 28,Cu 25,Cu 24,Cu 23)     15.8621         0.003227   
+    376. D(Cu 27,Cu 25,Cu 24,Cu 22)     12.1007         0.003227   
+    377. D(Cu 26,Cu 25,Cu 24,Cu 29)    -89.5571         0.003227   
+    378. D(Cu 26,Cu 25,Cu 24,Cu 23)    -25.9894         0.003227   
+    379. D(Cu 23,Cu 25,Cu 24,Cu 29)    -63.5677         0.003227   
+    380. D(Cu 28,Cu 25,Cu 24,Cu 29)    -47.7055         0.003227   
+    381. D(Cu 23,Cu 25,Cu 24,Cu 22)     65.4770         0.003227   
+    382. D(Cu 22,Cu 25,Cu 24,Cu 29)   -129.0447         0.003227   
+    383. D(Cu 29,Cu 25,Cu 23,Cu 28)     76.0636         0.001713   
+    384. D(Cu 29,Cu 25,Cu 23,Cu 26)    135.2594         0.001713   
+    385. D(Cu 29,Cu 25,Cu 23,Cu 24)    -85.5269         0.001713   
+    386. D(Cu 28,Cu 25,Cu 23,Cu 29)    -76.0636         0.001713   
+    387. D(Cu 28,Cu 25,Cu 23,Cu 27)     59.2045         0.001713   
+    388. D(Cu 28,Cu 25,Cu 23,Cu 26)     59.1958         0.001713   
+    389. D(Cu 28,Cu 25,Cu 23,Cu 24)   -161.5905         0.001713   
+    390. D(Cu 27,Cu 25,Cu 23,Cu 26)     -0.0087         0.001713   
+    391. D(Cu 27,Cu 25,Cu 23,Cu 24)    139.2050         0.001713   
+    392. D(Cu 27,Cu 25,Cu 23,Cu 22)     60.5812         0.001713   
+    393. D(Cu 26,Cu 25,Cu 23,Cu 24)    139.2137         0.001713   
+    394. D(Cu 24,Cu 25,Cu 23,Cu 27)   -139.2050         0.001713   
+    395. D(Cu 22,Cu 25,Cu 23,Cu 28)   -119.7858         0.001713   
+    396. D(Cu 22,Cu 25,Cu 23,Cu 24)     78.6237         0.001713   
+    397. D(Cu 29,Cu 25,Cu 22,Cu 28)     59.5694         0.002229   
+    398. D(Cu 29,Cu 25,Cu 22,Cu 23)     14.1922         0.002229   
+    399. D(Cu 28,Cu 25,Cu 22,Cu 24)   -110.4873         0.002229   
+    400. D(Cu 28,Cu 25,Cu 22,N  10)    131.3866         0.002229   
+    401. D(Cu 27,Cu 25,Cu 22,Cu 26)    -50.2682         0.002229   
+    402. D(Cu 26,Cu 25,Cu 22,Cu 24)   -118.7698         0.002229   
+    403. D(Cu 24,Cu 25,Cu 22,Cu 26)    118.7698         0.002229   
+    404. D(Cu 26,Cu 25,Cu 22,Cu 28)     -8.2825         0.002229   
+    405. D(Cu 26,Cu 25,Cu 22,Cu 27)     50.2682         0.002229   
+    406. D(Cu 24,Cu 25,Cu 22,Cu 28)    110.4873         0.002229   
+    407. D(Cu 26,Cu 25,Cu 22,Cu 23)    -53.6596         0.002229   
+    408. D(Cu 26,Cu 25,Cu 22,N  10)    123.1041         0.002229   
+    409. D(Cu 27,Cu 25,Cu 22,Cu 24)   -169.0380         0.002229   
+    410. D(Cu 27,Cu 25,Cu 22,Cu 28)    -58.5507         0.002229   
+    411. D(Cu 28,Cu 25,Cu 22,Cu 23)    -45.3771         0.002229   
+    412. D(Cu 24,Cu 25,Cu 22,Cu 27)    169.0380         0.002229   
+    413. D(Cu 28,Cu 25,Cu 22,Cu 26)      8.2825         0.002229   
+    414. D(Cu 24,Cu 25,Cu 22,Cu 23)     65.1102         0.002229   
+    415. D(Cu 24,Cu 25,Cu 22,N  10)   -118.1260         0.002229   
+    416. D(Cu 29,Cu 25,Cu 22,Cu 24)    -50.9180         0.002229   
+    417. D(Cu 29,Cu 25,Cu 22,N  10)   -169.0440         0.002229   
+    418. D(Cu 23,Cu 25,Cu 22,Cu 27)    103.9278         0.002229   
+    419. D(Cu 29,Cu 25,Cu 22,Cu 26)     67.8519         0.002229   
+    420. D(Cu 29,Cu 25,Cu 22,Cu 27)    118.1200         0.002229   
+    421. D(Cu 27,Cu 25,Cu 22,N  10)     72.8360         0.002229   
+    422. D(Cu 23,Cu 25,Cu 22,Cu 26)     53.6596         0.002229   
+    423. D(Cu 28,Cu 25,Cu 22,Cu 27)     58.5507         0.002229   
+    424. D(Cu 22,Cu 25,Cu 23,Cu 27)    -60.5812         0.001713   
+    425. D(Cu 22,Cu 25,Cu 23,Cu 26)    -60.5900         0.001713   
+    426. D(Cu 24,Cu 25,Cu 23,Cu 22)    -78.6237         0.001713   
+    427. D(Cu 24,Cu 25,Cu 23,Cu 26)   -139.2137         0.001713   
+    428. D(Cu 22,Cu 25,Cu 23,Cu 29)    164.1506         0.001713   
+    429. D(Cu 22,Cu 25,Cu 24,Cu 23)    -65.4770         0.003227   
+    430. D(Cu 24,Cu 25,Cu 23,Cu 28)    161.5905         0.001713   
+    431. D(Cu 27,Cu 25,Cu 22,Cu 23)   -103.9278         0.002229   
+    432. D(Cu 26,Cu 25,Cu 23,Cu 27)      0.0087         0.001713   
+    433. D(Cu 26,Cu 25,Cu 24,Cu 22)     39.4876         0.003227   
+    434. D(Cu 26,Cu 25,Cu 23,Cu 28)    -59.1958         0.001713   
+    435. D(Cu 26,Cu 25,Cu 23,Cu 22)     60.5900         0.001713   
+    436. D(Cu 23,Cu 25,Cu 22,N  10)    176.7638         0.002229   
+    437. D(Cu 27,Cu 25,Cu 24,Cu 23)    -53.3763         0.003227   
+    438. D(Cu 26,Cu 25,Cu 23,Cu 29)   -135.2594         0.001713   
+    439. D(Cu 27,Cu 25,Cu 23,Cu 29)   -135.2681         0.001713   
+    440. D(Cu 27,Cu 25,Cu 23,Cu 28)    -59.2045         0.001713   
+    441. D(Cu 28,Cu 25,Cu 23,Cu 22)    119.7858         0.001713   
+    442. D(Cu 23,Cu 25,Cu 22,Cu 28)     45.3771         0.002229   
+    443. D(Cu 23,Cu 25,Cu 22,Cu 24)    -65.1102         0.002229   
+    444. D(Cu 24,Cu 25,Cu 23,Cu 29)     85.5269         0.001713   
+    445. D(Cu 27,Cu 26,C   4,C   1)   -143.7318         0.001961   
+    446. D(Cu 25,Cu 26,C   4,C   1)   -173.5216         0.001961   
+    447. D(Cu 23,Cu 26,C   4,C   3)    -19.0365         0.001961   
+    448. D(Cu 22,Cu 26,C   4,H  13)    -91.1459         0.001961   
+    449. D(Cu 23,Cu 26,C   4,C   1)    100.1832         0.001961   
+    450. D(C   5,Cu 26,C   4,C   3)    -87.5144         0.001961   
+    451. D(Cu 23,Cu 26,C   4,H  13)   -144.1290         0.001961   
+    452. D(Cu 25,Cu 26,C   4,H  13)    -57.8338         0.001961   
+    453. D(C   1,Cu 26,C   4,C   3)   -119.2197         0.001961   
+    454. D(Cu 28,Cu 26,C   1,H  12)     23.7464         0.002218   
+    455. D(Cu 25,Cu 26,C   4,C   3)     67.2587         0.001961   
+    456. D(Cu 27,Cu 26,C   1,C   5)    170.9804         0.002218   
+    457. D(Cu 25,Cu 26,C   1,C   4)     55.4206         0.002218   
+    458. D(Cu 22,Cu 26,C   1,H  12)   -157.3457         0.002218   
+    459. D(C   5,Cu 26,C   1,H  12)    122.6660         0.002218   
+    460. D(C   5,Cu 26,C   1,C   4)   -118.9935         0.002218   
+    461. D(C   4,Cu 26,C   1,C   5)    118.9935         0.002218   
+    462. D(C   4,Cu 26,C   1,H  12)   -118.3405         0.002218   
+    463. D(Cu 22,Cu 26,C   1,C   4)    -39.0052         0.002218   
+    464. D(C   1,Cu 26,C   4,H  13)    115.6878         0.001961   
+    465. D(C   5,Cu 26,C   4,C   1)     31.7053         0.001961   
+    466. D(Cu 22,Cu 26,C   1,C   5)     79.9882         0.002218   
+    467. D(C   5,Cu 26,C   4,H  13)    147.3931         0.001961   
+    468. D(Cu 22,Cu 26,C   4,C   1)    153.1662         0.001961   
+    469. D(Cu 22,Cu 26,C   4,C   3)     33.9466         0.001961   
+    470. D(Cu 23,Cu 26,C   1,H  12)    112.9860         0.002218   
+    471. D(Cu 25,Cu 26,C   1,H  12)    -62.9199         0.002218   
+    472. D(Cu 25,Cu 26,C   1,C   5)    174.4140         0.002218   
+    473. D(Cu 23,Cu 26,C   1,C   5)     -9.6801         0.002218   
+    474. D(Cu 27,Cu 26,C   1,H  12)    -66.3536         0.002218   
+    475. D(Cu 27,Cu 26,C   1,C   4)     51.9869         0.002218   
+    476. D(Cu 28,Cu 26,C   1,C   4)    142.0869         0.002218   
+    477. D(Cu 23,Cu 26,C   1,C   4)   -128.6735         0.002218   
+    478. D(Cu 28,Cu 26,Cu 25,Cu 29)     48.0085         0.001501   
+    479. D(Cu 28,Cu 26,Cu 25,Cu 27)    -95.8949         0.001501   
+    480. D(Cu 28,Cu 26,Cu 25,Cu 24)    116.7727         0.001501   
+    481. D(Cu 28,Cu 26,C   1,C   5)    -98.9197         0.002218   
+    482. D(Cu 28,Cu 26,Cu 25,Cu 22)    168.2623         0.001501   
+    483. D(Cu 27,Cu 26,Cu 25,Cu 29)    143.9034         0.001501   
+    484. D(Cu 27,Cu 26,Cu 25,Cu 28)     95.8949         0.001501   
+    485. D(Cu 27,Cu 26,Cu 25,Cu 24)   -147.3325         0.001501   
+    486. D(Cu 27,Cu 26,Cu 25,Cu 23)   -179.9874         0.001501   
+    487. D(Cu 27,Cu 26,Cu 25,Cu 22)    -95.8428         0.001501   
+    488. D(Cu 23,Cu 26,Cu 25,Cu 29)    -36.1092         0.001501   
+    489. D(Cu 23,Cu 26,Cu 25,Cu 27)    179.9874         0.001501   
+    490. D(Cu 23,Cu 26,Cu 25,Cu 24)     32.6549         0.001501   
+    491. D(Cu 23,Cu 26,Cu 25,Cu 22)     84.1446         0.001501   
+    492. D(Cu 22,Cu 26,Cu 25,Cu 28)   -168.2623         0.001501   
+    493. D(Cu 22,Cu 26,Cu 25,Cu 27)     95.8428         0.001501   
+    494. D(Cu 22,Cu 26,Cu 25,Cu 24)    -51.4896         0.001501   
+    495. D(C   5,Cu 26,Cu 25,Cu 29)    -46.4775         0.001501   
+    496. D(C   5,Cu 26,Cu 25,Cu 28)    -94.4861         0.001501   
+    497. D(C   5,Cu 26,Cu 25,Cu 27)    169.6191         0.001501   
+    498. D(C   5,Cu 26,Cu 25,Cu 24)     22.2866         0.001501   
+    499. D(C   5,Cu 26,Cu 25,Cu 23)    -10.3683         0.001501   
+    500. D(C   5,Cu 26,Cu 25,Cu 22)     73.7763         0.001501   
+    501. D(C   4,Cu 26,Cu 25,Cu 29)   -169.4762         0.001501   
+    502. D(C   4,Cu 26,Cu 25,Cu 27)     46.6204         0.001501   
+    503. D(C   4,Cu 26,Cu 25,Cu 24)   -100.7121         0.001501   
+    504. D(C   4,Cu 26,Cu 25,Cu 23)   -133.3670         0.001501   
+    505. D(C   1,Cu 26,Cu 25,Cu 29)    140.1313         0.001501   
+    506. D(C   1,Cu 26,Cu 25,Cu 28)     92.1227         0.001501   
+    507. D(C   1,Cu 26,Cu 25,Cu 27)     -3.7721         0.001501   
+    508. D(C   1,Cu 26,Cu 25,Cu 23)    176.2405         0.001501   
+    509. D(C   1,Cu 26,Cu 25,Cu 22)    -99.6150         0.001501   
+    510. D(Cu 28,Cu 26,Cu 23,Cu 29)     -8.3143         0.003260   
+    511. D(Cu 28,Cu 26,Cu 23,Cu 27)    -53.5324         0.003260   
+    512. D(Cu 28,Cu 26,Cu 23,Cu 25)    -53.5242         0.003260   
+    513. D(Cu 28,Cu 26,Cu 23,Cu 24)    -96.3077         0.003260   
+    514. D(Cu 28,Cu 26,Cu 23,Cu 22)   -108.6597         0.003260   
+    515. D(Cu 27,Cu 26,Cu 23,Cu 28)     53.5324         0.003260   
+    516. D(Cu 27,Cu 26,Cu 23,Cu 25)      0.0083         0.003260   
+    517. D(Cu 27,Cu 26,Cu 23,Cu 24)    -42.7752         0.003260   
+    518. D(Cu 25,Cu 26,Cu 23,Cu 29)     45.2099         0.003260   
+    519. D(Cu 25,Cu 26,Cu 23,Cu 28)     53.5242         0.003260   
+    520. D(Cu 25,Cu 26,Cu 23,Cu 27)     -0.0083         0.003260   
+    521. D(Cu 25,Cu 26,Cu 23,Cu 22)    -55.1355         0.003260   
+    522. D(Cu 22,Cu 26,Cu 23,Cu 29)    100.3455         0.003260   
+    523. D(Cu 22,Cu 26,Cu 23,Cu 28)    108.6597         0.003260   
+    524. D(Cu 22,Cu 26,Cu 23,Cu 27)     55.1273         0.003260   
+    525. D(Cu 22,Cu 26,Cu 23,Cu 25)     55.1355         0.003260   
+    526. D(Cu 22,Cu 26,Cu 23,Cu 24)     12.3521         0.003260   
+    527. D(C   5,Cu 26,Cu 23,Cu 29)   -139.4097         0.003260   
+    528. D(C   5,Cu 26,Cu 23,Cu 27)    175.3721         0.003260   
+    529. D(C   5,Cu 26,Cu 23,Cu 25)    175.3803         0.003260   
+    530. D(C   5,Cu 26,Cu 23,Cu 24)    132.5969         0.003260   
+    531. D(C   4,Cu 26,Cu 23,Cu 29)    165.5841         0.003260   
+    532. D(C   4,Cu 26,Cu 23,Cu 28)    173.8983         0.003260   
+    533. D(C   4,Cu 26,Cu 23,Cu 27)    120.3659         0.003260   
+    534. D(C   4,Cu 26,Cu 23,Cu 25)    120.3742         0.003260   
+    535. D(C   4,Cu 26,Cu 23,Cu 24)     77.5907         0.003260   
+    536. D(C   1,Cu 26,Cu 23,Cu 29)   -134.3054         0.003260   
+    537. D(C   1,Cu 26,Cu 23,Cu 27)   -179.5236         0.003260   
+    538. D(C   1,Cu 26,Cu 23,Cu 25)   -179.5154         0.003260   
+    539. D(C   1,Cu 26,Cu 23,Cu 24)    137.7012         0.003260   
+    540. D(Cu 28,Cu 26,Cu 22,Cu 27)    -56.4795         0.001949   
+    541. D(Cu 28,Cu 26,Cu 22,Cu 24)     43.6457         0.001949   
+    542. D(Cu 27,Cu 26,Cu 22,Cu 24)    100.1253         0.001949   
+    543. D(Cu 27,Cu 26,Cu 22,Cu 28)     56.4795         0.001949   
+    544. D(Cu 27,Cu 26,Cu 22,Cu 25)     48.4640         0.001949   
+    545. D(Cu 28,Cu 26,Cu 22,N  10)   -149.3433         0.001949   
+    546. D(Cu 28,Cu 26,Cu 22,Cu 25)     -8.0155         0.001949   
+    547. D(Cu 27,Cu 26,Cu 22,Cu 23)    109.9329         0.001949   
+    548. D(Cu 27,Cu 26,Cu 22,N  10)    -92.8638         0.001949   
+    549. D(Cu 25,Cu 26,Cu 22,Cu 28)      8.0155         0.001949   
+    550. D(C   1,Cu 26,Cu 23,Cu 22)    125.3491         0.003260   
+    551. D(Cu 25,Cu 26,Cu 22,Cu 27)    -48.4640         0.001949   
+    552. D(Cu 25,Cu 26,Cu 22,Cu 24)     51.6613         0.001949   
+    553. D(C   5,Cu 26,Cu 23,Cu 22)    120.2448         0.003260   
+    554. D(C   1,Cu 26,Cu 23,Cu 28)   -125.9912         0.003260   
+    555. D(Cu 25,Cu 26,Cu 22,Cu 23)     61.4689         0.001949   
+    556. D(Cu 25,Cu 26,Cu 22,N  10)   -141.3278         0.001949   
+    557. D(C   5,Cu 26,Cu 23,Cu 28)   -131.0955         0.003260   
+    558. D(Cu 28,Cu 26,Cu 22,Cu 23)     53.4533         0.001949   
+    559. D(Cu 23,Cu 26,Cu 22,Cu 28)    -53.4533         0.001949   
+    560. D(Cu 23,Cu 26,Cu 22,Cu 27)   -109.9329         0.001949   
+    561. D(Cu 23,Cu 26,Cu 22,Cu 25)    -61.4689         0.001949   
+    562. D(Cu 23,Cu 26,Cu 22,Cu 24)     -9.8076         0.001949   
+    563. D(Cu 23,Cu 26,Cu 22,N  10)    157.2033         0.001949   
+    564. D(C   5,Cu 26,Cu 22,Cu 25)   -150.1805         0.001949   
+    565. D(Cu 25,Cu 26,Cu 23,Cu 24)    -42.7835         0.003260   
+    566. D(C   4,Cu 26,C   5,O   6)   -145.0985         0.001513   
+    567. D(C   4,Cu 26,Cu 22,Cu 28)    157.4580         0.001949   
+    568. D(C   5,Cu 26,Cu 22,Cu 27)    161.3555         0.001949   
+    569. D(Cu 27,Cu 26,Cu 23,Cu 22)    -55.1273         0.003260   
+    570. D(Cu 22,Cu 26,C   5,C   2)     -2.0965         0.001513   
+    571. D(C   4,Cu 26,Cu 22,Cu 24)   -158.8963         0.001949   
+    572. D(C   4,Cu 26,Cu 22,Cu 23)   -149.0887         0.001949   
+    573. D(Cu 27,Cu 26,Cu 23,Cu 29)     45.2182         0.003260   
+    574. D(C   4,Cu 26,Cu 22,N  10)      8.1147         0.001949   
+    575. D(C   1,Cu 26,Cu 22,Cu 25)    172.7338         0.001949   
+    576. D(C   1,Cu 26,Cu 22,Cu 23)   -125.7974         0.001949   
+    577. D(Cu 28,Cu 26,C   5,O   6)      6.3546         0.001513   
+    578. D(Cu 28,Cu 26,C   5,C   1)    112.4010         0.001513   
+    579. D(Cu 27,Cu 26,C   5,O   6)   -129.4966         0.001513   
+    580. D(Cu 28,Cu 26,C   5,C   2)   -125.3103         0.001513   
+    581. D(C   1,Cu 26,Cu 25,Cu 24)   -151.1046         0.001501   
+    582. D(Cu 27,Cu 26,C   5,C   2)     98.8385         0.001513   
+    583. D(Cu 27,Cu 26,C   5,C   1)    -23.4502         0.001513   
+    584. D(Cu 25,Cu 26,C   5,O   6)     75.1113         0.001513   
+    585. D(C   4,Cu 26,Cu 25,Cu 22)    -49.2224         0.001501   
+    586. D(C   1,Cu 26,Cu 22,N  10)     31.4060         0.001949   
+    587. D(Cu 25,Cu 26,C   5,C   2)    -56.5536         0.001513   
+    588. D(Cu 25,Cu 26,C   5,C   1)   -178.8422         0.001513   
+    589. D(C   4,Cu 26,Cu 25,Cu 28)    142.5153         0.001501   
+    590. D(C   1,Cu 26,Cu 22,Cu 24)   -135.6050         0.001949   
+    591. D(Cu 23,Cu 26,C   5,O   6)     66.9991         0.001513   
+    592. D(Cu 23,Cu 26,C   5,C   2)    -64.6658         0.001513   
+    593. D(C   1,Cu 26,Cu 22,Cu 28)   -179.2507         0.001949   
+    594. D(Cu 23,Cu 26,C   5,C   1)    173.0455         0.001513   
+    595. D(Cu 22,Cu 26,C   5,O   6)    129.5684         0.001513   
+    596. D(C   1,Cu 26,Cu 22,Cu 27)    124.2698         0.001949   
+    597. D(Cu 22,Cu 26,Cu 25,Cu 23)    -84.1446         0.001501   
+    598. D(C   4,Cu 26,Cu 22,Cu 27)    100.9785         0.001949   
+    599. D(Cu 22,Cu 26,C   5,C   1)   -124.3852         0.001513   
+    600. D(C   5,Cu 26,Cu 22,Cu 23)    -88.7116         0.001949   
+    601. D(Cu 22,Cu 26,Cu 25,Cu 29)   -120.2538         0.001501   
+    602. D(C   4,Cu 26,C   5,C   2)     83.2366         0.001513   
+    603. D(C   5,Cu 26,Cu 22,N  10)     68.4917         0.001949   
+    604. D(C   4,Cu 26,Cu 22,Cu 25)    149.4425         0.001949   
+    605. D(Cu 23,Cu 26,Cu 25,Cu 28)    -84.1177         0.001501   
+    606. D(C   4,Cu 26,C   5,C   1)    -39.0521         0.001513   
+    607. D(C   1,Cu 26,C   5,O   6)   -106.0464         0.001513   
+    608. D(C   4,Cu 26,Cu 23,Cu 22)     65.2386         0.003260   
+    609. D(C   1,Cu 26,C   5,C   2)    122.2887         0.001513   
+    610. D(Cu 28,Cu 26,C   4,H  13)     23.5361         0.001961   
+    611. D(C   5,Cu 26,Cu 22,Cu 28)   -142.1649         0.001949   
+    612. D(C   5,Cu 26,Cu 22,Cu 24)    -98.5192         0.001949   
+    613. D(Cu 28,Cu 26,Cu 25,Cu 23)     84.1177         0.001501   
+    614. D(Cu 28,Cu 26,C   4,C   3)    148.6286         0.001961   
+    615. D(Cu 28,Cu 26,C   4,C   1)    -92.1517         0.001961   
+    616. D(Cu 27,Cu 26,C   4,H  13)    -28.0440         0.001961   
+    617. D(Cu 27,Cu 26,C   4,C   3)     97.0485         0.001961   
+    618. D(Cu 28,Cu 27,Cu 26,Cu 25)    -52.0290         0.002390   
+    619. D(Cu 28,Cu 27,Cu 26,Cu 23)    -52.0385         0.002390   
+    620. D(Cu 28,Cu 27,Cu 26,Cu 22)   -105.4400         0.002390   
+    621. D(Cu 28,Cu 27,Cu 26,C   4)    157.5309         0.002390   
+    622. D(Cu 28,Cu 27,Cu 26,C   1)    127.5040         0.002390   
+    623. D(Cu 25,Cu 27,Cu 26,Cu 28)     52.0290         0.002390   
+    624. D(Cu 25,Cu 27,Cu 26,Cu 22)    -53.4110         0.002390   
+    625. D(Cu 25,Cu 27,Cu 26,C   5)   -164.1587         0.002390   
+    626. D(Cu 25,Cu 27,Cu 26,C   4)   -150.4401         0.002390   
+    627. D(Cu 25,Cu 27,Cu 26,C   1)    179.5330         0.002390   
+    628. D(Cu 23,Cu 27,Cu 26,Cu 28)     52.0385         0.002390   
+    629. D(Cu 23,Cu 27,Cu 26,Cu 25)      0.0095         0.002390   
+    630. D(Cu 23,Cu 27,Cu 26,Cu 22)    -53.4015         0.002390   
+    631. D(Cu 23,Cu 27,Cu 26,C   4)   -150.4306         0.002390   
+    632. D(Cu 23,Cu 27,Cu 26,C   1)    179.5425         0.002390   
+    633. D(Cu 22,Cu 27,Cu 26,Cu 28)    105.4400         0.002390   
+    634. D(Cu 22,Cu 27,Cu 26,Cu 23)     53.4015         0.002390   
+    635. D(Cu 22,Cu 27,Cu 26,C   5)   -110.7477         0.002390   
+    636. D(Cu 22,Cu 27,Cu 26,C   4)    -97.0291         0.002390   
+    637. D(Cu 28,Cu 27,Cu 25,Cu 29)      7.3998         0.003576   
+    638. D(Cu 28,Cu 27,Cu 25,Cu 26)     52.4602         0.003576   
+    639. D(Cu 28,Cu 27,Cu 25,Cu 24)     94.1211         0.003576   
+    640. D(Cu 28,Cu 27,Cu 25,Cu 23)     52.4686         0.003576   
+    641. D(Cu 28,Cu 27,Cu 25,Cu 22)    106.1878         0.003576   
+    642. D(Cu 26,Cu 27,Cu 25,Cu 29)    -45.0604         0.003576   
+    643. D(Cu 26,Cu 27,Cu 25,Cu 28)    -52.4602         0.003576   
+    644. D(Cu 26,Cu 27,Cu 25,Cu 23)      0.0085         0.003576   
+    645. D(Cu 26,Cu 27,Cu 25,Cu 22)     53.7276         0.003576   
+    646. D(Cu 23,Cu 27,Cu 25,Cu 29)    -45.0689         0.003576   
+    647. D(Cu 23,Cu 27,Cu 25,Cu 26)     -0.0085         0.003576   
+    648. D(Cu 23,Cu 27,Cu 25,Cu 24)     41.6524         0.003576   
+    649. D(Cu 23,Cu 27,Cu 25,Cu 22)     53.7191         0.003576   
+    650. D(Cu 22,Cu 27,Cu 25,Cu 28)   -106.1878         0.003576   
+    651. D(Cu 22,Cu 27,Cu 25,Cu 26)    -53.7276         0.003576   
+    652. D(Cu 22,Cu 27,Cu 25,Cu 24)    -12.0667         0.003576   
+    653. D(Cu 22,Cu 27,Cu 25,Cu 23)    -53.7191         0.003576   
+    654. D(Cu 28,Cu 27,Cu 23,Cu 29)    -50.2417         0.001501   
+    655. D(Cu 28,Cu 27,Cu 23,Cu 26)     94.2544         0.001501   
+    656. D(Cu 28,Cu 27,Cu 23,Cu 25)    -85.7334         0.001501   
+    657. D(Cu 28,Cu 27,Cu 23,Cu 24)   -118.2386         0.001501   
+    658. D(Cu 28,Cu 27,Cu 23,Cu 22)   -171.7997         0.001501   
+    659. D(Cu 26,Cu 27,Cu 23,Cu 29)   -144.4961         0.001501   
+    660. D(Cu 26,Cu 27,Cu 23,Cu 28)    -94.2544         0.001501   
+    661. D(Cu 22,Cu 27,Cu 25,Cu 29)    -98.7880         0.003576   
+    662. D(Cu 26,Cu 27,Cu 23,Cu 25)   -179.9878         0.001501   
+    663. D(Cu 26,Cu 27,Cu 23,Cu 24)    147.5070         0.001501   
+    664. D(Cu 26,Cu 27,Cu 23,Cu 22)     93.9459         0.001501   
+    665. D(Cu 23,Cu 27,Cu 25,Cu 28)    -52.4686         0.003576   
+    666. D(Cu 25,Cu 27,Cu 23,Cu 29)     35.4918         0.001501   
+    667. D(Cu 25,Cu 27,Cu 23,Cu 28)     85.7334         0.001501   
+    668. D(Cu 25,Cu 27,Cu 23,Cu 26)    179.9878         0.001501   
+    669. D(Cu 26,Cu 27,Cu 25,Cu 24)     41.6609         0.003576   
+    670. D(Cu 25,Cu 27,Cu 23,Cu 24)    -32.5052         0.001501   
+    671. D(Cu 25,Cu 27,Cu 23,Cu 22)    -86.0663         0.001501   
+    672. D(Cu 22,Cu 27,Cu 23,Cu 29)    121.5580         0.001501   
+    673. D(Cu 22,Cu 27,Cu 23,Cu 28)    171.7997         0.001501   
+    674. D(Cu 22,Cu 27,Cu 23,Cu 26)    -93.9459         0.001501   
+    675. D(Cu 22,Cu 27,Cu 23,Cu 25)     86.0663         0.001501   
+    676. D(Cu 22,Cu 27,Cu 23,Cu 24)     53.5611         0.001501   
+    677. D(Cu 22,Cu 27,Cu 26,C   1)   -127.0560         0.002390   
+    678. D(Cu 28,Cu 27,Cu 22,Cu 26)     57.5534         0.001966   
+    679. D(Cu 28,Cu 27,Cu 22,Cu 25)    -56.7089         0.001966   
+    680. D(Cu 28,Cu 27,Cu 22,Cu 24)    -47.0815         0.001966   
+    681. D(Cu 22,Cu 27,Cu 26,Cu 25)     53.4110         0.002390   
+    682. D(Cu 28,Cu 27,Cu 22,Cu 23)      5.6658         0.001966   
+    683. D(Cu 28,Cu 27,Cu 22,N  10)    165.9210         0.001966   
+    684. D(Cu 26,Cu 27,Cu 22,Cu 28)    -57.5534         0.001966   
+    685. D(Cu 23,Cu 27,Cu 26,C   5)   -164.1492         0.002390   
+    686. D(Cu 26,Cu 27,Cu 22,Cu 25)   -114.2623         0.001966   
+    687. D(Cu 26,Cu 27,Cu 22,Cu 24)   -104.6350         0.001966   
+    688. D(Cu 26,Cu 27,Cu 22,Cu 23)    -51.8876         0.001966   
+    689. D(Cu 26,Cu 27,Cu 22,N  10)    108.3676         0.001966   
+    690. D(Cu 25,Cu 27,Cu 22,Cu 28)     56.7089         0.001966   
+    691. D(Cu 25,Cu 27,Cu 22,Cu 26)    114.2623         0.001966   
+    692. D(Cu 25,Cu 27,Cu 22,Cu 24)      9.6274         0.001966   
+    693. D(Cu 25,Cu 27,Cu 26,Cu 23)     -0.0095         0.002390   
+    694. D(Cu 25,Cu 27,Cu 22,Cu 23)     62.3748         0.001966   
+    695. D(Cu 25,Cu 27,Cu 22,N  10)   -137.3701         0.001966   
+    696. D(Cu 23,Cu 27,Cu 22,Cu 28)     -5.6658         0.001966   
+    697. D(Cu 28,Cu 27,Cu 26,C   5)    143.8123         0.002390   
+    698. D(Cu 23,Cu 27,Cu 22,Cu 26)     51.8876         0.001966   
+    699. D(Cu 23,Cu 27,Cu 22,Cu 25)    -62.3748         0.001966   
+    700. D(Cu 23,Cu 27,Cu 22,Cu 24)    -52.7474         0.001966   
+    701. D(Cu 23,Cu 27,Cu 22,N  10)    160.2552         0.001966   
+    702. D(Cu 25,Cu 28,Cu 23,Cu 22)    -47.7915         0.003229   
+    703. D(Cu 22,Cu 28,Cu 23,Cu 29)    113.1355         0.003229   
+    704. D(Cu 22,Cu 28,Cu 23,Cu 27)     -6.1012         0.003229   
+    705. D(Cu 22,Cu 28,Cu 23,Cu 25)     47.7915         0.003229   
+    706. D(Cu 22,Cu 28,Cu 23,Cu 24)     63.8733         0.003229   
+    707. D(Cu 29,Cu 28,Cu 22,Cu 27)   -134.9063         0.001501   
+    708. D(Cu 29,Cu 28,Cu 22,Cu 25)    -51.8503         0.001501   
+    709. D(Cu 29,Cu 28,Cu 22,Cu 24)      0.4213         0.001501   
+    710. D(Cu 29,Cu 28,Cu 22,Cu 23)     53.5190         0.001501   
+    711. D(Cu 29,Cu 28,Cu 22,N  10)   -160.5773         0.001501   
+    712. D(Cu 27,Cu 28,Cu 22,Cu 26)    -85.3086         0.001501   
+    713. D(Cu 27,Cu 28,Cu 22,Cu 25)     83.0560         0.001501   
+    714. D(Cu 27,Cu 28,Cu 22,Cu 24)    135.3276         0.001501   
+    715. D(Cu 27,Cu 28,Cu 22,Cu 23)   -171.5747         0.001501   
+    716. D(Cu 27,Cu 28,Cu 22,N  10)    -25.6710         0.001501   
+    717. D(Cu 26,Cu 28,Cu 22,Cu 27)     85.3086         0.001501   
+    718. D(Cu 26,Cu 28,Cu 22,Cu 25)    168.3646         0.001501   
+    719. D(Cu 26,Cu 28,Cu 22,Cu 24)   -139.3638         0.001501   
+    720. D(Cu 26,Cu 28,Cu 22,Cu 23)    -86.2661         0.001501   
+    721. D(Cu 26,Cu 28,Cu 22,N  10)     59.6376         0.001501   
+    722. D(Cu 25,Cu 28,Cu 22,Cu 27)    -83.0560         0.001501   
+    723. D(Cu 25,Cu 28,Cu 22,Cu 26)   -168.3646         0.001501   
+    724. D(Cu 25,Cu 28,Cu 22,Cu 24)     52.2716         0.001501   
+    725. D(Cu 29,Cu 28,Cu 22,Cu 26)    139.7851         0.001501   
+    726. D(Cu 25,Cu 28,Cu 22,Cu 23)    105.3693         0.001501   
+    727. D(Cu 25,Cu 28,Cu 22,N  10)   -108.7270         0.001501   
+    728. D(Cu 23,Cu 28,Cu 22,Cu 27)    171.5747         0.001501   
+    729. D(Cu 22,Cu 28,Cu 23,Cu 26)    -59.1464         0.003229   
+    730. D(Cu 23,Cu 28,Cu 22,Cu 26)     86.2661         0.001501   
+    731. D(Cu 23,Cu 28,Cu 22,Cu 25)   -105.3693         0.001501   
+    732. D(Cu 23,Cu 28,Cu 22,Cu 24)    -53.0977         0.001501   
+    733. D(Cu 25,Cu 28,Cu 23,Cu 24)     16.0819         0.003229   
+    734. D(Cu 23,Cu 28,Cu 22,N  10)    145.9037         0.001501   
+    735. D(Cu 29,Cu 28,Cu 27,Cu 26)    108.9517         0.002225   
+    736. D(Cu 29,Cu 28,Cu 27,Cu 25)     -6.5889         0.002225   
+    737. D(Cu 29,Cu 28,Cu 27,Cu 22)     50.8281         0.002225   
+    738. D(Cu 26,Cu 28,Cu 27,Cu 25)   -115.5405         0.002225   
+    739. D(Cu 26,Cu 28,Cu 27,Cu 23)    -52.3198         0.002225   
+    740. D(Cu 26,Cu 28,Cu 27,Cu 22)    -58.1236         0.002225   
+    741. D(Cu 25,Cu 28,Cu 27,Cu 26)    115.5405         0.002225   
+    742. D(Cu 25,Cu 28,Cu 27,Cu 23)     63.2208         0.002225   
+    743. D(Cu 25,Cu 28,Cu 27,Cu 22)     57.4170         0.002225   
+    744. D(Cu 23,Cu 28,Cu 27,Cu 25)    -63.2208         0.002225   
+    745. D(Cu 23,Cu 28,Cu 27,Cu 22)     -5.8038         0.002225   
+    746. D(Cu 22,Cu 28,Cu 27,Cu 26)     58.1236         0.002225   
+    747. D(Cu 22,Cu 28,Cu 27,Cu 23)      5.8038         0.002225   
+    748. D(Cu 29,Cu 28,Cu 26,Cu 27)   -103.8657         0.002163   
+    749. D(Cu 29,Cu 28,Cu 26,Cu 25)    -54.7538         0.002163   
+    750. D(Cu 29,Cu 28,Cu 26,Cu 22)    -46.5069         0.002163   
+    751. D(Cu 29,Cu 28,Cu 26,C   5)     89.3767         0.002163   
+    752. D(Cu 29,Cu 28,Cu 26,C   4)   -164.4534         0.002163   
+    753. D(Cu 29,Cu 28,Cu 26,C   1)    132.7316         0.002163   
+    754. D(Cu 27,Cu 28,Cu 26,Cu 25)     49.1119         0.002163   
+    755. D(Cu 27,Cu 28,Cu 26,Cu 23)    111.4475         0.002163   
+    756. D(Cu 27,Cu 28,Cu 26,Cu 22)     57.3588         0.002163   
+    757. D(Cu 27,Cu 28,Cu 26,C   4)    -60.5877         0.002163   
+    758. D(Cu 27,Cu 28,Cu 26,C   1)   -123.4027         0.002163   
+    759. D(Cu 25,Cu 28,Cu 26,Cu 27)    -49.1119         0.002163   
+    760. D(Cu 25,Cu 28,Cu 26,Cu 22)      8.2469         0.002163   
+    761. D(Cu 25,Cu 28,Cu 26,C   5)    144.1305         0.002163   
+    762. D(Cu 25,Cu 28,Cu 26,C   4)   -109.6996         0.002163   
+    763. D(Cu 23,Cu 28,Cu 26,Cu 27)   -111.4475         0.002163   
+    764. D(Cu 23,Cu 28,Cu 26,Cu 25)    -62.3356         0.002163   
+    765. D(Cu 23,Cu 28,Cu 26,Cu 22)    -54.0887         0.002163   
+    766. D(Cu 23,Cu 28,Cu 26,C   5)     81.7949         0.002163   
+    767. D(Cu 23,Cu 28,Cu 26,C   4)   -172.0352         0.002163   
+    768. D(Cu 23,Cu 28,Cu 26,C   1)    125.1498         0.002163   
+    769. D(Cu 22,Cu 28,Cu 26,Cu 27)    -57.3588         0.002163   
+    770. D(Cu 22,Cu 28,Cu 26,Cu 23)     54.0887         0.002163   
+    771. D(Cu 22,Cu 28,Cu 26,C   5)    135.8836         0.002163   
+    772. D(Cu 22,Cu 28,Cu 26,C   4)   -117.9465         0.002163   
+    773. D(Cu 22,Cu 28,Cu 26,C   1)    179.2385         0.002163   
+    774. D(Cu 29,Cu 28,Cu 25,Cu 27)    172.9887         0.002637   
+    775. D(Cu 29,Cu 28,Cu 25,Cu 26)    122.1832         0.002637   
+    776. D(Cu 29,Cu 28,Cu 25,Cu 24)     51.7334         0.002637   
+    777. D(Cu 29,Cu 28,Cu 25,Cu 23)     67.7153         0.002637   
+    778. D(Cu 29,Cu 28,Cu 25,Cu 22)    113.6951         0.002637   
+    779. D(Cu 27,Cu 28,Cu 25,Cu 29)   -172.9887         0.002637   
+    780. D(Cu 27,Cu 28,Cu 25,Cu 26)    -50.8056         0.002637   
+    781. D(Cu 22,Cu 28,Cu 26,Cu 25)     -8.2469         0.002163   
+    782. D(Cu 27,Cu 28,Cu 25,Cu 24)   -121.2553         0.002637   
+    783. D(Cu 27,Cu 28,Cu 25,Cu 23)   -105.2734         0.002637   
+    784. D(Cu 27,Cu 28,Cu 25,Cu 22)    -59.2936         0.002637   
+    785. D(Cu 26,Cu 28,Cu 25,Cu 29)   -122.1832         0.002637   
+    786. D(Cu 26,Cu 28,Cu 25,Cu 27)     50.8056         0.002637   
+    787. D(Cu 26,Cu 28,Cu 25,Cu 24)    -70.4498         0.002637   
+    788. D(Cu 26,Cu 28,Cu 25,Cu 23)    -54.4679         0.002637   
+    789. D(Cu 25,Cu 28,Cu 26,C   1)   -172.5146         0.002163   
+    790. D(Cu 26,Cu 28,Cu 25,Cu 22)     -8.4880         0.002637   
+    791. D(Cu 23,Cu 28,Cu 25,Cu 29)    -67.7153         0.002637   
+    792. D(Cu 23,Cu 28,Cu 25,Cu 27)    105.2734         0.002637   
+    793. D(Cu 25,Cu 28,Cu 26,Cu 23)     62.3356         0.002163   
+    794. D(Cu 23,Cu 28,Cu 25,Cu 26)     54.4679         0.002637   
+    795. D(Cu 23,Cu 28,Cu 25,Cu 24)    -15.9819         0.002637   
+    796. D(Cu 23,Cu 28,Cu 25,Cu 22)     45.9798         0.002637   
+    797. D(Cu 27,Cu 28,Cu 26,C   5)   -166.7576         0.002163   
+    798. D(Cu 22,Cu 28,Cu 25,Cu 29)   -113.6951         0.002637   
+    799. D(Cu 22,Cu 28,Cu 25,Cu 27)     59.2936         0.002637   
+    800. D(Cu 22,Cu 28,Cu 25,Cu 26)      8.4880         0.002637   
+    801. D(Cu 22,Cu 28,Cu 25,Cu 24)    -61.9618         0.002637   
+    802. D(Cu 22,Cu 28,Cu 25,Cu 23)    -45.9798         0.002637   
+    803. D(Cu 29,Cu 28,Cu 23,Cu 27)   -119.2368         0.003229   
+    804. D(Cu 29,Cu 28,Cu 23,Cu 26)   -172.2819         0.003229   
+    805. D(Cu 29,Cu 28,Cu 26,Cu 23)      7.5818         0.002163   
+    806. D(Cu 29,Cu 28,Cu 23,Cu 25)    -65.3441         0.003229   
+    807. D(Cu 29,Cu 28,Cu 23,Cu 24)    -49.2622         0.003229   
+    808. D(Cu 29,Cu 28,Cu 23,Cu 22)   -113.1355         0.003229   
+    809. D(Cu 22,Cu 28,Cu 27,Cu 25)    -57.4170         0.002225   
+    810. D(Cu 27,Cu 28,Cu 23,Cu 29)    119.2368         0.003229   
+    811. D(Cu 27,Cu 28,Cu 23,Cu 26)    -53.0451         0.003229   
+    812. D(Cu 27,Cu 28,Cu 23,Cu 25)     53.8927         0.003229   
+    813. D(Cu 23,Cu 28,Cu 27,Cu 26)     52.3198         0.002225   
+    814. D(Cu 27,Cu 28,Cu 23,Cu 24)     69.9745         0.003229   
+    815. D(Cu 27,Cu 28,Cu 23,Cu 22)      6.1012         0.003229   
+    816. D(Cu 26,Cu 28,Cu 23,Cu 29)    172.2819         0.003229   
+    817. D(Cu 26,Cu 28,Cu 23,Cu 27)     53.0451         0.003229   
+    818. D(Cu 26,Cu 28,Cu 23,Cu 25)    106.9378         0.003229   
+    819. D(Cu 26,Cu 28,Cu 23,Cu 24)    123.0197         0.003229   
+    820. D(Cu 26,Cu 28,Cu 23,Cu 22)     59.1464         0.003229   
+    821. D(Cu 29,Cu 28,Cu 27,Cu 23)     56.6319         0.002225   
+    822. D(Cu 25,Cu 28,Cu 23,Cu 29)     65.3441         0.003229   
+    823. D(Cu 25,Cu 28,Cu 23,Cu 27)    -53.8927         0.003229   
+    824. D(Cu 25,Cu 28,Cu 23,Cu 26)   -106.9378         0.003229   
+    825. D(Cu 25,Cu 29,Cu 28,Cu 26)     73.3365         0.002289   
+    826. D(Cu 25,Cu 29,Cu 28,Cu 23)     80.7668         0.002289   
+    827. D(Cu 25,Cu 29,Cu 28,Cu 22)     41.0017         0.002289   
+    828. D(Cu 24,Cu 29,Cu 28,Cu 26)     31.9388         0.002289   
+    829. D(Cu 24,Cu 29,Cu 28,Cu 25)    -41.3977         0.002289   
+    830. D(Cu 24,Cu 29,Cu 28,Cu 23)     39.3691         0.002289   
+    831. D(Cu 24,Cu 29,Cu 28,Cu 22)     -0.3960         0.002289   
+    832. D(Cu 23,Cu 29,Cu 28,Cu 27)    -74.2914         0.002289   
+    833. D(Cu 23,Cu 29,Cu 28,Cu 26)     -7.4303         0.002289   
+    834. D(Cu 23,Cu 29,Cu 28,Cu 25)    -80.7668         0.002289   
+    835. D(Cu 28,Cu 29,Cu 25,Cu 27)     -7.4849         0.002896   
+    836. D(Cu 28,Cu 29,Cu 25,Cu 26)    -36.8159         0.002896   
+    837. D(Cu 28,Cu 29,Cu 25,Cu 24)   -127.0568         0.002896   
+    838. D(Cu 28,Cu 29,Cu 25,Cu 22)    -79.0334         0.002896   
+    839. D(Cu 24,Cu 29,Cu 25,Cu 28)    127.0568         0.002896   
+    840. D(Cu 24,Cu 29,Cu 25,Cu 27)    119.5720         0.002896   
+    841. D(Cu 24,Cu 29,Cu 25,Cu 23)     62.0639         0.002896   
+    842. D(Cu 24,Cu 29,Cu 25,Cu 22)     48.0234         0.002896   
+    843. D(Cu 23,Cu 29,Cu 25,Cu 28)     64.9930         0.002896   
+    844. D(Cu 23,Cu 29,Cu 25,Cu 27)     57.5081         0.002896   
+    845. D(Cu 23,Cu 29,Cu 25,Cu 26)     28.1770         0.002896   
+    846. D(Cu 23,Cu 29,Cu 25,Cu 24)    -62.0639         0.002896   
+    847. D(Cu 23,Cu 29,Cu 25,Cu 22)    -14.0404         0.002896   
+    848. D(Cu 28,Cu 29,Cu 24,Cu 25)     44.3734         0.001650   
+    849. D(Cu 28,Cu 29,Cu 24,Cu 23)    -41.0822         0.001650   
+    850. D(Cu 28,Cu 29,Cu 24,Cu 22)      0.5519         0.001650   
+    851. D(Cu 25,Cu 29,Cu 24,Cu 23)    -85.4556         0.001650   
+    852. D(Cu 25,Cu 29,Cu 24,Cu 22)    -43.8214         0.001650   
+    853. D(Cu 24,Cu 29,Cu 25,Cu 26)     90.2409         0.002896   
+    854. D(Cu 23,Cu 29,Cu 24,Cu 25)     85.4556         0.001650   
+    855. D(Cu 23,Cu 29,Cu 24,Cu 22)     41.6341         0.001650   
+    856. D(Cu 28,Cu 29,Cu 23,Cu 27)     39.1813         0.002584   
+    857. D(Cu 28,Cu 29,Cu 25,Cu 23)    -64.9930         0.002896   
+    858. D(Cu 28,Cu 29,Cu 23,Cu 26)      8.4743         0.002584   
+    859. D(Cu 28,Cu 29,Cu 23,Cu 25)     67.8176         0.002584   
+    860. D(Cu 28,Cu 29,Cu 23,Cu 24)    129.9843         0.002584   
+    861. D(Cu 23,Cu 29,Cu 28,Cu 22)    -39.7651         0.002289   
+    862. D(Cu 28,Cu 29,Cu 23,Cu 22)     82.3676         0.002584   
+    863. D(Cu 25,Cu 29,Cu 23,Cu 28)    -67.8176         0.002584   
+    864. D(Cu 25,Cu 29,Cu 23,Cu 27)    -28.6362         0.002584   
+    865. D(Cu 25,Cu 29,Cu 23,Cu 26)    -59.3433         0.002584   
+    866. D(Cu 25,Cu 29,Cu 23,Cu 24)     62.1668         0.002584   
+    867. D(Cu 25,Cu 29,Cu 23,Cu 22)     14.5500         0.002584   
+    868. D(Cu 24,Cu 29,Cu 23,Cu 28)   -129.9843         0.002584   
+    869. D(Cu 24,Cu 29,Cu 28,Cu 27)    -34.9223         0.002289   
+    870. D(Cu 24,Cu 29,Cu 23,Cu 27)    -90.8030         0.002584   
+    871. D(Cu 24,Cu 29,Cu 23,Cu 26)   -121.5101         0.002584   
+    872. D(Cu 24,Cu 29,Cu 23,Cu 25)    -62.1668         0.002584   
+    873. D(Cu 25,Cu 29,Cu 28,Cu 27)      6.4754         0.002289   
+    874. D(Cu 24,Cu 29,Cu 23,Cu 22)    -47.6168         0.002584   
+    -----------------------------------------------------------------
+
+Number of atoms                         .... 30
+Number of degrees of freedom            .... 874
+
+         *************************************************************
+         *                GEOMETRY OPTIMIZATION CYCLE   1            *
+         *************************************************************
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C      0.361558   -0.842664    0.106322
+  C      0.237898    1.544949    1.567955
+  C     -0.667760   -0.643469    1.032454
+  C      1.337892    0.134495   -0.122190
+  C      1.273549    1.335456    0.619140
+  C     -0.743780    0.555710    1.765199
+  O     -1.746336    0.773960    2.659873
+  O     -1.645837   -1.559406    1.304274
+  C      2.397712   -0.065958   -1.177507
+  C      3.840709   -0.161689   -0.678714
+  N      4.080224   -1.391089    0.121378
+  H      0.390771   -1.782249   -0.452022
+  H      0.121488    2.509575    2.065313
+  H      1.966775    2.149007    0.400555
+  H     -2.304115   -0.029829    2.694137
+  H     -1.517522   -2.358194    0.758824
+  H      2.360891    0.779115   -1.884083
+  H      2.163679   -0.971129   -1.760668
+  H      4.510351   -0.140042   -1.553688
+  H      4.086112    0.704375   -0.043538
+  H      5.088394   -1.572208    0.152339
+  H      3.671935   -2.195923   -0.365199
+  Cu     3.556860   -1.317657    2.101241
+  Cu     2.079195   -1.351147    4.052584
+  Cu     3.806432   -2.993078    4.027164
+  Cu     4.708248   -0.812668    4.279979
+  Cu     1.856488    0.563881    2.630907
+  Cu     4.282980    1.022230    2.867972
+  Cu     2.906349    0.709370    4.927040
+  Cu     3.321009   -1.403195    6.151359
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 C     6.0000    0    12.011    0.683245   -1.592405    0.200919
+   1 C     6.0000    0    12.011    0.449562    2.919531    2.963005
+   2 C     6.0000    0    12.011   -1.261883   -1.215981    1.951056
+   3 C     6.0000    0    12.011    2.528250    0.254159   -0.230906
+   4 C     6.0000    0    12.011    2.406659    2.523646    1.170005
+   5 C     6.0000    0    12.011   -1.405540    1.050140    3.335743
+   6 O     8.0000    0    15.999   -3.300097    1.462572    5.026431
+   7 O     8.0000    0    15.999   -3.110181   -2.946850    2.464721
+   8 C     6.0000    0    12.011    4.531018   -0.124642   -2.225166
+   9 C     6.0000    0    12.011    7.257888   -0.305548   -1.282584
+  10 N     7.0000    0    14.007    7.710506   -2.628778    0.229372
+  11 H     1.0000    0     1.008    0.738449   -3.367962   -0.854198
+  12 H     1.0000    0     1.008    0.229579    4.742409    3.902876
+  13 H     1.0000    0     1.008    3.716666    4.061035    0.756939
+  14 H     1.0000    0     1.008   -4.354147   -0.056369    5.091180
+  15 H     1.0000    0     1.008   -2.867701   -4.456341    1.433969
+  16 H     1.0000    0     1.008    4.461438    1.472315   -3.560401
+  17 H     1.0000    0     1.008    4.088760   -1.835168   -3.327180
+  18 H     1.0000    0     1.008    8.523328   -0.264641   -2.936044
+  19 H     1.0000    0     1.008    7.721633    1.331077   -0.082275
+  20 H     1.0000    0     1.008    9.615671   -2.971042    0.287880
+  21 H     1.0000    0     1.008    6.938952   -4.149693   -0.690125
+  22 Cu   29.0000    0    63.550    6.721492   -2.490010    3.970770
+  23 Cu   29.0000    0    63.550    3.929109   -2.553297    7.658274
+  24 Cu   29.0000    0    63.550    7.193115   -5.656098    7.610237
+  25 Cu   29.0000    0    63.550    8.897300   -1.535720    8.087987
+  26 Cu   29.0000    0    63.550    3.508254    1.065581    4.971693
+  27 Cu   29.0000    0    63.550    8.093659    1.931734    5.419682
+  28 Cu   29.0000    0    63.550    5.492203    1.340514    9.310757
+  29 Cu   29.0000    0    63.550    6.275798   -2.651654   11.624385
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ C      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     2.802206355888     0.00000000     0.00000000
+ C      1   2   0     1.398890218656    60.05800746     0.00000000
+ C      1   2   3     1.400102766696    61.39574248   179.45766016
+ C      4   1   2     1.412804466724   118.41606446     0.14474164
+ C      3   1   2     1.407382414040   120.38220311     0.41709009
+ O      6   3   1     1.361320227545   121.23551448   179.25891990
+ O      3   1   2     1.367282340502   124.23474187   180.84230698
+ C      4   1   2     1.509003523482   120.74295651   182.76195082
+ C      9   4   1     1.529771360268   116.28124566   244.27090207
+ N     10   9   4     1.486250589043   112.29050651    67.20995204
+ H      1   2   3     1.093352817558   178.74982868   357.42859292
+ H      2   1   3     1.091521446009   174.48374547   276.31941778
+ H      5   4   1     1.090966389539   119.98859704   185.39287726
+ H      7   6   3     0.978962954197   108.11811268     2.52724635
+ H      8   3   1     0.975727176398   110.07249854   359.81627193
+ H      9   4   1     1.102158861826   108.84590422   123.70242979
+ H      9   4   1     1.101899583501   109.27303235     7.81113008
+ H     10   9   4     1.102029015365   108.24430003   189.11894347
+ H     10   9   4     1.101697905339   110.42044537   306.99806652
+ H     11  10   9     1.024777778114   108.72354702   160.71693649
+ H     11  10   9     1.025287121175   109.24885247    46.04776920
+ Cu    11  10   9     2.049184640145   116.69988032   276.84762939
+ Cu    23  11  10     2.447929304681   157.49611418    77.85453174
+ Cu    24  23  11     2.383261331889    64.11562715   122.14637374
+ Cu    25  24  23     2.373052054836    68.97750116    68.06921417
+ Cu     2   1   3     2.170759140298    80.64369037   104.05715706
+ Cu    26  25  24     2.354031998590   125.70680280   306.62365298
+ Cu    24  23  11     2.386333048894    94.07484837   232.80182374
+ Cu    26  25  24     2.403168656456    68.76526267    63.56766532
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ C      0   0   0     0.000000000000     0.00000000     0.00000000
+ C      1   0   0     5.295402583361     0.00000000     0.00000000
+ C      1   2   0     2.643519404681    60.05800746     0.00000000
+ C      1   2   3     2.645810788400    61.39574248   179.45766016
+ C      4   1   2     2.669813522889   118.41606446     0.14474164
+ C      3   1   2     2.659567328232   120.38220311     0.41709009
+ O      6   3   1     2.572522410628   121.23551448   179.25891990
+ O      3   1   2     2.583789171296   124.23474187   180.84230698
+ C      4   1   2     2.851603394504   120.74295651   182.76195082
+ C      9   4   1     2.890848918423   116.28124566   244.27090207
+ N     10   9   4     2.808606579671   112.29050651    67.20995204
+ H      1   2   3     2.066137392936   178.74982868   357.42859292
+ H      2   1   3     2.062676602258   174.48374547   276.31941778
+ H      5   4   1     2.061627697542   119.98859704   185.39287726
+ H      7   6   3     1.849971878687   108.11811268     2.52724635
+ H      8   3   1     1.843857144816   110.07249854   359.81627193
+ H      9   4   1     2.082778404926   108.84590422   123.70242979
+ H      9   4   1     2.082288439898   109.27303235     7.81113008
+ H     10   9   4     2.082533030675   108.24430003   189.11894347
+ H     10   9   4     2.081907323406   110.42044537   306.99806652
+ H     11  10   9     1.936549348765   108.72354702   160.71693649
+ H     11  10   9     1.937511867658   109.24885247    46.04776920
+ Cu    11  10   9     3.872397767711   116.69988032   276.84762939
+ Cu    23  11  10     4.625915981047   157.49611418    77.85453174
+ Cu    24  23  11     4.503711222834    64.11562715   122.14637374
+ Cu    25  24  23     4.484418485179    68.97750116    68.06921417
+ Cu     2   1   3     4.102140277870    80.64369037   104.05715706
+ Cu    26  25  24     4.448475787822   125.70680280   306.62365298
+ Cu    24  23  11     4.509515926736    94.07484837   232.80182374
+ Cu    26  25  24     4.541330614326    68.76526267    63.56766532
+
+---------------------
+BASIS SET INFORMATION
+---------------------
+There are 5 groups of distinct atoms
+
+ Group   1 Type C   : 11s6p2d1f contracted to 5s3p2d1f pattern {62111/411/11/1}
+ Group   2 Type O   : 11s6p2d1f contracted to 5s3p2d1f pattern {62111/411/11/1}
+ Group   3 Type N   : 11s6p2d1f contracted to 5s3p2d1f pattern {62111/411/11/1}
+ Group   4 Type H   : 5s1p contracted to 3s1p pattern {311/1}
+ Group   5 Type Cu  : 17s11p7d1f contracted to 6s4p4d1f pattern {842111/6311/4111/1}
+
+Atom   0C    basis set group =>   1
+Atom   1C    basis set group =>   1
+Atom   2C    basis set group =>   1
+Atom   3C    basis set group =>   1
+Atom   4C    basis set group =>   1
+Atom   5C    basis set group =>   1
+Atom   6O    basis set group =>   2
+Atom   7O    basis set group =>   2
+Atom   8C    basis set group =>   1
+Atom   9C    basis set group =>   1
+Atom  10N    basis set group =>   3
+Atom  11H    basis set group =>   4
+Atom  12H    basis set group =>   4
+Atom  13H    basis set group =>   4
+Atom  14H    basis set group =>   4
+Atom  15H    basis set group =>   4
+Atom  16H    basis set group =>   4
+Atom  17H    basis set group =>   4
+Atom  18H    basis set group =>   4
+Atom  19H    basis set group =>   4
+Atom  20H    basis set group =>   4
+Atom  21H    basis set group =>   4
+Atom  22Cu   basis set group =>   5
+Atom  23Cu   basis set group =>   5
+Atom  24Cu   basis set group =>   5
+Atom  25Cu   basis set group =>   5
+Atom  26Cu   basis set group =>   5
+Atom  27Cu   basis set group =>   5
+Atom  28Cu   basis set group =>   5
+Atom  29Cu   basis set group =>   5
+---------------------------------
+AUXILIARY/J BASIS SET INFORMATION
+---------------------------------
+There are 5 groups of distinct atoms
+
+ Group   1 Type C   : 12s5p4d2f1g contracted to 6s4p3d1f1g pattern {711111/2111/211/2/1}
+ Group   2 Type O   : 12s5p4d2f1g contracted to 6s4p3d1f1g pattern {711111/2111/211/2/1}
+ Group   3 Type N   : 12s5p4d2f1g contracted to 6s4p3d1f1g pattern {711111/2111/211/2/1}
+ Group   4 Type H   : 5s2p1d contracted to 3s1p1d pattern {311/2/1}
+ Group   5 Type Cu  : 19s5p5d3f3g contracted to 8s5p4d3f3g pattern {121111111/11111/2111/111/111}
+
+Atom   0C    basis set group =>   1
+Atom   1C    basis set group =>   1
+Atom   2C    basis set group =>   1
+Atom   3C    basis set group =>   1
+Atom   4C    basis set group =>   1
+Atom   5C    basis set group =>   1
+Atom   6O    basis set group =>   2
+Atom   7O    basis set group =>   2
+Atom   8C    basis set group =>   1
+Atom   9C    basis set group =>   1
+Atom  10N    basis set group =>   3
+Atom  11H    basis set group =>   4
+Atom  12H    basis set group =>   4
+Atom  13H    basis set group =>   4
+Atom  14H    basis set group =>   4
+Atom  15H    basis set group =>   4
+Atom  16H    basis set group =>   4
+Atom  17H    basis set group =>   4
+Atom  18H    basis set group =>   4
+Atom  19H    basis set group =>   4
+Atom  20H    basis set group =>   4
+Atom  21H    basis set group =>   4
+Atom  22Cu   basis set group =>   5
+Atom  23Cu   basis set group =>   5
+Atom  24Cu   basis set group =>   5
+Atom  25Cu   basis set group =>   5
+Atom  26Cu   basis set group =>   5
+Atom  27Cu   basis set group =>   5
+Atom  28Cu   basis set group =>   5
+Atom  29Cu   basis set group =>   5
+[file orca_main/mainfcts.cpp, line 629]: Error : multiplicity (2) is even and number of electrons (314) is even -> impossible
+

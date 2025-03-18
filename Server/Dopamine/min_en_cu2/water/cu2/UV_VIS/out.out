@@ -1,0 +1,2859 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                                            #,                                       
+                                            ###                                      
+                                            ####                                     
+                                            #####                                    
+                                            ######                                   
+                                           ########,                                 
+                                     ,,################,,,,,                         
+                               ,,#################################,,                 
+                          ,,##########################################,,             
+                       ,#########################################, ''#####,          
+                    ,#############################################,,   '####,        
+                  ,##################################################,,,,####,       
+                ,###########''''           ''''###############################       
+              ,#####''   ,,,,##########,,,,          '''####'''          '####       
+            ,##' ,,,,###########################,,,                        '##       
+           ' ,,###''''                  '''############,,,                           
+         ,,##''                                '''############,,,,        ,,,,,,###''
+      ,#''                                            '''#######################'''  
+     '                                                          ''''####''''         
+             ,#######,   #######,   ,#######,      ##                                
+            ,#'     '#,  ##    ##  ,#'     '#,    #''#        ######   ,####,        
+            ##       ##  ##   ,#'  ##            #'  '#       #        #'  '#        
+            ##       ##  #######   ##           ,######,      #####,   #    #        
+            '#,     ,#'  ##    ##  '#,     ,#' ,#      #,         ##   #,  ,#        
+             '#######'   ##     ##  '#######'  #'      '#     #####' # '####'        
+
+
+
+                  #######################################################
+                  #                        -***-                        #
+                  #          Department of theory and spectroscopy      #
+                  #    Directorship and core code : Frank Neese         #
+                  #        Max Planck Institute fuer Kohlenforschung    #
+                  #                Kaiser Wilhelm Platz 1               #
+                  #                 D-45470 Muelheim/Ruhr               #
+                  #                      Germany                        #
+                  #                                                     #
+                  #                  All rights reserved                #
+                  #                        -***-                        #
+                  #######################################################
+
+
+                         Program Version 5.0.2 -  RELEASE  -
+
+
+ With contributions from (in alphabetic order):
+   Daniel Aravena         : Magnetic Suceptibility
+   Michael Atanasov       : Ab Initio Ligand Field Theory (pilot matlab implementation)
+   Alexander A. Auer      : GIAO ZORA, VPT2 properties, NMR spectrum
+   Ute Becker             : Parallelization
+   Giovanni Bistoni       : ED, misc. LED, open-shell LED, HFLD
+   Martin Brehm           : Molecular dynamics
+   Dmytro Bykov           : SCF Hessian
+   Vijay G. Chilkuri      : MRCI spin determinant printing, contributions to CSF-ICE
+   Dipayan Datta          : RHF DLPNO-CCSD density
+   Achintya Kumar Dutta   : EOM-CC, STEOM-CC
+   Dmitry Ganyushin       : Spin-Orbit,Spin-Spin,Magnetic field MRCI
+   Miquel Garcia          : C-PCM and meta-GGA Hessian, CC/C-PCM, Gaussian charge scheme
+   Yang Guo               : DLPNO-NEVPT2, F12-NEVPT2, CIM, IAO-localization
+   Andreas Hansen         : Spin unrestricted coupled pair/coupled cluster methods
+   Benjamin Helmich-Paris : MC-RPA, TRAH-SCF, COSX integrals
+   Lee Huntington         : MR-EOM, pCC
+   Robert Izsak           : Overlap fitted RIJCOSX, COSX-SCS-MP3, EOM
+   Marcus Kettner         : VPT2
+   Christian Kollmar      : KDIIS, OOCD, Brueckner-CCSD(T), CCSD density, CASPT2, CASPT2-K
+   Simone Kossmann        : Meta GGA functionals, TD-DFT gradient, OOMP2, MP2 Hessian
+   Martin Krupicka        : Initial AUTO-CI
+   Lucas Lang             : DCDCAS
+   Marvin Lechner         : AUTO-CI (C++ implementation), FIC-MRCC
+   Dagmar Lenk            : GEPOL surface, SMD
+   Dimitrios Liakos       : Extrapolation schemes; Compound Job, initial MDCI parallelization
+   Dimitrios Manganas     : Further ROCIS development; embedding schemes
+   Dimitrios Pantazis     : SARC Basis sets
+   Anastasios Papadopoulos: AUTO-CI, single reference methods and gradients
+   Taras Petrenko         : DFT Hessian,TD-DFT gradient, ASA, ECA, R-Raman, ABS, FL, XAS/XES, NRVS
+   Peter Pinski           : DLPNO-MP2, DLPNO-MP2 Gradient
+   Christoph Reimann      : Effective Core Potentials
+   Marius Retegan         : Local ZFS, SOC
+   Christoph Riplinger    : Optimizer, TS searches, QM/MM, DLPNO-CCSD(T), (RO)-DLPNO pert. Triples
+   Tobias Risthaus        : Range-separated hybrids, TD-DFT gradient, RPA, STAB
+   Michael Roemelt        : Original ROCIS implementation
+   Masaaki Saitow         : Open-shell DLPNO-CCSD energy and density
+   Barbara Sandhoefer     : DKH picture change effects
+   Avijit Sen             : IP-ROCIS
+   Kantharuban Sivalingam : CASSCF convergence, NEVPT2, FIC-MRCI
+   Bernardo de Souza      : ESD, SOC TD-DFT
+   Georgi Stoychev        : AutoAux, RI-MP2 NMR, DLPNO-MP2 response
+   Willem Van den Heuvel  : Paramagnetic NMR
+   Boris Wezisla          : Elementary symmetry handling
+   Frank Wennmohs         : Technical directorship
+
+
+ We gratefully acknowledge several colleagues who have allowed us to
+ interface, adapt or use parts of their codes:
+   Stefan Grimme, W. Hujo, H. Kruse, P. Pracht,  : VdW corrections, initial TS optimization,
+                  C. Bannwarth, S. Ehlert          DFT functionals, gCP, sTDA/sTD-DF
+   Ed Valeev, F. Pavosevic, A. Kumar             : LibInt (2-el integral package), F12 methods
+   Garnet Chan, S. Sharma, J. Yang, R. Olivares  : DMRG
+   Ulf Ekstrom                                   : XCFun DFT Library
+   Mihaly Kallay                                 : mrcc  (arbitrary order and MRCC methods)
+   Jiri Pittner, Ondrej Demel                    : Mk-CCSD
+   Frank Weinhold                                : gennbo (NPA and NBO analysis)
+   Christopher J. Cramer and Donald G. Truhlar   : smd solvation model
+   Lars Goerigk                                  : TD-DFT with DH, B97 family of functionals
+   V. Asgeirsson, H. Jonsson                     : NEB implementation
+   FAccTs GmbH                                   : IRC, NEB, NEB-TS, DLPNO-Multilevel, CI-OPT
+                                                   MM, QMMM, 2- and 3-layer-ONIOM, Crystal-QMMM,
+                                                   LR-CPCM, SF, NACMEs, symmetry and pop. for TD-DFT,
+                                                   nearIR, NL-DFT gradient (VV10), updates on ESD,
+                                                   ML-optimized integration grids
+   S Lehtola, MJT Oliveira, MAL Marques          : LibXC Library
+   Liviu Ungur et al                             : ANISO software
+
+
+ Your calculation uses the libint2 library for the computation of 2-el integrals
+ For citations please refer to: http://libint.valeyev.net
+
+ Your ORCA version has been built with support for libXC version: 5.1.0
+ For citations please refer to: https://tddft.org/programs/libxc/
+
+ This ORCA versions uses:
+   CBLAS   interface :  Fast vector & matrix operations
+   LAPACKE interface :  Fast linear algebra routines
+   SCALAPACK package :  Parallel linear algebra routines
+   Shared memory     :  Shared parallel matrices
+   BLAS/LAPACK       :  OpenBLAS 0.3.15  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell SINGLE_THREADED
+        Core in use  :  Haswell
+   Copyright (c) 2011-2014, The OpenBLAS Project
+
+
+XCFun DFT library Copyright 2009-2010 Ulf Ekstrom and contributors.
+See http://admol.org/xcfun for more information.
+This is free software; see the source code for copying conditions.
+There is ABSOLUTELY NO WARRANTY; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+For details see the documentation.
+Scientific users of this library should cite U. Ekstrom, L. Visscher, R. Bast, A. J. Thorvaldsen and K. Ruud;
+J.Chem.Theor.Comp. 2010, DOI: 10.1021/ct100117s
+XCFun Version 0.99 
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+INFO   : Checking CIS options ...
+
+WARNING: Minnesota functionals are quite sensitive to the integration grid.
+         see SE Wheeler, KN Houk, JCTC 2010, 6, 395,
+             N Mardirossian, M Head-Gordon, JCTC 2016, 12, 4303.
+         DEFGRID3 seems to be a minimum grid for reliable results with these functionals!
+  ===> : Please increase the integration grid!
+
+
+WARNING: CIS/ROCIS methods need fully converged wavefunctions
+  ===> : Setting SCFConvForced true
+         You can overwrite this default with %scf ConvForced false 
+
+
+INFO   : the flag for use of the SHARK integral package has been found!
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = ex.inp
+|  1> ! M062X TightSCF def2-TZVP slowconv PModel cpcm(water) 
+|  2> 
+|  3> %tddft
+|  4>  nroots 12
+|  5>  maxdim 60
+|  6>  triplets false
+|  7> end
+|  8> 
+|  9> %output
+| 10> Print[ P_Basis ] 2
+| 11> Print[ P_MOs ] 1
+| 12> end
+| 13> 
+| 14> %pal nprocs=16 end
+| 15> %base "cu2"
+| 16> *xyz 0 1
+| 17>   Cu    -2.630013769000    0.000000000000   -3.527558151000
+| 18>   Cu    -2.630013769000    0.000000000000   -6.267558151000
+| 19> *
+| 20> 
+| 21>                          ****END OF INPUT****
+================================================================================
+
+                       ****************************
+                       * Single Point Calculation *
+                       ****************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  Cu    -2.630014    0.000000   -3.527558
+  Cu    -2.630014    0.000000   -6.267558
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 Cu   29.0000    0    63.550   -4.970006    0.000000   -6.666119
+   1 Cu   29.0000    0    63.550   -4.970006    0.000000  -11.843968
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ Cu     0   0   0     0.000000000000     0.00000000     0.00000000
+ Cu     1   0   0     2.740000000000     0.00000000     0.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ Cu     0   0   0     0.000000000000     0.00000000     0.00000000
+ Cu     1   0   0     5.177849606944     0.00000000     0.00000000
+
+---------------------
+BASIS SET INFORMATION
+---------------------
+There are 1 groups of distinct atoms
+
+ Group   1 Type Cu  : 17s11p7d1f contracted to 6s4p4d1f pattern {842111/6311/4111/1}
+
+Atom   0Cu   basis set group =>   1
+Atom   1Cu   basis set group =>   1
+
+-------------------------
+BASIS SET IN INPUT FORMAT
+-------------------------
+
+ # Basis set for element : Cu
+ NewGTO Cu
+ S 8 
+   1  377518.7992300000      0.0002387916
+   2   56589.9843110000      0.0018515678
+   3   12878.7117060000      0.0096297932
+   4    3645.3752143000      0.0391615178
+   5    1187.0072945000      0.1276025095
+   6     426.4642190200      0.3034008838
+   7     165.7066016400      0.4347519283
+   8      65.5989427070      0.2293079504
+ S 4 
+   1     414.4126581100     -0.0249866525
+   2     128.3205603900     -0.1186119709
+   3      20.6220897500      0.5598271484
+   4       8.7821226045      0.5288643080
+ S 2 
+   1      13.7413720060     -0.3699327832
+   2       2.2431246833      1.1676087386
+ S 1 
+   1       0.8937054908      1.0000000000
+ S 1 
+   1       0.1083669953      1.0000000000
+ S 1 
+   1       0.0388061781      1.0000000000
+ P 6 
+   1    2034.7596692000      0.0026776186
+   2     481.9046810600      0.0217785896
+   3     154.6748296300      0.1026336485
+   4      57.7405769690      0.2966548980
+   5      23.0990528110      0.4791122399
+   6       9.3882478591      0.2770928296
+ P 3 
+   1      37.5961712100     -0.0207301505
+   2       5.1240690810      0.3927002052
+   3       2.0119996085      0.6706714235
+ P 1 
+   1       0.7386068600      1.0000000000
+ D 4 
+   1      74.1294606370      0.0222258533
+   2      21.3598425870      0.1340497188
+   3       7.4995240537      0.3966245361
+   4       2.7601394169      0.6247541952
+ D 1 
+   1       0.9536206124      1.0000000000
+ D 1 
+   1       0.2842086252      1.0000000000
+ P 1 
+   1       0.1550650000      1.0000000000
+ D 1 
+   1       0.0850000000      1.0000000000
+ F 1 
+   1       2.2330000000      1.0000000000
+  end;
+
+---------------------------------
+AUXILIARY/J BASIS SET INFORMATION
+---------------------------------
+There are 1 groups of distinct atoms
+
+ Group   1 Type Cu  : 19s5p5d3f3g contracted to 8s5p4d3f3g pattern {121111111/11111/2111/111/111}
+
+Atom   0Cu   basis set group =>   1
+Atom   1Cu   basis set group =>   1
+
+-------------------------------------
+AUXILIARY/J BASIS SET IN INPUT FORMAT
+-------------------------------------
+
+ # Auxiliary/J basis set for element : Cu
+ NewAuxJGTO Cu
+ S 12 
+   1   22760.1575320000      0.0282764819
+   2    7272.8802874000      0.0691320820
+   3    2725.0817134000      0.1660481474
+   4    1480.3337422000      0.1462232042
+   5     870.7845298000      0.2312796482
+   6     533.0245964000      0.1980761869
+   7     313.5438715000      0.1178844884
+   8     112.8979167000     -0.0569562562
+   9      66.4105374000      0.1110331733
+  10      39.0650209000      0.2298430798
+  11      22.9794234000      0.1324785707
+  12      13.5173075000     -0.0781371994
+ S 1 
+   1       4.3193796000      1.0000000000
+ S 1 
+   1       2.5408114000      1.0000000000
+ S 1 
+   1       1.5552814000      1.0000000000
+ S 1 
+   1       0.9148714000      1.0000000000
+ S 1 
+   1       0.3294183000      1.0000000000
+ S 1 
+   1       0.1139855000      1.0000000000
+ S 1 
+   1       0.0670503000     -1.0000000000
+ P 1 
+   1      10.4327236000      1.0000000000
+ P 1 
+   1       4.0251086000     -1.0000000000
+ P 1 
+   1       1.5534382000      1.0000000000
+ P 1 
+   1       0.5996423000      1.0000000000
+ P 1 
+   1       0.2314823000     -1.0000000000
+ D 2 
+   1      19.6140080000     -1.0547292095
+   2       7.2975860000      1.3124309240
+ D 1 
+   1       2.7500946000     -1.0000000000
+ D 1 
+   1       1.0444408000     -1.0000000000
+ D 1 
+   1       0.3976934000      1.0000000000
+ F 1 
+   1       5.8169042000     -1.0000000000
+ F 1 
+   1       0.7156542000      1.0000000000
+ F 1 
+   1       0.0892019000     -1.0000000000
+ G 1 
+   1      15.3794722000      1.0000000000
+ G 1 
+   1       4.2631148000      1.0000000000
+ G 1 
+   1       1.1926492000     -1.0000000000
+  end;
+
+No protocol specified
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+------------------------------------------------------------------------------
+                           ORCA GTO INTEGRAL CALCULATION
+                           -- RI-GTO INTEGRALS CHOSEN --
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+                   ___                                                        
+                  /   \      - P O W E R E D   B Y -                         
+                 /     \                                                     
+                 |  |  |   _    _      __       _____    __    __             
+                 |  |  |  | |  | |    /  \     |  _  \  |  |  /  |          
+                  \  \/   | |  | |   /    \    | | | |  |  | /  /          
+                 / \  \   | |__| |  /  /\  \   | |_| |  |  |/  /          
+                |  |  |   |  __  | /  /__\  \  |    /   |      \           
+                |  |  |   | |  | | |   __   |  |    \   |  |\   \          
+                \     /   | |  | | |  |  |  |  | |\  \  |  | \   \       
+                 \___/    |_|  |_| |__|  |__|  |_| \__\ |__|  \__/        
+                                                                              
+                      - O R C A' S   B I G   F R I E N D -                    
+                                      &                                       
+                       - I N T E G R A L  F E E D E R -                       
+                                                                              
+ v1 FN, 2020, v2 2021                                                         
+------------------------------------------------------------------------------
+
+
+Reading SHARK input file cu2.SHARKINP.tmp ... ok
+----------------------
+SHARK INTEGRAL PACKAGE
+----------------------
+
+Number of atoms                             ...      2
+Number of basis functions                   ...     90
+Number of shells                            ...     30
+Maximum angular momentum                    ...      3
+Integral batch strategy                     ... SHARK/LIBINT Hybrid
+RI-J (if used) integral strategy            ... SPLIT-RIJ (Revised 2003 algorithm where possible)
+Printlevel                                  ...      1
+Contraction scheme used                     ... SEGMENTED contraction
+Coulomb Range Separation                    ... NOT USED
+Exchange Range Separation                   ... NOT USED
+Finite Nucleus Model                        ... NOT USED
+Auxiliary Coulomb fitting basis             ... AVAILABLE
+   # of basis functions in Aux-J            ...    182
+   # of shells in Aux-J                     ...     46
+   Maximum angular momentum in Aux-J        ...      4
+Auxiliary J/K fitting basis                 ... NOT available
+Auxiliary Correlation fitting basis         ... NOT available
+Auxiliary 'external' fitting basis          ... NOT available
+Integral threshold                          ...     2.500000e-11
+Primitive cut-off                           ...     2.500000e-12
+Primitive pair pre-selection threshold      ...     2.500000e-12
+
+Calculating pre-screening integrals         ... done (  0.1 sec) Dimension = 30
+Organizing shell pair data                  ... done (  0.0 sec)
+Shell pair information
+Total number of shell pairs                 ...       465
+Shell pairs after pre-screening             ...       428
+Total number of primitive shell pairs       ...      2746
+Primitive shell pairs kept                  ...      1974
+          la=0 lb=0:     69 shell pairs
+          la=1 lb=0:     86 shell pairs
+          la=1 lb=1:     33 shell pairs
+          la=2 lb=0:     90 shell pairs
+          la=2 lb=1:     62 shell pairs
+          la=2 lb=2:     35 shell pairs
+          la=3 lb=0:     20 shell pairs
+          la=3 lb=1:     14 shell pairs
+          la=3 lb=2:     16 shell pairs
+          la=3 lb=3:      3 shell pairs
+
+Calculating one electron integrals          ... done (  0.0 sec)
+Calculating RI/J V-Matrix + Cholesky decomp.... done (  0.0 sec)
+Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=    162.422639481861 Eh
+
+SHARK setup successfully completed in   0.3 seconds
+
+Maximum memory used throughout the entire GTOINT-calculation: 17.8 MB
+No protocol specified
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+-------------------------------------------------------------------------------
+                                 ORCA SCF
+-------------------------------------------------------------------------------
+
+------------
+SCF SETTINGS
+------------
+Hamiltonian:
+ Density Functional     Method          .... DFT(GTOs)
+ Exchange Functional    Exchange        .... M062X
+ Correlation Functional Correlation     .... M062X
+ Gradients option       PostSCFGGA      .... off
+ Hybrid DFT is turned on
+   Fraction HF Exchange ScalHFX         ....  0.540000
+   Scaling of DF-GGA-X  ScalDFX         ....  0.460000
+   Scaling of DF-GGA-C  ScalDFC         ....  1.000000
+   Scaling of DF-LDA-C  ScalLDAC        ....  1.000000
+   Perturbative correction              ....  0.000000
+   Density functional embedding theory  .... OFF
+ RI-approximation to the Coulomb term is turned on
+   Number of AuxJ basis functions       .... 182
+   RIJ-COSX (HFX calculated with COS-X)).... on
+
+
+General Settings:
+ Integral files         IntName         .... cu2
+ Hartree-Fock type      HFTyp           .... RHF
+ Total Charge           Charge          ....    0
+ Multiplicity           Mult            ....    1
+ Number of Electrons    NEL             ....   58
+ Basis Dimension        Dim             ....   90
+ Nuclear Repulsion      ENuc            ....    162.4226394819 Eh
+
+Convergence Acceleration:
+ DIIS                   CNVDIIS         .... on
+   Start iteration      DIISMaxIt       ....     0
+   Startup error        DIISStart       ....  0.200000
+   # of expansion vecs  DIISMaxEq       ....     5
+   Bias factor          DIISBfac        ....   1.050
+   Max. coefficient     DIISMaxC        ....  10.000
+ Trust-Rad. Augm. Hess. CNVTRAH         .... auto
+   Auto Start mean grad. ratio tolernc. ....  1.125000
+   Auto Start start iteration           ....    20
+   Auto Start num. interpolation iter.  ....    10
+   Max. Number of Micro iterations      ....    16
+   Max. Number of Macro iterations      .... Maxiter - #DIIS iter
+   Number of Davidson start vectors     ....     2
+   Converg. threshold I  (grad. norm)   ....   1.000e-05
+   Converg. threshold II (energy diff.) ....   1.000e-08
+   Grad. Scal. Fac. for Micro threshold ....   0.100
+   Minimum threshold for Micro iter.    ....   0.010
+   NR start threshold (gradient norm)   ....   0.001
+   Initial trust radius                 ....   0.400
+   Minimum AH scaling param. (alpha)    ....   1.000
+   Maximum AH scaling param. (alpha)    .... 1000.000
+   Orbital update algorithm             .... Taylor
+   White noise on init. David. guess    .... on
+   Maximum white noise                  ....   0.010
+   Quad. conv. algorithm                .... NR
+ SOSCF                  CNVSOSCF        .... off
+ Level Shifting         CNVShift        .... on
+   Level shift para.    LevelShift      ....    0.2500
+   Turn off err/grad.   ShiftErr        ....    0.0000
+ Zerner damping         CNVZerner       .... off
+ Static damping         CNVDamp         .... on
+   Fraction old density DampFac         ....    0.8500
+   Max. Damping (<1)    DampMax         ....    0.9800
+   Min. Damping (>=0)   DampMin         ....    0.0000
+   Turn off err/grad.   DampErr         ....    0.0300
+ Fernandez-Rico         CNVRico         .... off
+
+SCF Procedure:
+ Maximum # iterations   MaxIter         ....   125
+ SCF integral mode      SCFMode         .... Direct
+   Integral package                     .... SHARK and LIBINT hybrid scheme
+ Reset frequency        DirectResetFreq ....    20
+ Integral Threshold     Thresh          ....  2.500e-11 Eh
+ Primitive CutOff       TCut            ....  2.500e-12 Eh
+
+Convergence Tolerance:
+ Convergence Check Mode ConvCheckMode   .... Total+1el-Energy
+ Convergence forced     ConvForced      .... 1
+ Energy Change          TolE            ....  1.000e-08 Eh
+ 1-El. energy change                    ....  1.000e-05 Eh
+ DIIS Error             TolErr          ....  5.000e-07
+
+
+Diagonalization of the overlap matrix:
+Smallest eigenvalue                        ... 4.675e-02
+Time for diagonalization                   ...    0.002 sec
+Threshold for overlap eigenvalues          ... 1.000e-08
+Number of eigenvalues below threshold      ... 0
+Time for construction of square roots      ...    0.001 sec
+Total time needed                          ...    0.004 sec
+
+Time for model grid setup =    0.076 sec
+
+------------------------------
+INITIAL GUESS: MODEL POTENTIAL
+------------------------------
+Loading Hartree-Fock densities                     ... done
+Calculating cut-offs                               ... done
+Initializing the effective Hamiltonian             ... done
+Setting up the integral package (SHARK)            ... done
+Starting the Coulomb interaction                   ... done (   0.0 sec)
+Reading the grid                                   ... done
+Mapping shells                                     ... done
+Starting the XC term evaluation                    ... done (   0.0 sec)
+  promolecular density results
+     # of electrons  =     58.000028115
+     EX              =   -130.900964562
+     EC              =     -2.684070028
+     EX+EC           =   -133.585034590
+Transforming the Hamiltonian                       ... done (   0.0 sec)
+Diagonalizing the Hamiltonian                      ... done (   0.0 sec)
+Back transforming the eigenvectors                 ... done (   0.0 sec)
+Now organizing SCF variables                       ... done
+                      ------------------
+                      INITIAL GUESS DONE (   0.1 sec)
+                      ------------------
+-------------------
+DFT GRID GENERATION
+-------------------
+
+General Integration Accuracy     IntAcc      ... 4.388
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 4 (Lebedev-302)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... Becke
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Angular grids for H and He will be reduced by one unit
+Partially contracted basis set               ... off
+Rotationally invariant grid construction     ... off
+
+Total number of grid points                  ...    22656
+Total number of batches                      ...      356
+Average number of points per batch           ...       63
+Average number of grid points per atom       ...    11328
+Time for grid setup =    0.415 sec
+
+--------------------
+COSX GRID GENERATION
+--------------------
+
+GRIDX 1
+-------
+General Integration Accuracy     IntAcc      ... 3.816
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 1 (Lebedev-50)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... Becke
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Angular grids for H and He will be reduced by one unit
+Partially contracted basis set               ... on
+Rotationally invariant grid construction     ... off
+
+Total number of grid points                  ...     2472
+Total number of batches                      ...       40
+Average number of points per batch           ...       61
+Average number of grid points per atom       ...     1236
+UseSFitting                                  ... on
+
+GRIDX 2
+-------
+General Integration Accuracy     IntAcc      ... 4.020
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 2 (Lebedev-110)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... Becke
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Angular grids for H and He will be reduced by one unit
+Partially contracted basis set               ... on
+Rotationally invariant grid construction     ... off
+
+Total number of grid points                  ...     5404
+Total number of batches                      ...       86
+Average number of points per batch           ...       62
+Average number of grid points per atom       ...     2702
+UseSFitting                                  ... on
+
+GRIDX 3
+-------
+General Integration Accuracy     IntAcc      ... 4.338
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 3 (Lebedev-194)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... Becke
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Angular grids for H and He will be reduced by one unit
+Partially contracted basis set               ... on
+Rotationally invariant grid construction     ... off
+
+Total number of grid points                  ...    12518
+Total number of batches                      ...      196
+Average number of points per batch           ...       63
+Average number of grid points per atom       ...     6259
+UseSFitting                                  ... on
+
+Time for X-Grid setup             =    0.229 sec
+
+
+--------------------
+CPCM SOLVATION MODEL
+--------------------
+CPCM parameters:
+  Epsilon                                         ...      80.4000
+  Refrac                                          ...       1.3300
+  Rsolv                                           ...       1.3000
+  Surface type                                    ... GAUSSIAN VDW
+  Epsilon function type                           ...         CPCM
+Radii:
+ Radius for Cu used is    3.1747 Bohr (=   1.6800 Ang.)
+Calculating surface                               ...        done! (  0.0s)
+GEPOL surface points                              ...          210
+GEPOL Volume                                      ...     260.8652
+GEPOL Surface-area                                ...     227.8466
+Calculating surface distance matrix               ...        done! (  0.0s)
+Performing Cholesky decomposition & store         ...        done! (  0.0s)
+Overall time for CPCM initialization              ...                 0.0s
+--------------
+SCF ITERATIONS
+--------------
+ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
+               ***  Starting incremental Fock matrix formation  ***
+  0  -3280.8728807374   0.000000000000 0.02756066  0.00103327  0.1821939 0.8500
+  1  -3280.8940998220  -0.021219084624 0.03558455  0.00100605  0.1073595 0.8500
+                               ***Turning on DIIS***
+  2  -3280.9046569948  -0.010557172735 0.03439886  0.00086198  0.0546721 0.8500
+  3  -3280.9112399933  -0.006582998569 0.20135652  0.00476526  0.0292868 0.0000
+  4  -3280.9453394242  -0.034099430875 0.01373374  0.00047017  0.0257084 0.0000
+  5  -3280.9469924163  -0.001652992125 0.01370466  0.00035890  0.0046544 0.0000
+  6  -3280.9472566811  -0.000264264736 0.00898592  0.00022881  0.0025230 0.0000
+  7  -3280.9473416134  -0.000084932285 0.00547135  0.00014355  0.0013718 0.0000
+  8  -3280.9473715072  -0.000029893883 0.00289661  0.00007793  0.0008129 0.0000
+               *** Restarting incremental Fock matrix formation ***
+                                   *** Resetting DIIS ***
+  9  -3280.9473436834   0.000027823846 0.00109456  0.00002902  0.0004739 0.0000
+ 10  -3280.9473453987  -0.000001715274 0.00064554  0.00001803  0.0003203 0.0000
+ 11  -3280.9473461622  -0.000000763531 0.00048716  0.00001549  0.0002273 0.0000
+ 12  -3280.9473467270  -0.000000564803 0.00033770  0.00001163  0.0001474 0.0000
+ 13  -3280.9473469636  -0.000000236548 0.00017309  0.00000611  0.0000775 0.0000
+ 14  -3280.9473470265  -0.000000062975 0.00007915  0.00000298  0.0000383 0.0000
+ 15  -3280.9473470429  -0.000000016394 0.00003994  0.00000154  0.0000186 0.0000
+ 16  -3280.9473470476  -0.000000004705 0.00002000  0.00000081  0.0000089 0.0000
+ 17  -3280.9473470473   0.000000000339 0.00000960  0.00000040  0.0000040 0.0000
+ 18  -3280.9473470466   0.000000000702 0.00000565  0.00000021  0.0000017 0.0000
+                            ***DIIS convergence achieved***
+
+               *****************************************************
+               *                     SUCCESS                       *
+               *           SCF CONVERGED AFTER  19 CYCLES          *
+               *****************************************************
+
+Old exchange energy                            =    -70.913019295 Eh
+New exchange energy                            =    -70.912838230 Eh
+Exchange energy change after final integration =      0.000181065 Eh
+Total energy after final integration           =  -3280.947165987 Eh
+Final COS-X integration done in                =     0.276 sec
+
+----------------
+TOTAL SCF ENERGY
+----------------
+
+Total Energy       :        -3280.94716599 Eh          -89279.11125 eV
+
+Components:
+Nuclear Repulsion  :          162.42263948 Eh            4419.74472 eV
+Electronic Energy  :        -3443.36980547 Eh          -93698.85596 eV
+One Electron Energy:        -4902.65219030 Eh         -133407.94843 eV
+Two Electron Energy:         1459.28238483 Eh           39709.09246 eV
+Max COSX asymmetry :            0.00003403 Eh               0.00093 eV
+CPCM Dielectric    :           -0.00822351 Eh              -0.22377 eV
+
+Virial components:
+Potential Energy   :        -6557.43205428 Eh         -178436.79775 eV
+Kinetic Energy     :         3276.48488830 Eh           89157.68650 eV
+Virial Ratio       :            2.00136191
+
+
+DFT components:
+N(Alpha)           :       28.999995232521 electrons
+N(Beta)            :       28.999995232521 electrons
+N(Total)           :       57.999990465041 electrons
+E(XC)              :      -63.509065753522 Eh       
+DFET-embed. en.    :        0.000000000000 Eh       
+CPCM Solvation Model Properties:
+Surface-charge          :           -0.14351613
+Charge-correction       :            0.00349182 Eh               0.09502 eV
+Free-energy (cav+disp)  :  This term is not implemented in the current solvation scheme
+
+---------------
+SCF CONVERGENCE
+---------------
+
+  Last Energy change         ...   -5.6957e-09  Tolerance :   1.0000e-08
+  Last MAX-Density change    ...    0.0000e+00  Tolerance :   1.0000e-07
+  Last RMS-Density change    ...    0.0000e+00  Tolerance :   5.0000e-09
+  Last DIIS Error            ...    8.9235e-07  Tolerance :   5.0000e-07
+
+             **** THE GBW FILE WAS UPDATED (cu2.gbw) ****
+             **** DENSITY cu2.scfp WAS UPDATED ****
+             **** ENERGY FILE WAS UPDATED (cu2.en.tmp) ****
+             **** THE GBW FILE WAS UPDATED (cu2.gbw) ****
+             **** DENSITY cu2.scfp WAS UPDATED ****
+----------------
+ORBITAL ENERGIES
+----------------
+
+  NO   OCC          E(Eh)            E(eV) 
+   0   2.0000    -324.984586     -8843.2802 
+   1   2.0000    -324.984582     -8843.2801 
+   2   2.0000     -39.378530     -1071.5443 
+   3   2.0000     -39.378504     -1071.5436 
+   4   2.0000     -34.583944      -941.0770 
+   5   2.0000     -34.583944      -941.0770 
+   6   2.0000     -34.583936      -941.0768 
+   7   2.0000     -34.583936      -941.0768 
+   8   2.0000     -34.583891      -941.0755 
+   9   2.0000     -34.583879      -941.0752 
+  10   2.0000      -4.451054      -121.1193 
+  11   2.0000      -4.451013      -121.1182 
+  12   2.0000      -2.929004       -79.7022 
+  13   2.0000      -2.928755       -79.6955 
+  14   2.0000      -2.928755       -79.6955 
+  15   2.0000      -2.928711       -79.6943 
+  16   2.0000      -2.928711       -79.6943 
+  17   2.0000      -2.928302       -79.6832 
+  18   2.0000      -0.340875        -9.2757 
+  19   2.0000      -0.337829        -9.1928 
+  20   2.0000      -0.337829        -9.1928 
+  21   2.0000      -0.333127        -9.0649 
+  22   2.0000      -0.333073        -9.0634 
+  23   2.0000      -0.330892        -9.0040 
+  24   2.0000      -0.330836        -9.0025 
+  25   2.0000      -0.325590        -8.8598 
+  26   2.0000      -0.325590        -8.8598 
+  27   2.0000      -0.321143        -8.7388 
+  28   2.0000      -0.198917        -5.4128 
+  29   0.0000      -0.038835        -1.0568 
+  30   0.0000       0.089837         2.4446 
+  31   0.0000       0.114203         3.1076 
+  32   0.0000       0.114203         3.1076 
+  33   0.0000       0.140910         3.8344 
+  34   0.0000       0.140910         3.8344 
+  35   0.0000       0.154566         4.2060 
+  36   0.0000       0.164581         4.4785 
+  37   0.0000       0.198864         5.4114 
+  38   0.0000       0.198895         5.4122 
+  39   0.0000       0.228156         6.2085 
+  40   0.0000       0.258664         7.0386 
+  41   0.0000       0.258664         7.0386 
+  42   0.0000       0.267713         7.2848 
+  43   0.0000       0.267717         7.2850 
+  44   0.0000       0.284944         7.7537 
+  45   0.0000       0.361677         9.8417 
+  46   0.0000       0.361677         9.8417 
+  47   0.0000       0.496812        13.5189 
+  48   0.0000       0.894483        24.3401 
+  49   0.0000       0.903362        24.5817 
+  50   0.0000       0.903362        24.5817 
+  51   0.0000       0.951013        25.8784 
+  52   0.0000       0.951091        25.8805 
+  53   0.0000       0.985489        26.8165 
+  54   0.0000       0.985559        26.8184 
+  55   0.0000       1.023593        27.8534 
+  56   0.0000       1.023593        27.8534 
+  57   0.0000       1.215193        33.0671 
+  58   0.0000       2.233054        60.7645 
+  59   0.0000       2.233054        60.7645 
+  60   0.0000       2.354615        64.0723 
+  61   0.0000       2.356700        64.1291 
+  62   0.0000       2.356700        64.1291 
+  63   0.0000       2.487158        67.6790 
+  64   0.0000       3.078155        83.7609 
+  65   0.0000       3.326728        90.5249 
+  66   0.0000       3.807040       103.5948 
+  67   0.0000       3.807040       103.5948 
+  68   0.0000       3.834398       104.3393 
+  69   0.0000       3.834722       104.3481 
+  70   0.0000       3.857407       104.9654 
+  71   0.0000       3.859603       105.0251 
+  72   0.0000       3.859918       105.0337 
+  73   0.0000       3.892038       105.9077 
+  74   0.0000       3.892038       105.9077 
+  75   0.0000       4.028489       109.6208 
+  76   0.0000       5.968593       162.4137 
+  77   0.0000       5.968593       162.4137 
+  78   0.0000       5.968595       162.4137 
+  79   0.0000       5.968595       162.4137 
+  80   0.0000       5.968633       162.4148 
+  81   0.0000       5.968653       162.4153 
+  82   0.0000       5.968664       162.4156 
+  83   0.0000       5.968664       162.4156 
+  84   0.0000       5.968665       162.4156 
+  85   0.0000       5.968685       162.4162 
+  86   0.0000       5.969114       162.4278 
+  87   0.0000       5.969114       162.4278 
+  88   0.0000       5.969978       162.4514 
+  89   0.0000       5.977302       162.6506 
+------------------
+MOLECULAR ORBITALS
+------------------
+                      0         1         2         3         4         5   
+                 -324.98459 -324.98458 -39.37853 -39.37850 -34.58394 -34.58394
+                   2.00000   2.00000   2.00000   2.00000   2.00000   2.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.728464  0.681544  0.227214  0.224474  0.000000  0.000000
+  0Cu  2s         0.005482  0.005135 -0.737935 -0.728946 -0.000000 -0.000000
+  0Cu  3s        -0.002034 -0.001859 -0.029868 -0.029219  0.000000 -0.000000
+  0Cu  4s         0.001301  0.001130  0.010305  0.009595 -0.000000  0.000000
+  0Cu  5s        -0.000468 -0.000282 -0.003248 -0.002120 -0.000000 -0.000000
+  0Cu  6s         0.000177  0.000129  0.001239  0.000950 -0.000000 -0.000000
+  0Cu  1pz       -0.000001  0.000003 -0.000710 -0.000673  0.000000  0.000000
+  0Cu  1px        0.000000 -0.000000  0.000000  0.000000  0.715683  0.006290
+  0Cu  1py       -0.000000 -0.000000  0.000000  0.000000 -0.006289  0.715627
+  0Cu  2pz        0.000021 -0.000003  0.000096 -0.000056  0.000000  0.000000
+  0Cu  2px        0.000000  0.000000  0.000000  0.000000  0.016869  0.000148
+  0Cu  2py       -0.000000 -0.000000  0.000000 -0.000000 -0.000148  0.016867
+  0Cu  3pz       -0.000060  0.000007 -0.000385  0.000047 -0.000000 -0.000000
+  0Cu  3px        0.000000  0.000000 -0.000000  0.000000 -0.003548 -0.000031
+  0Cu  3py       -0.000000 -0.000000  0.000000 -0.000000  0.000031 -0.003548
+  0Cu  1dz2      -0.000008  0.000001 -0.000044  0.000008  0.000000  0.000000
+  0Cu  1dxz       0.000000  0.000000  0.000000 -0.000000  0.000062  0.000001
+  0Cu  1dyz      -0.000000 -0.000000 -0.000000  0.000000 -0.000001  0.000062
+  0Cu  1dx2y2    -0.000000  0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  0Cu  1dxy       0.000000  0.000000  0.000000  0.000000  0.000000 -0.000000
+  0Cu  2dz2       0.000031 -0.000003  0.000198 -0.000012  0.000000  0.000000
+  0Cu  2dxz       0.000000 -0.000000 -0.000000  0.000000 -0.000036 -0.000000
+  0Cu  2dyz      -0.000000  0.000000  0.000000 -0.000000  0.000000 -0.000036
+  0Cu  2dx2y2    -0.000000 -0.000000  0.000000  0.000000  0.000000 -0.000000
+  0Cu  2dxy       0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  3dz2      -0.000076  0.000009 -0.000507  0.000049 -0.000000 -0.000000
+  0Cu  3dxz       0.000000 -0.000000  0.000000 -0.000000  0.000058  0.000001
+  0Cu  3dyz       0.000000 -0.000000 -0.000000  0.000000 -0.000001  0.000058
+  0Cu  3dx2y2     0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  3dxy       0.000000 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  0Cu  4pz        0.000181 -0.000023  0.001224 -0.000128  0.000000  0.000000
+  0Cu  4px       -0.000000 -0.000000 -0.000000  0.000000  0.001084  0.000010
+  0Cu  4py        0.000000  0.000000  0.000000 -0.000000 -0.000010  0.001084
+  0Cu  4dz2      -0.000059  0.000015 -0.000414  0.000092 -0.000000 -0.000000
+  0Cu  4dxz       0.000000  0.000000 -0.000000  0.000000 -0.000417 -0.000004
+  0Cu  4dyz      -0.000000  0.000000  0.000000 -0.000000  0.000004 -0.000417
+  0Cu  4dx2y2    -0.000000 -0.000000  0.000000  0.000000  0.000000 -0.000000
+  0Cu  4dxy      -0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  1f0        0.000002 -0.000000  0.000012 -0.000002 -0.000000 -0.000000
+  0Cu  1f+1       0.000000 -0.000000  0.000000 -0.000000  0.000003  0.000000
+  0Cu  1f-1       0.000000 -0.000000  0.000000 -0.000000 -0.000000  0.000003
+  0Cu  1f+2       0.000000  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  1f-2       0.000000  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f+3      -0.000000  0.000000 -0.000000 -0.000000 -0.000001 -0.000000
+  0Cu  1f-3       0.000000 -0.000000  0.000000 -0.000000 -0.000000  0.000001
+  1Cu  1s        -0.681541  0.728467 -0.224459  0.227229 -0.000000 -0.000000
+  1Cu  2s        -0.005129  0.005488  0.728988 -0.737893  0.000000  0.000000
+  1Cu  3s         0.001906 -0.001990  0.029510 -0.029581  0.000000  0.000000
+  1Cu  4s        -0.001223  0.001214 -0.010187  0.009720 -0.000000 -0.000000
+  1Cu  5s         0.000448 -0.000313  0.003222 -0.002159  0.000000  0.000000
+  1Cu  6s        -0.000169  0.000140 -0.001228  0.000965  0.000000  0.000000
+  1Cu  1pz       -0.000002 -0.000003 -0.000702  0.000681  0.000000  0.000000
+  1Cu  1px        0.000000 -0.000000 -0.000000  0.000000 -0.685781 -0.006027
+  1Cu  1py        0.000000 -0.000000 -0.000000 -0.000000  0.006028 -0.685839
+  1Cu  2pz        0.000021  0.000002  0.000097  0.000055  0.000000  0.000000
+  1Cu  2px       -0.000000  0.000000  0.000000  0.000000 -0.016166 -0.000142
+  1Cu  2py        0.000000 -0.000000 -0.000000 -0.000000  0.000142 -0.016168
+  1Cu  3pz       -0.000060 -0.000003 -0.000385 -0.000042 -0.000000 -0.000000
+  1Cu  3px        0.000000 -0.000000 -0.000000 -0.000000  0.003406  0.000030
+  1Cu  3py        0.000000 -0.000000  0.000000  0.000000 -0.000030  0.003406
+  1Cu  1dz2       0.000008 -0.000000  0.000044  0.000007 -0.000000 -0.000000
+  1Cu  1dxz       0.000000  0.000000  0.000000  0.000000  0.000060  0.000001
+  1Cu  1dyz      -0.000000 -0.000000  0.000000 -0.000000 -0.000001  0.000060
+  1Cu  1dx2y2    -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  1dxy      -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  2dz2      -0.000031 -0.000001 -0.000198 -0.000009 -0.000000 -0.000000
+  1Cu  2dxz      -0.000000  0.000000 -0.000000 -0.000000 -0.000035 -0.000000
+  1Cu  2dyz       0.000000  0.000000  0.000000  0.000000  0.000000 -0.000035
+  1Cu  2dx2y2    -0.000000  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  1Cu  2dxy      -0.000000  0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  3dz2       0.000077  0.000004  0.000508  0.000043  0.000000  0.000000
+  1Cu  3dxz       0.000000  0.000000  0.000000  0.000000  0.000058  0.000001
+  1Cu  3dyz      -0.000000 -0.000000 -0.000000 -0.000000 -0.000001  0.000058
+  1Cu  3dx2y2    -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  3dxy      -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  4pz        0.000182  0.000011  0.001226  0.000113  0.000000  0.000000
+  1Cu  4px       -0.000000  0.000000 -0.000000  0.000000 -0.001053 -0.000009
+  1Cu  4py       -0.000000 -0.000000 -0.000000 -0.000000  0.000009 -0.001053
+  1Cu  4dz2       0.000060  0.000011  0.000415  0.000087  0.000000  0.000000
+  1Cu  4dxz      -0.000000  0.000000 -0.000000 -0.000000 -0.000421 -0.000004
+  1Cu  4dyz       0.000000  0.000000  0.000000  0.000000  0.000004 -0.000421
+  1Cu  4dx2y2     0.000000  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  1Cu  4dxy       0.000000  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  1f0        0.000002  0.000000  0.000012  0.000002  0.000000 -0.000000
+  1Cu  1f+1       0.000000  0.000000  0.000000  0.000000 -0.000004 -0.000000
+  1Cu  1f-1       0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000004
+  1Cu  1f+2      -0.000000 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  1f-2      -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  1f+3      -0.000000  0.000000 -0.000000 -0.000000  0.000001  0.000000
+  1Cu  1f-3      -0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000001
+                      6         7         8         9        10        11   
+                 -34.58394 -34.58394 -34.58389 -34.58388  -4.45105  -4.45101
+                   2.00000   2.00000   2.00000   2.00000   2.00000   2.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s        -0.000000 -0.000000  0.000212 -0.000219  0.084789 -0.084276
+  0Cu  2s         0.000000  0.000000 -0.000761  0.000713 -0.328981  0.326892
+  0Cu  3s         0.000000 -0.000000 -0.000214  0.000001  0.454985 -0.452420
+  0Cu  4s        -0.000000  0.000000  0.000413  0.000045  0.334206 -0.331502
+  0Cu  5s        -0.000000 -0.000000 -0.000817 -0.000381  0.008253 -0.009996
+  0Cu  6s        -0.000000  0.000000 -0.000516  0.000176 -0.002817  0.003745
+  0Cu  1pz       -0.000000 -0.000000  0.710004 -0.691692 -0.001235  0.001222
+  0Cu  1px       -0.685789 -0.006540 -0.000000  0.000001  0.000000  0.000000
+  0Cu  1py        0.006542 -0.685847 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  2pz       -0.000000 -0.000000  0.016837 -0.016301  0.002782 -0.002693
+  0Cu  2px       -0.016108 -0.000154 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  2py        0.000154 -0.016109 -0.000000  0.000000  0.000000  0.000000
+  0Cu  3pz        0.000000  0.000000 -0.003804  0.003396  0.000976 -0.001342
+  0Cu  3px        0.003259  0.000031  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  3py       -0.000031  0.003259  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  1dz2      -0.000000 -0.000000  0.000039 -0.000064  0.000255 -0.000239
+  0Cu  1dxz      -0.000056 -0.000001 -0.000000  0.000000  0.000000  0.000000
+  0Cu  1dyz       0.000001 -0.000056 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1dx2y2     0.000000 -0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  1dxy       0.000000  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  2dz2       0.000000  0.000000  0.000093  0.000030 -0.000056  0.000089
+  0Cu  2dxz       0.000019  0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  2dyz      -0.000000  0.000019  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  2dx2y2    -0.000000  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  2dxy      -0.000000 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  3dz2      -0.000000 -0.000000 -0.000350 -0.000121  0.000060 -0.000429
+  0Cu  3dxz      -0.000000 -0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  3dyz       0.000000 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  3dx2y2     0.000000 -0.000000  0.000000  0.000000  0.000000  0.000000
+  0Cu  3dxy       0.000000  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  4pz       -0.000000 -0.000000  0.002054 -0.000697  0.000396  0.001552
+  0Cu  4px       -0.000699 -0.000007 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  4py        0.000007 -0.000699 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  4dz2       0.000000  0.000000 -0.000425  0.000250 -0.000222 -0.000795
+  0Cu  4dxz      -0.000085 -0.000001  0.000000 -0.000000  0.000000  0.000000
+  0Cu  4dyz       0.000001 -0.000085  0.000000  0.000000  0.000000 -0.000000
+  0Cu  4dx2y2     0.000000  0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  4dxy      -0.000000 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f0       -0.000000 -0.000000  0.000009  0.000003  0.000009 -0.000001
+  0Cu  1f+1       0.000001  0.000000  0.000000  0.000000  0.000000  0.000000
+  0Cu  1f-1      -0.000000  0.000001  0.000000  0.000000  0.000000  0.000000
+  0Cu  1f+2      -0.000000 -0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  1f-2      -0.000000 -0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  1f+3       0.000001  0.000000  0.000000  0.000000  0.000000  0.000000
+  0Cu  1f-3       0.000000 -0.000001  0.000000  0.000000  0.000000  0.000000
+  1Cu  1s        -0.000000 -0.000000 -0.000207 -0.000224  0.084261  0.084804
+  1Cu  2s         0.000000  0.000000  0.000742  0.000732 -0.326932 -0.328941
+  1Cu  3s         0.000000 -0.000000  0.000214  0.000006  0.452150  0.455254
+  1Cu  4s         0.000000  0.000000 -0.000414  0.000034  0.332129  0.333583
+  1Cu  5s        -0.000000 -0.000000  0.000827 -0.000359  0.008191  0.010047
+  1Cu  6s         0.000000  0.000000  0.000511  0.000190 -0.002793 -0.003762
+  1Cu  1pz        0.000000  0.000000  0.691671  0.710025  0.001228  0.001229
+  1Cu  1px       -0.715690 -0.006826  0.000000  0.000000  0.000000  0.000000
+  1Cu  1py        0.006825 -0.715634  0.000000  0.000000 -0.000000  0.000000
+  1Cu  2pz        0.000000  0.000000  0.016405  0.016736 -0.002765 -0.002710
+  1Cu  2px       -0.016813 -0.000160  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  2py        0.000160 -0.016811  0.000000  0.000000  0.000000 -0.000000
+  1Cu  3pz       -0.000000 -0.000000 -0.003714 -0.003495 -0.000967 -0.001348
+  1Cu  3px        0.003407  0.000032 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  3py       -0.000032  0.003407 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1dz2      -0.000000 -0.000000 -0.000037 -0.000065  0.000254  0.000241
+  1Cu  1dxz       0.000059  0.000001 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1dyz      -0.000001  0.000059 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1dx2y2     0.000000  0.000000  0.000000  0.000000  0.000000 -0.000000
+  1Cu  1dxy      -0.000000  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  2dz2       0.000000  0.000000 -0.000094  0.000028 -0.000055 -0.000090
+  1Cu  2dxz      -0.000020 -0.000000  0.000000  0.000000  0.000000 -0.000000
+  1Cu  2dyz       0.000000 -0.000020  0.000000  0.000000  0.000000 -0.000000
+  1Cu  2dx2y2    -0.000000 -0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  2dxy       0.000000 -0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  3dz2      -0.000000 -0.000000  0.000353 -0.000112  0.000058  0.000429
+  1Cu  3dxz       0.000003  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  3dyz      -0.000000  0.000003 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  3dx2y2     0.000000  0.000000  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  3dxy      -0.000000  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  4pz        0.000000  0.000000  0.002035  0.000750 -0.000406  0.001549
+  1Cu  4px       -0.000744 -0.000007  0.000000  0.000000 -0.000000  0.000000
+  1Cu  4py        0.000007 -0.000744  0.000000  0.000000 -0.000000  0.000000
+  1Cu  4dz2       0.000000  0.000000  0.000418  0.000261 -0.000227  0.000794
+  1Cu  4dxz       0.000067  0.000001  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  4dyz      -0.000001  0.000067  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  4dx2y2    -0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  1Cu  4dxy       0.000000 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  1Cu  1f0       -0.000000  0.000000  0.000009 -0.000003 -0.000009 -0.000001
+  1Cu  1f+1       0.000000  0.000000  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1f-1      -0.000000  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  1f+2       0.000000  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f-2       0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  1f+3       0.000001  0.000000  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1f-3       0.000000 -0.000001 -0.000000  0.000000  0.000000 -0.000000
+                     12        13        14        15        16        17   
+                  -2.92900  -2.92876  -2.92876  -2.92871  -2.92871  -2.92830
+                   2.00000   2.00000   2.00000   2.00000   2.00000   2.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s        -0.000416  0.000000  0.000000  0.000000  0.000000 -0.000455
+  0Cu  2s         0.001504 -0.000000 -0.000000 -0.000000 -0.000000  0.001718
+  0Cu  3s        -0.002523  0.000000  0.000000  0.000000  0.000000 -0.002641
+  0Cu  4s        -0.001191  0.000000  0.000000  0.000000  0.000000 -0.001960
+  0Cu  5s         0.001262 -0.000000 -0.000000 -0.000000 -0.000000  0.001814
+  0Cu  6s        -0.000573  0.000000  0.000000  0.000000  0.000000 -0.001163
+  0Cu  1pz       -0.270036  0.000003  0.000007  0.000006  0.000001 -0.270071
+  0Cu  1px       -0.000008  0.015447 -0.270269 -0.268255  0.023318 -0.000005
+  0Cu  1py        0.000003  0.270278  0.015447  0.023317  0.268246  0.000002
+  0Cu  2pz        0.621557 -0.000006 -0.000016 -0.000013 -0.000003  0.621619
+  0Cu  2px        0.000018 -0.035550  0.622003  0.617389 -0.053666  0.000011
+  0Cu  2py       -0.000007 -0.622023 -0.035551 -0.053664 -0.617370 -0.000004
+  0Cu  3pz        0.182547 -0.000002 -0.000005 -0.000004 -0.000001  0.182947
+  0Cu  3px        0.000005 -0.010468  0.183149  0.181683 -0.015793  0.000003
+  0Cu  3py       -0.000002 -0.183155 -0.010468 -0.015792 -0.181677 -0.000001
+  0Cu  1dz2       0.001197 -0.000000 -0.000000 -0.000000 -0.000000  0.001382
+  0Cu  1dxz       0.000000 -0.000058  0.001007  0.001006 -0.000087  0.000000
+  0Cu  1dyz      -0.000000 -0.001008 -0.000058 -0.000087 -0.001006 -0.000000
+  0Cu  1dx2y2    -0.000000  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1dxy      -0.000000  0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  2dz2       0.000799 -0.000000 -0.000000 -0.000000 -0.000000  0.000456
+  0Cu  2dxz       0.000000 -0.000036  0.000628  0.000511 -0.000044  0.000000
+  0Cu  2dyz      -0.000000 -0.000628 -0.000036 -0.000044 -0.000511 -0.000000
+  0Cu  2dx2y2     0.000000  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  2dxy      -0.000000  0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  3dz2       0.000095  0.000000 -0.000000 -0.000000 -0.000000  0.001243
+  0Cu  3dxz       0.000000 -0.000011  0.000199  0.000456 -0.000040  0.000000
+  0Cu  3dyz      -0.000000 -0.000199 -0.000011 -0.000040 -0.000456 -0.000000
+  0Cu  3dx2y2    -0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  3dxy       0.000000  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  4pz        0.005197 -0.000000 -0.000000 -0.000000 -0.000000  0.004494
+  0Cu  4px        0.000000 -0.000296  0.005181  0.005488 -0.000477  0.000000
+  0Cu  4py       -0.000000 -0.005181 -0.000296 -0.000477 -0.005488 -0.000000
+  0Cu  4dz2      -0.000460  0.000000  0.000000  0.000000  0.000000 -0.000290
+  0Cu  4dxz      -0.000000 -0.000005  0.000091 -0.000616  0.000054 -0.000000
+  0Cu  4dyz      -0.000000 -0.000091 -0.000005  0.000054  0.000616  0.000000
+  0Cu  4dx2y2    -0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  4dxy      -0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  1f0        0.000002 -0.000000  0.000000 -0.000000  0.000000 -0.000009
+  0Cu  1f+1       0.000000 -0.000001  0.000013  0.000013 -0.000001  0.000000
+  0Cu  1f-1      -0.000000 -0.000013 -0.000001 -0.000001 -0.000013  0.000000
+  0Cu  1f+2      -0.000000 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  1f-2       0.000000 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  0Cu  1f+3      -0.000000 -0.000000  0.000001  0.000001 -0.000000  0.000000
+  0Cu  1f-3      -0.000000  0.000001  0.000000  0.000000  0.000001  0.000000
+  1Cu  1s        -0.000416  0.000000  0.000000  0.000000 -0.000000  0.000456
+  1Cu  2s         0.001503 -0.000000 -0.000000 -0.000000  0.000000 -0.001719
+  1Cu  3s        -0.002522  0.000000  0.000000  0.000000 -0.000000  0.002642
+  1Cu  4s        -0.001190  0.000000 -0.000000  0.000000 -0.000000  0.001960
+  1Cu  5s         0.001262 -0.000000  0.000000 -0.000000  0.000000 -0.001815
+  1Cu  6s        -0.000572  0.000000 -0.000000  0.000000 -0.000000  0.001163
+  1Cu  1pz        0.269936 -0.000003 -0.000000 -0.000003  0.000003 -0.270171
+  1Cu  1px        0.000001  0.015363 -0.268800  0.269720 -0.023445 -0.000002
+  1Cu  1py        0.000004  0.268792  0.015362 -0.023446 -0.269729 -0.000002
+  1Cu  2pz       -0.621326  0.000008  0.000001  0.000006 -0.000006  0.621850
+  1Cu  2px       -0.000002 -0.035357  0.618623 -0.620762  0.053959  0.000004
+  1Cu  2py       -0.000008 -0.618603 -0.035355  0.053961  0.620782  0.000005
+  1Cu  3pz       -0.182479  0.000002  0.000000  0.000002 -0.000002  0.183015
+  1Cu  3px       -0.000001 -0.010411  0.182154 -0.182676  0.015879  0.000001
+  1Cu  3py       -0.000002 -0.182149 -0.010410  0.015879  0.182682  0.000002
+  1Cu  1dz2       0.001197 -0.000000  0.000000 -0.000000  0.000000 -0.001382
+  1Cu  1dxz       0.000000  0.000057 -0.001002  0.001011 -0.000088 -0.000000
+  1Cu  1dyz       0.000000  0.001002  0.000057 -0.000088 -0.001011 -0.000000
+  1Cu  1dx2y2     0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  1dxy      -0.000000  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  2dz2       0.000798 -0.000000 -0.000000 -0.000000  0.000000 -0.000456
+  1Cu  2dxz      -0.000000  0.000036 -0.000625  0.000514 -0.000045 -0.000000
+  1Cu  2dyz       0.000000  0.000625  0.000036 -0.000045 -0.000514 -0.000000
+  1Cu  2dx2y2     0.000000 -0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  2dxy      -0.000000 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  3dz2       0.000095 -0.000000  0.000000  0.000000  0.000000 -0.001243
+  1Cu  3dxz       0.000000  0.000011 -0.000197  0.000457 -0.000040 -0.000000
+  1Cu  3dyz       0.000000  0.000197  0.000011 -0.000040 -0.000457 -0.000000
+  1Cu  3dx2y2     0.000000 -0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  3dxy      -0.000000  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  4pz       -0.005195  0.000000  0.000000  0.000000 -0.000000  0.004496
+  1Cu  4px       -0.000000 -0.000294  0.005151 -0.005516  0.000479  0.000000
+  1Cu  4py       -0.000000 -0.005151 -0.000294  0.000479  0.005516  0.000000
+  1Cu  4dz2      -0.000460  0.000000  0.000000  0.000000 -0.000000  0.000290
+  1Cu  4dxz      -0.000000  0.000005 -0.000094 -0.000615  0.000053 -0.000000
+  1Cu  4dyz       0.000000  0.000094  0.000005  0.000053  0.000615  0.000000
+  1Cu  4dx2y2     0.000000 -0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  4dxy       0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+  1Cu  1f0       -0.000003  0.000000  0.000000  0.000000  0.000000 -0.000009
+  1Cu  1f+1       0.000000 -0.000001  0.000013 -0.000013  0.000001  0.000000
+  1Cu  1f-1      -0.000000 -0.000013 -0.000001  0.000001  0.000013 -0.000000
+  1Cu  1f+2      -0.000000  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f-2      -0.000000  0.000000  0.000000  0.000000  0.000000 -0.000000
+  1Cu  1f+3       0.000000 -0.000000  0.000001 -0.000001  0.000000  0.000000
+  1Cu  1f-3      -0.000000  0.000001  0.000000 -0.000000 -0.000001 -0.000000
+                     18        19        20        21        22        23   
+                  -0.34087  -0.33783  -0.33783  -0.33313  -0.33307  -0.33089
+                   2.00000   2.00000   2.00000   2.00000   2.00000   2.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.001462 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  2s        -0.004997 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  3s         0.010348 -0.000000 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  4s         0.012109  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  5s        -0.029254 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  6s         0.001779  0.000000  0.000000  0.000000  0.000000 -0.000000
+  0Cu  1pz        0.003064 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  1px       -0.000000  0.000043 -0.000212 -0.000000  0.000000 -0.000000
+  0Cu  1py        0.000000  0.000212  0.000043 -0.000000  0.000000 -0.000000
+  0Cu  2pz       -0.008310  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  2px        0.000000 -0.000118  0.000585  0.000000 -0.000000  0.000000
+  0Cu  2py       -0.000000 -0.000585 -0.000118  0.000000 -0.000000  0.000000
+  0Cu  3pz       -0.001480  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  3px        0.000000 -0.000049  0.000246  0.000000 -0.000000 -0.000000
+  0Cu  3py       -0.000000 -0.000246 -0.000049 -0.000000 -0.000000  0.000000
+  0Cu  1dz2      -0.449959  0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  1dxz       0.000000 -0.089208  0.444216 -0.000000  0.000001 -0.000000
+  0Cu  1dyz      -0.000000 -0.444216 -0.089208 -0.000000  0.000000 -0.000000
+  0Cu  1dx2y2    -0.000000 -0.000000  0.000001  0.000000 -0.457047 -0.000000
+  0Cu  1dxy      -0.000000 -0.000000  0.000000  0.457059  0.000000  0.459426
+  0Cu  2dz2      -0.264441  0.000000  0.000000 -0.000000  0.000000 -0.000000
+  0Cu  2dxz       0.000000 -0.052286  0.260360 -0.000000  0.000001 -0.000000
+  0Cu  2dyz      -0.000000 -0.260361 -0.052286 -0.000000  0.000000 -0.000000
+  0Cu  2dx2y2    -0.000000 -0.000000  0.000001  0.000000 -0.267909 -0.000000
+  0Cu  2dxy      -0.000000 -0.000000  0.000000  0.267922  0.000000  0.269335
+  0Cu  3dz2      -0.165442  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  3dxz       0.000000 -0.033001  0.164332 -0.000000  0.000000 -0.000000
+  0Cu  3dyz      -0.000000 -0.164332 -0.033001 -0.000000  0.000000 -0.000000
+  0Cu  3dx2y2    -0.000000 -0.000000  0.000000  0.000000 -0.166188 -0.000000
+  0Cu  3dxy      -0.000000 -0.000000  0.000000  0.166145  0.000000  0.166125
+  0Cu  4pz        0.010958 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  4px       -0.000000 -0.000049  0.000242 -0.000000  0.000000 -0.000000
+  0Cu  4py        0.000000 -0.000242 -0.000049 -0.000000  0.000000 -0.000000
+  0Cu  4dz2      -0.025391  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  4dxz       0.000000 -0.005294  0.026363 -0.000000  0.000000 -0.000000
+  0Cu  4dyz      -0.000000 -0.026363 -0.005294 -0.000000  0.000000 -0.000000
+  0Cu  4dx2y2    -0.000000 -0.000000  0.000000  0.000000 -0.028438 -0.000000
+  0Cu  4dxy      -0.000000 -0.000000  0.000000  0.028442  0.000000  0.027747
+  0Cu  1f0       -0.000504  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  1f+1       0.000000 -0.000109  0.000543  0.000000  0.000000 -0.000000
+  0Cu  1f-1       0.000000 -0.000543 -0.000109  0.000000  0.000000 -0.000000
+  0Cu  1f+2      -0.000000 -0.000000  0.000000  0.000000 -0.000545 -0.000000
+  0Cu  1f-2      -0.000000 -0.000000  0.000000  0.000543  0.000000  0.000634
+  0Cu  1f+3      -0.000000  0.000000 -0.000001 -0.000000 -0.000000  0.000000
+  0Cu  1f-3       0.000000 -0.000001 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  1s         0.001462  0.000000  0.000000  0.000000  0.000000  0.000000
+  1Cu  2s        -0.004997 -0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  3s         0.010348 -0.000000  0.000000  0.000000  0.000000  0.000000
+  1Cu  4s         0.012109  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  5s        -0.029256 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  6s         0.001779 -0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1pz       -0.003064 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1px        0.000000  0.000043 -0.000212  0.000000 -0.000000 -0.000000
+  1Cu  1py        0.000000  0.000212  0.000043  0.000000 -0.000000  0.000000
+  1Cu  2pz        0.008310  0.000000  0.000000  0.000000 -0.000000  0.000000
+  1Cu  2px       -0.000000 -0.000118  0.000586 -0.000000  0.000000  0.000000
+  1Cu  2py       -0.000000 -0.000586 -0.000118 -0.000000  0.000000 -0.000000
+  1Cu  3pz        0.001480  0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  3px        0.000000 -0.000049  0.000246 -0.000000 -0.000000 -0.000000
+  1Cu  3py        0.000000 -0.000246 -0.000049  0.000000  0.000000 -0.000000
+  1Cu  1dz2      -0.449953  0.000000  0.000000  0.000000 -0.000001 -0.000000
+  1Cu  1dxz      -0.000000  0.089206 -0.444208 -0.000000 -0.000000  0.000000
+  1Cu  1dyz       0.000000  0.444208  0.089206  0.000000  0.000000 -0.000000
+  1Cu  1dx2y2     0.000001  0.000000  0.000000  0.000000 -0.457007  0.000000
+  1Cu  1dxy       0.000000 -0.000000 -0.000000  0.457020  0.000000 -0.459465
+  1Cu  2dz2      -0.264438  0.000000  0.000000  0.000000 -0.000001 -0.000000
+  1Cu  2dxz      -0.000000  0.052285 -0.260356 -0.000000 -0.000000  0.000000
+  1Cu  2dyz       0.000000  0.260356  0.052285  0.000000  0.000000 -0.000000
+  1Cu  2dx2y2     0.000001  0.000000  0.000000  0.000000 -0.267885  0.000000
+  1Cu  2dxy       0.000000 -0.000000 -0.000000  0.267899  0.000000 -0.269358
+  1Cu  3dz2      -0.165439  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  3dxz      -0.000000  0.033001 -0.164330 -0.000000 -0.000000  0.000000
+  1Cu  3dyz       0.000000  0.164329  0.033001  0.000000  0.000000 -0.000000
+  1Cu  3dx2y2     0.000000  0.000000  0.000000  0.000000 -0.166173  0.000000
+  1Cu  3dxy       0.000000 -0.000000 -0.000000  0.166131  0.000000 -0.166139
+  1Cu  4pz       -0.010958 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  1Cu  4px        0.000000 -0.000049  0.000242  0.000000 -0.000000  0.000000
+  1Cu  4py       -0.000000 -0.000242 -0.000049  0.000000 -0.000000  0.000000
+  1Cu  4dz2      -0.025391  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  4dxz      -0.000000  0.005294 -0.026363 -0.000000 -0.000000  0.000000
+  1Cu  4dyz       0.000000  0.026363  0.005294  0.000000  0.000000 -0.000000
+  1Cu  4dx2y2     0.000000  0.000000  0.000000  0.000000 -0.028436  0.000000
+  1Cu  4dxy       0.000000 -0.000000 -0.000000  0.028440  0.000000 -0.027750
+  1Cu  1f0        0.000503  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f+1      -0.000000 -0.000109  0.000543 -0.000000  0.000000 -0.000000
+  1Cu  1f-1      -0.000000 -0.000543 -0.000109 -0.000000  0.000000 -0.000000
+  1Cu  1f+2      -0.000000 -0.000000  0.000000 -0.000000  0.000545 -0.000000
+  1Cu  1f-2      -0.000000 -0.000000  0.000000 -0.000543 -0.000000  0.000634
+  1Cu  1f+3       0.000000  0.000000 -0.000001  0.000000 -0.000000  0.000000
+  1Cu  1f-3      -0.000000 -0.000001 -0.000000 -0.000000  0.000000 -0.000000
+                     24        25        26        27        28        29   
+                  -0.33084  -0.32559  -0.32559  -0.32114  -0.19892  -0.03884
+                   2.00000   2.00000   2.00000   2.00000   2.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s        -0.000000 -0.000000 -0.000000 -0.001854 -0.016204  0.014213
+  0Cu  2s         0.000000  0.000000  0.000000  0.005706  0.055111 -0.048352
+  0Cu  3s        -0.000000 -0.000000 -0.000000 -0.014457 -0.116618  0.102458
+  0Cu  4s        -0.000000  0.000000 -0.000000 -0.012644 -0.152351  0.137317
+  0Cu  5s         0.000000 -0.000000  0.000000  0.044595  0.435822 -0.341630
+  0Cu  6s        -0.000000  0.000000  0.000000  0.008493  0.225440 -0.694350
+  0Cu  1pz       -0.000000 -0.000000 -0.000000 -0.004210 -0.010656 -0.015901
+  0Cu  1px        0.000000 -0.000210 -0.002778  0.000000  0.000000  0.000000
+  0Cu  1py       -0.000000  0.002778 -0.000210 -0.000000 -0.000000 -0.000000
+  0Cu  2pz        0.000000  0.000000  0.000000  0.011600  0.028663  0.043159
+  0Cu  2px       -0.000000  0.000566  0.007486 -0.000000 -0.000000 -0.000000
+  0Cu  2py        0.000000 -0.007486  0.000566  0.000000  0.000000  0.000000
+  0Cu  3pz       -0.000000  0.000000  0.000000 -0.000142  0.008783  0.011815
+  0Cu  3px       -0.000000  0.000117  0.001546 -0.000000 -0.000000 -0.000000
+  0Cu  3py        0.000000 -0.001546  0.000117  0.000000 -0.000000 -0.000000
+  0Cu  1dz2       0.000000 -0.000000 -0.000000 -0.460623 -0.039350 -0.037793
+  0Cu  1dxz       0.000001 -0.034882 -0.461154  0.000000  0.000000 -0.000000
+  0Cu  1dyz       0.000000  0.461154 -0.034882 -0.000000 -0.000000 -0.000000
+  0Cu  1dx2y2    -0.459414 -0.000000 -0.000001 -0.000000 -0.000000  0.000000
+  0Cu  1dxy      -0.000000  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  2dz2       0.000000 -0.000000 -0.000000 -0.268842 -0.024222 -0.022940
+  0Cu  2dxz       0.000000 -0.020428 -0.270067  0.000000  0.000000 -0.000000
+  0Cu  2dyz       0.000000  0.270067 -0.020428 -0.000000 -0.000000 -0.000000
+  0Cu  2dx2y2    -0.269324 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  2dxy      -0.000000  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  3dz2       0.000000 -0.000000 -0.000000 -0.169957 -0.005049 -0.010259
+  0Cu  3dxz       0.000000 -0.012567 -0.166137  0.000000 -0.000000 -0.000000
+  0Cu  3dyz       0.000000  0.166137 -0.012567 -0.000000 -0.000000 -0.000000
+  0Cu  3dx2y2    -0.166159 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  3dxy      -0.000000  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  4pz       -0.000000 -0.000000 -0.000000 -0.014618 -0.062816 -0.101848
+  0Cu  4px        0.000000 -0.001238 -0.016362  0.000000  0.000000  0.000000
+  0Cu  4py       -0.000000  0.016362 -0.001238 -0.000000  0.000000  0.000000
+  0Cu  4dz2       0.000000 -0.000000 -0.000000 -0.026584 -0.031430 -0.005627
+  0Cu  4dxz       0.000000 -0.002027 -0.026802  0.000000  0.000000  0.000000
+  0Cu  4dyz       0.000000  0.026802 -0.002027 -0.000000  0.000000 -0.000000
+  0Cu  4dx2y2    -0.027746 -0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  0Cu  4dxy      -0.000000  0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  0Cu  1f0       -0.000000  0.000000 -0.000000 -0.001033 -0.000303 -0.000126
+  0Cu  1f+1       0.000000 -0.000069 -0.000916  0.000000  0.000000  0.000000
+  0Cu  1f-1      -0.000000  0.000916 -0.000069 -0.000000  0.000000  0.000000
+  0Cu  1f+2      -0.000636  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  1f-2      -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  1f+3      -0.000000  0.000000  0.000001  0.000000 -0.000000 -0.000000
+  0Cu  1f-3      -0.000000  0.000001 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  1s         0.000000 -0.000000 -0.000000  0.001854 -0.016204 -0.014213
+  1Cu  2s         0.000000  0.000000  0.000000 -0.005706  0.055111  0.048352
+  1Cu  3s         0.000000 -0.000000 -0.000000  0.014457 -0.116618 -0.102458
+  1Cu  4s        -0.000000  0.000000  0.000000  0.012645 -0.152351 -0.137317
+  1Cu  5s         0.000000  0.000000 -0.000000 -0.044597  0.435821  0.341630
+  1Cu  6s        -0.000000  0.000000  0.000000 -0.008494  0.225439  0.694351
+  1Cu  1pz        0.000000 -0.000000  0.000000 -0.004210  0.010656 -0.015901
+  1Cu  1px       -0.000000  0.000210  0.002778 -0.000000  0.000000 -0.000000
+  1Cu  1py        0.000000 -0.002778  0.000210  0.000000 -0.000000  0.000000
+  1Cu  2pz       -0.000000  0.000000 -0.000000  0.011600 -0.028663  0.043159
+  1Cu  2px        0.000000 -0.000566 -0.007486  0.000000 -0.000000  0.000000
+  1Cu  2py       -0.000000  0.007486 -0.000566 -0.000000  0.000000 -0.000000
+  1Cu  3pz       -0.000000  0.000000  0.000000 -0.000142 -0.008783  0.011815
+  1Cu  3px       -0.000000 -0.000117 -0.001546  0.000000  0.000000 -0.000000
+  1Cu  3py       -0.000000  0.001546 -0.000117  0.000000 -0.000000  0.000000
+  1Cu  1dz2       0.000001  0.000000  0.000000  0.460629 -0.039348  0.037793
+  1Cu  1dxz       0.000000 -0.034882 -0.461162  0.000000  0.000000 -0.000000
+  1Cu  1dyz      -0.000000  0.461162 -0.034882 -0.000000  0.000000 -0.000000
+  1Cu  1dx2y2     0.459455  0.000000  0.000000 -0.000001 -0.000000 -0.000000
+  1Cu  1dxy       0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  2dz2       0.000001  0.000000  0.000000  0.268845 -0.024221  0.022940
+  1Cu  2dxz       0.000000 -0.020428 -0.270072  0.000000  0.000000 -0.000000
+  1Cu  2dyz      -0.000000  0.270072 -0.020428 -0.000000  0.000000 -0.000000
+  1Cu  2dx2y2     0.269348  0.000000  0.000000 -0.000001 -0.000000 -0.000000
+  1Cu  2dxy       0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  3dz2       0.000000  0.000000  0.000000  0.169959 -0.005047  0.010259
+  1Cu  3dxz       0.000000 -0.012567 -0.166139  0.000000  0.000000 -0.000000
+  1Cu  3dyz      -0.000000  0.166140 -0.012567 -0.000000  0.000000 -0.000000
+  1Cu  3dx2y2     0.166174  0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  3dxy       0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  4pz        0.000000  0.000000  0.000000 -0.014618  0.062816 -0.101848
+  1Cu  4px       -0.000000  0.001238  0.016362 -0.000000  0.000000 -0.000000
+  1Cu  4py        0.000000 -0.016362  0.001238  0.000000  0.000000 -0.000000
+  1Cu  4dz2       0.000000  0.000000  0.000000  0.026585 -0.031430  0.005627
+  1Cu  4dxz       0.000000 -0.002027 -0.026802  0.000000  0.000000  0.000000
+  1Cu  4dyz      -0.000000  0.026802 -0.002027 -0.000000 -0.000000 -0.000000
+  1Cu  4dx2y2     0.027748  0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  4dxy       0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f0       -0.000000  0.000000  0.000000 -0.001033  0.000303 -0.000126
+  1Cu  1f+1       0.000000  0.000069  0.000916 -0.000000 -0.000000  0.000000
+  1Cu  1f-1       0.000000 -0.000916  0.000069 -0.000000  0.000000  0.000000
+  1Cu  1f+2      -0.000636 -0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  1f-2      -0.000000  0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f+3      -0.000000 -0.000000 -0.000001  0.000000  0.000000 -0.000000
+  1Cu  1f-3       0.000000 -0.000001  0.000000 -0.000000  0.000000 -0.000000
+                     30        31        32        33        34        35   
+                   0.08984   0.11420   0.11420   0.14091   0.14091   0.15457
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.003025 -0.000000 -0.000000  0.000000 -0.000000 -0.012554
+  0Cu  2s        -0.013087  0.000000 -0.000000 -0.000000  0.000000  0.048646
+  0Cu  3s         0.016993 -0.000000 -0.000000  0.000000  0.000000 -0.080517
+  0Cu  4s         0.059053 -0.000000  0.000000  0.000000 -0.000000 -0.188626
+  0Cu  5s        -0.636617  0.000000 -0.000000 -0.000000  0.000000  1.047201
+  0Cu  6s         0.644719 -0.000000  0.000000  0.000000 -0.000000 -0.861615
+  0Cu  1pz        0.045391 -0.000000 -0.000000  0.000000  0.000000  0.018604
+  0Cu  1px       -0.000000 -0.049590 -0.002374  0.038291 -0.002775 -0.000000
+  0Cu  1py        0.000000  0.002374 -0.049590 -0.002775 -0.038291 -0.000000
+  0Cu  2pz       -0.121694  0.000000  0.000000 -0.000000 -0.000000 -0.049691
+  0Cu  2px        0.000000  0.130751  0.006259 -0.103148  0.007476  0.000000
+  0Cu  2py       -0.000000 -0.006259  0.130751  0.007476  0.103148  0.000000
+  0Cu  3pz       -0.055413  0.000000 -0.000000 -0.000000  0.000000 -0.026643
+  0Cu  3px        0.000000  0.079663  0.003813 -0.044968  0.003259  0.000000
+  0Cu  3py       -0.000000 -0.003813  0.079663  0.003259  0.044968  0.000000
+  0Cu  1dz2       0.019629  0.000000  0.000000 -0.000000  0.000000 -0.047745
+  0Cu  1dxz      -0.000000 -0.044339 -0.002122 -0.065978  0.004782 -0.000000
+  0Cu  1dyz       0.000000  0.002122 -0.044339  0.004782  0.065979 -0.000000
+  0Cu  1dx2y2    -0.000000  0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  1dxy      -0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  2dz2       0.017592  0.000000  0.000000 -0.000000  0.000000 -0.021910
+  0Cu  2dxz      -0.000000 -0.018951 -0.000907 -0.025825  0.001872 -0.000000
+  0Cu  2dyz       0.000000  0.000907 -0.018950  0.001872  0.025825 -0.000000
+  0Cu  2dx2y2    -0.000000  0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  2dxy      -0.000000  0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  0Cu  3dz2      -0.029694  0.000000  0.000000 -0.000000  0.000000 -0.038026
+  0Cu  3dxz      -0.000000 -0.041938 -0.002007 -0.069980  0.005072 -0.000000
+  0Cu  3dyz       0.000000  0.002007 -0.041938  0.005072  0.069980 -0.000000
+  0Cu  3dx2y2    -0.000000  0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  3dxy      -0.000000  0.000000  0.000000 -0.000000  0.000000 -0.000000
+  0Cu  4pz        0.544641 -0.000000 -0.000000  0.000000  0.000000  0.277434
+  0Cu  4px       -0.000000 -0.634072 -0.030350  0.378869 -0.027459 -0.000000
+  0Cu  4py        0.000000  0.030350 -0.634072 -0.027459 -0.378869 -0.000000
+  0Cu  4dz2       0.267106 -0.000000 -0.000000  0.000000  0.000000  0.268726
+  0Cu  4dxz       0.000000  0.146527  0.007014  0.619484 -0.044898 -0.000000
+  0Cu  4dyz      -0.000000 -0.007014  0.146527 -0.044898 -0.619484  0.000000
+  0Cu  4dx2y2     0.000000 -0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  4dxy      -0.000000 -0.000000  0.000000  0.000000 -0.000000  0.000000
+  0Cu  1f0        0.000778 -0.000000 -0.000000 -0.000000  0.000000 -0.000196
+  0Cu  1f+1      -0.000000 -0.000484 -0.000023 -0.000067  0.000005  0.000000
+  0Cu  1f-1      -0.000000  0.000023 -0.000484  0.000005  0.000067  0.000000
+  0Cu  1f+2       0.000000  0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  1f-2      -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  1f+3       0.000000  0.000002  0.000000 -0.000001  0.000000 -0.000000
+  0Cu  1f-3       0.000000  0.000000 -0.000002 -0.000000 -0.000001  0.000000
+  1Cu  1s         0.003025 -0.000000 -0.000000 -0.000000  0.000000 -0.012554
+  1Cu  2s        -0.013087 -0.000000 -0.000000  0.000000 -0.000000  0.048646
+  1Cu  3s         0.016993 -0.000000 -0.000000 -0.000000 -0.000000 -0.080517
+  1Cu  4s         0.059053  0.000000  0.000000 -0.000000  0.000000 -0.188626
+  1Cu  5s        -0.636618  0.000000 -0.000000  0.000000 -0.000000  1.047198
+  1Cu  6s         0.644720  0.000000  0.000000 -0.000000  0.000000 -0.861610
+  1Cu  1pz       -0.045390  0.000000  0.000000 -0.000000 -0.000000 -0.018604
+  1Cu  1px       -0.000000 -0.049590 -0.002374 -0.038291  0.002775 -0.000000
+  1Cu  1py        0.000000  0.002374 -0.049590  0.002775  0.038291 -0.000000
+  1Cu  2pz        0.121694 -0.000000 -0.000000  0.000000  0.000000  0.049691
+  1Cu  2px        0.000000  0.130751  0.006259  0.103148 -0.007476  0.000000
+  1Cu  2py       -0.000000 -0.006259  0.130751 -0.007476 -0.103148  0.000000
+  1Cu  3pz        0.055413 -0.000000 -0.000000  0.000000  0.000000  0.026642
+  1Cu  3px        0.000000  0.079663  0.003813  0.044967 -0.003259  0.000000
+  1Cu  3py       -0.000000 -0.003813  0.079663 -0.003259 -0.044967  0.000000
+  1Cu  1dz2       0.019629 -0.000000  0.000000  0.000000 -0.000000 -0.047745
+  1Cu  1dxz      -0.000000  0.044339  0.002122 -0.065979  0.004782  0.000000
+  1Cu  1dyz      -0.000000 -0.002122  0.044339  0.004782  0.065979  0.000000
+  1Cu  1dx2y2     0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1dxy      -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  2dz2       0.017592 -0.000000  0.000000  0.000000 -0.000000 -0.021910
+  1Cu  2dxz      -0.000000  0.018950  0.000907 -0.025825  0.001872  0.000000
+  1Cu  2dyz      -0.000000 -0.000907  0.018950  0.001872  0.025825  0.000000
+  1Cu  2dx2y2     0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  2dxy      -0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  3dz2      -0.029694  0.000000 -0.000000  0.000000 -0.000000 -0.038026
+  1Cu  3dxz       0.000000  0.041938  0.002007 -0.069980  0.005072  0.000000
+  1Cu  3dyz       0.000000 -0.002007  0.041938  0.005072  0.069980 -0.000000
+  1Cu  3dx2y2     0.000000 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  3dxy      -0.000000 -0.000000 -0.000000  0.000000  0.000000  0.000000
+  1Cu  4pz       -0.544641  0.000000  0.000000 -0.000000 -0.000000 -0.277433
+  1Cu  4px       -0.000000 -0.634073 -0.030350 -0.378869  0.027459 -0.000000
+  1Cu  4py        0.000000  0.030350 -0.634073  0.027459  0.378869 -0.000000
+  1Cu  4dz2       0.267106 -0.000000 -0.000000 -0.000000  0.000000  0.268727
+  1Cu  4dxz      -0.000000 -0.146527 -0.007014  0.619484 -0.044898 -0.000000
+  1Cu  4dyz      -0.000000  0.007014 -0.146527 -0.044898 -0.619484  0.000000
+  1Cu  4dx2y2     0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  4dxy      -0.000000  0.000000  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1f0       -0.000778 -0.000000 -0.000000  0.000000  0.000000  0.000196
+  1Cu  1f+1       0.000000 -0.000484 -0.000023  0.000067 -0.000005 -0.000000
+  1Cu  1f-1       0.000000  0.000023 -0.000484 -0.000005 -0.000067 -0.000000
+  1Cu  1f+2      -0.000000  0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f-2       0.000000  0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1f+3      -0.000000  0.000002  0.000000  0.000001 -0.000000  0.000000
+  1Cu  1f-3      -0.000000  0.000000 -0.000002  0.000000  0.000001  0.000000
+                     36        37        38        39        40        41   
+                   0.16458   0.19886   0.19890   0.22816   0.25866   0.25866
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.014214 -0.000000 -0.000000 -0.005033 -0.000000 -0.000000
+  0Cu  2s        -0.052834 -0.000000  0.000000  0.022736  0.000000 -0.000000
+  0Cu  3s         0.095163 -0.000000 -0.000000 -0.026670 -0.000000 -0.000000
+  0Cu  4s         0.192554  0.000000 -0.000000 -0.110107  0.000000  0.000000
+  0Cu  5s        -1.074485  0.000000  0.000000  0.969019 -0.000000 -0.000000
+  0Cu  6s         1.662063  0.000000 -0.000000 -0.825898  0.000000  0.000000
+  0Cu  1pz       -0.001441  0.000000 -0.000000  0.023933 -0.000000 -0.000000
+  0Cu  1px       -0.000000 -0.000000 -0.000000  0.000000 -0.001841 -0.017132
+  0Cu  1py       -0.000000 -0.000000  0.000000  0.000000 -0.017132  0.001841
+  0Cu  2pz        0.000844 -0.000000  0.000000 -0.066307  0.000000  0.000000
+  0Cu  2px        0.000000  0.000000  0.000000 -0.000000  0.004756  0.044260
+  0Cu  2py        0.000000  0.000000 -0.000000 -0.000000  0.044260 -0.004756
+  0Cu  3pz        0.028293  0.000000  0.000000 -0.016277 -0.000000  0.000000
+  0Cu  3px        0.000000  0.000000  0.000000 -0.000000  0.004395  0.040901
+  0Cu  3py        0.000000  0.000000 -0.000000 -0.000000  0.040901 -0.004395
+  0Cu  1dz2      -0.057456 -0.000000  0.000000 -0.083426 -0.000000 -0.000000
+  0Cu  1dxz       0.000000  0.000000  0.000000  0.000000  0.011749  0.109340
+  0Cu  1dyz       0.000000  0.000000 -0.000000 -0.000000  0.109340 -0.011749
+  0Cu  1dx2y2     0.000000 -0.101210 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  1dxy       0.000000 -0.000000  0.101197  0.000000  0.000000 -0.000000
+  0Cu  2dz2      -0.029917 -0.000000 -0.000000 -0.037390 -0.000000 -0.000000
+  0Cu  2dxz      -0.000000  0.000000  0.000000  0.000000  0.004774  0.044431
+  0Cu  2dyz       0.000000 -0.000000 -0.000000 -0.000000  0.044431 -0.004774
+  0Cu  2dx2y2     0.000000 -0.041534 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  2dxy       0.000000 -0.000000  0.041523  0.000000  0.000000 -0.000000
+  0Cu  3dz2      -0.027752 -0.000000  0.000000 -0.059615 -0.000000 -0.000000
+  0Cu  3dxz       0.000000  0.000000  0.000000 -0.000000  0.011456  0.106611
+  0Cu  3dyz       0.000000  0.000000 -0.000000 -0.000000  0.106611 -0.011456
+  0Cu  3dx2y2     0.000000 -0.099461 -0.000000  0.000000  0.000000  0.000000
+  0Cu  3dxy       0.000000 -0.000000  0.099471  0.000000  0.000000 -0.000000
+  0Cu  4pz       -0.259145 -0.000000  0.000000  0.116184  0.000000 -0.000000
+  0Cu  4px       -0.000000 -0.000000 -0.000000  0.000000 -0.041203 -0.383445
+  0Cu  4py       -0.000000 -0.000000  0.000000  0.000000 -0.383445  0.041203
+  0Cu  4dz2       0.356692  0.000000 -0.000000  0.717912  0.000000  0.000000
+  0Cu  4dxz      -0.000000 -0.000000 -0.000000  0.000000 -0.070965 -0.660418
+  0Cu  4dyz      -0.000000 -0.000000  0.000000  0.000000 -0.660418  0.070965
+  0Cu  4dx2y2    -0.000000  0.651499  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  4dxy      -0.000000  0.000000 -0.651505 -0.000000 -0.000000  0.000000
+  0Cu  1f0       -0.000237 -0.000000  0.000000  0.000085 -0.000000 -0.000000
+  0Cu  1f+1       0.000000 -0.000000  0.000000 -0.000000  0.000023  0.000210
+  0Cu  1f-1       0.000000  0.000000  0.000000  0.000000  0.000210 -0.000023
+  0Cu  1f+2      -0.000000 -0.000469 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f-2       0.000000 -0.000000  0.000468  0.000000 -0.000000 -0.000000
+  0Cu  1f+3      -0.000000 -0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  1f-3       0.000000  0.000000  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1s        -0.014214 -0.000000  0.000000  0.005033  0.000000 -0.000000
+  1Cu  2s         0.052834  0.000000 -0.000000 -0.022736 -0.000000 -0.000000
+  1Cu  3s        -0.095163 -0.000000  0.000000  0.026670 -0.000000 -0.000000
+  1Cu  4s        -0.192554 -0.000000  0.000000  0.110106  0.000000  0.000000
+  1Cu  5s         1.074489  0.000000 -0.000000 -0.969019 -0.000000 -0.000000
+  1Cu  6s        -1.662066 -0.000000  0.000000  0.825897  0.000000  0.000000
+  1Cu  1pz       -0.001442  0.000000 -0.000000  0.023933  0.000000  0.000000
+  1Cu  1px        0.000000  0.000000 -0.000000 -0.000000 -0.001841 -0.017132
+  1Cu  1py        0.000000 -0.000000 -0.000000 -0.000000 -0.017132  0.001841
+  1Cu  2pz        0.000844 -0.000000  0.000000 -0.066306 -0.000000 -0.000000
+  1Cu  2px       -0.000000 -0.000000  0.000000  0.000000  0.004756  0.044260
+  1Cu  2py       -0.000000  0.000000  0.000000  0.000000  0.044260 -0.004756
+  1Cu  3pz        0.028293 -0.000000 -0.000000 -0.016277 -0.000000  0.000000
+  1Cu  3px       -0.000000  0.000000  0.000000  0.000000  0.004395  0.040901
+  1Cu  3py       -0.000000  0.000000  0.000000 -0.000000  0.040901 -0.004395
+  1Cu  1dz2       0.057456 -0.000000 -0.000000  0.083426 -0.000000 -0.000000
+  1Cu  1dxz       0.000000  0.000000 -0.000000  0.000000 -0.011749 -0.109340
+  1Cu  1dyz      -0.000000 -0.000000 -0.000000  0.000000 -0.109340  0.011749
+  1Cu  1dx2y2     0.000000 -0.101210 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  1dxy      -0.000000 -0.000000  0.101197 -0.000000 -0.000000  0.000000
+  1Cu  2dz2       0.029917  0.000000 -0.000000  0.037390 -0.000000 -0.000000
+  1Cu  2dxz      -0.000000  0.000000  0.000000  0.000000 -0.004774 -0.044431
+  1Cu  2dyz      -0.000000 -0.000000 -0.000000  0.000000 -0.044431  0.004774
+  1Cu  2dx2y2     0.000000 -0.041534 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  2dxy      -0.000000 -0.000000  0.041523 -0.000000 -0.000000  0.000000
+  1Cu  3dz2       0.027752 -0.000000 -0.000000  0.059615 -0.000000 -0.000000
+  1Cu  3dxz       0.000000  0.000000 -0.000000 -0.000000 -0.011456 -0.106611
+  1Cu  3dyz      -0.000000 -0.000000  0.000000  0.000000 -0.106611  0.011456
+  1Cu  3dx2y2     0.000000 -0.099461 -0.000000  0.000000 -0.000000 -0.000000
+  1Cu  3dxy      -0.000000 -0.000000  0.099471  0.000000 -0.000000  0.000000
+  1Cu  4pz       -0.259146 -0.000000  0.000000  0.116184  0.000000  0.000000
+  1Cu  4px        0.000000  0.000000 -0.000000 -0.000000 -0.041203 -0.383445
+  1Cu  4py        0.000000 -0.000000 -0.000000  0.000000 -0.383445  0.041203
+  1Cu  4dz2      -0.356692 -0.000000  0.000000 -0.717912  0.000000  0.000000
+  1Cu  4dxz      -0.000000  0.000000  0.000000 -0.000000  0.070965  0.660418
+  1Cu  4dyz      -0.000000  0.000000  0.000000 -0.000000  0.660418 -0.070965
+  1Cu  4dx2y2    -0.000000  0.651499  0.000000 -0.000000  0.000000  0.000000
+  1Cu  4dxy      -0.000000  0.000000 -0.651505  0.000000  0.000000 -0.000000
+  1Cu  1f0       -0.000237 -0.000000 -0.000000  0.000085  0.000000  0.000000
+  1Cu  1f+1       0.000000 -0.000000 -0.000000  0.000000  0.000023  0.000210
+  1Cu  1f-1       0.000000  0.000000  0.000000 -0.000000  0.000210 -0.000023
+  1Cu  1f+2      -0.000000  0.000469  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f-2      -0.000000  0.000000 -0.000468  0.000000  0.000000 -0.000000
+  1Cu  1f+3      -0.000000  0.000000  0.000000 -0.000000  0.000000  0.000000
+  1Cu  1f-3      -0.000000  0.000000  0.000000 -0.000000 -0.000000  0.000000
+                     42        43        44        45        46        47   
+                   0.26771   0.26772   0.28494   0.36168   0.36168   0.49681
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.000000 -0.000000 -0.003373 -0.000000  0.000000  0.010933
+  0Cu  2s        -0.000000  0.000000  0.017579 -0.000000 -0.000000 -0.038703
+  0Cu  3s         0.000000 -0.000000 -0.013765 -0.000000  0.000000  0.077583
+  0Cu  4s         0.000000 -0.000000 -0.098467  0.000000 -0.000000  0.150700
+  0Cu  5s         0.000000  0.000000  1.095532 -0.000000 -0.000000 -1.009747
+  0Cu  6s        -0.000000 -0.000000 -0.666083 -0.000000  0.000000 -0.251759
+  0Cu  1pz        0.000000  0.000000  0.032895  0.000000 -0.000000  0.061584
+  0Cu  1px        0.000000 -0.000000 -0.000000  0.048002 -0.004073 -0.000000
+  0Cu  1py        0.000000 -0.000000 -0.000000 -0.004073 -0.048002 -0.000000
+  0Cu  2pz       -0.000000 -0.000000 -0.090038 -0.000000  0.000000 -0.165838
+  0Cu  2px       -0.000000  0.000000  0.000000 -0.128499  0.010903  0.000000
+  0Cu  2py       -0.000000  0.000000  0.000000  0.010903  0.128499  0.000000
+  0Cu  3pz       -0.000000  0.000000 -0.033356 -0.000000  0.000000 -0.117433
+  0Cu  3px       -0.000000  0.000000  0.000000 -0.083928  0.007121  0.000000
+  0Cu  3py        0.000000  0.000000  0.000000  0.007121  0.083928  0.000000
+  0Cu  1dz2       0.000000 -0.000000  0.092213 -0.000000 -0.000000 -0.065289
+  0Cu  1dxz      -0.000000 -0.000000 -0.000000  0.033207 -0.002818  0.000000
+  0Cu  1dyz      -0.000000  0.000000  0.000000 -0.002818 -0.033207 -0.000000
+  0Cu  1dx2y2     0.094963  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  1dxy       0.000000 -0.094957 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  2dz2      -0.000000 -0.000000  0.030571 -0.000000 -0.000000 -0.054369
+  0Cu  2dxz      -0.000000  0.000000 -0.000000  0.002858 -0.000242  0.000000
+  0Cu  2dyz      -0.000000  0.000000  0.000000 -0.000242 -0.002858 -0.000000
+  0Cu  2dx2y2     0.036543  0.000000  0.000000  0.000000 -0.000000  0.000000
+  0Cu  2dxy       0.000000 -0.036542 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  3dz2       0.000000 -0.000000  0.148832  0.000000 -0.000000  0.118754
+  0Cu  3dxz      -0.000000 -0.000000  0.000000  0.096830 -0.008216 -0.000000
+  0Cu  3dyz      -0.000000  0.000000  0.000000 -0.008216 -0.096830 -0.000000
+  0Cu  3dx2y2     0.106481  0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  3dxy       0.000000 -0.106462 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  4pz        0.000000  0.000000  0.203808  0.000000 -0.000000  1.423039
+  0Cu  4px        0.000000 -0.000000 -0.000000  0.897004 -0.076108 -0.000000
+  0Cu  4py        0.000000 -0.000000 -0.000000 -0.076108 -0.897004 -0.000000
+  0Cu  4dz2      -0.000000  0.000000 -0.933935 -0.000000  0.000000 -0.708809
+  0Cu  4dxz       0.000000  0.000000 -0.000000 -0.998357  0.084708  0.000000
+  0Cu  4dyz       0.000000 -0.000000 -0.000000  0.084708  0.998357  0.000000
+  0Cu  4dx2y2    -0.912753 -0.000001  0.000000  0.000000  0.000000  0.000000
+  0Cu  4dxy      -0.000001  0.912745  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f0       -0.000000  0.000000 -0.000504 -0.000000  0.000000 -0.002468
+  0Cu  1f+1      -0.000000  0.000000  0.000000 -0.001528  0.000130  0.000000
+  0Cu  1f-1       0.000000  0.000000 -0.000000  0.000130  0.001528  0.000000
+  0Cu  1f+2      -0.000509 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f-2      -0.000000  0.000511 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  1f+3       0.000000 -0.000000  0.000000 -0.000002  0.000000 -0.000000
+  0Cu  1f-3       0.000000  0.000000  0.000000 -0.000000 -0.000002 -0.000000
+  1Cu  1s         0.000000  0.000000 -0.003373 -0.000000 -0.000000 -0.010933
+  1Cu  2s        -0.000000 -0.000000  0.017579  0.000000 -0.000000  0.038703
+  1Cu  3s         0.000000 -0.000000 -0.013765  0.000000 -0.000000 -0.077583
+  1Cu  4s        -0.000000  0.000000 -0.098467 -0.000000  0.000000 -0.150700
+  1Cu  5s         0.000000 -0.000000  1.095532  0.000000 -0.000000  1.009747
+  1Cu  6s        -0.000000  0.000000 -0.666082  0.000000  0.000000  0.251759
+  1Cu  1pz       -0.000000  0.000000 -0.032895  0.000000 -0.000000  0.061584
+  1Cu  1px        0.000000  0.000000  0.000000 -0.048002  0.004073  0.000000
+  1Cu  1py        0.000000 -0.000000 -0.000000  0.004073  0.048002  0.000000
+  1Cu  2pz        0.000000 -0.000000  0.090038 -0.000000  0.000000 -0.165838
+  1Cu  2px       -0.000000 -0.000000 -0.000000  0.128499 -0.010903 -0.000000
+  1Cu  2py       -0.000000  0.000000  0.000000 -0.010903 -0.128499 -0.000000
+  1Cu  3pz        0.000000 -0.000000  0.033356  0.000000  0.000000 -0.117433
+  1Cu  3px       -0.000000 -0.000000  0.000000  0.083928 -0.007121 -0.000000
+  1Cu  3py       -0.000000  0.000000  0.000000 -0.007121 -0.083928 -0.000000
+  1Cu  1dz2       0.000000 -0.000000  0.092213  0.000000 -0.000000  0.065289
+  1Cu  1dxz       0.000000  0.000000 -0.000000  0.033207 -0.002818 -0.000000
+  1Cu  1dyz       0.000000 -0.000000 -0.000000 -0.002818 -0.033207 -0.000000
+  1Cu  1dx2y2    -0.094963 -0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  1dxy      -0.000000  0.094957  0.000000  0.000000  0.000000 -0.000000
+  1Cu  2dz2      -0.000000  0.000000  0.030571  0.000000 -0.000000  0.054369
+  1Cu  2dxz       0.000000 -0.000000 -0.000000  0.002858 -0.000242 -0.000000
+  1Cu  2dyz       0.000000 -0.000000 -0.000000 -0.000242 -0.002858 -0.000000
+  1Cu  2dx2y2    -0.036544 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  2dxy      -0.000000  0.036542  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  3dz2       0.000000 -0.000000  0.148832 -0.000000  0.000000 -0.118754
+  1Cu  3dxz       0.000000  0.000000 -0.000000  0.096830 -0.008216 -0.000000
+  1Cu  3dyz       0.000000 -0.000000 -0.000000 -0.008216 -0.096830  0.000000
+  1Cu  3dx2y2    -0.106481 -0.000000  0.000000  0.000000  0.000000  0.000000
+  1Cu  3dxy      -0.000000  0.106462  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  4pz        0.000000  0.000000 -0.203808  0.000000 -0.000000  1.423039
+  1Cu  4px        0.000000  0.000000 -0.000000 -0.897004  0.076108  0.000000
+  1Cu  4py        0.000000 -0.000000 -0.000000  0.076108  0.897004  0.000000
+  1Cu  4dz2      -0.000000  0.000000 -0.933935  0.000000 -0.000000  0.708809
+  1Cu  4dxz      -0.000000  0.000000  0.000000 -0.998357  0.084708  0.000000
+  1Cu  4dyz      -0.000000  0.000000  0.000000  0.084708  0.998357  0.000000
+  1Cu  4dx2y2     0.912753  0.000001 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  4dxy       0.000001 -0.912745 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  1f0        0.000000  0.000000  0.000504  0.000000 -0.000000 -0.002468
+  1Cu  1f+1       0.000000  0.000000  0.000000  0.001528 -0.000130  0.000000
+  1Cu  1f-1      -0.000000 -0.000000 -0.000000 -0.000130 -0.001528 -0.000000
+  1Cu  1f+2      -0.000509 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f-2      -0.000000  0.000511  0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  1f+3      -0.000000 -0.000000 -0.000000  0.000002 -0.000000 -0.000000
+  1Cu  1f-3      -0.000000 -0.000000  0.000000  0.000000  0.000002 -0.000000
+                     48        49        50        51        52        53   
+                   0.89448   0.90336   0.90336   0.95101   0.95109   0.98549
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.001234 -0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  2s        -0.005239  0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  3s         0.007231 -0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  4s         0.022964  0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  5s         0.191409 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  6s        -0.094033  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  1pz        0.005274  0.000000  0.000000  0.000000  0.000000 -0.000000
+  0Cu  1px       -0.000000  0.000134  0.000615 -0.000000  0.000000 -0.000000
+  0Cu  1py       -0.000000  0.000615 -0.000134 -0.000000  0.000000  0.000000
+  0Cu  2pz       -0.012402 -0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  0Cu  2px        0.000000 -0.000351 -0.001611  0.000000 -0.000000  0.000000
+  0Cu  2py        0.000000 -0.001611  0.000351  0.000000 -0.000000 -0.000000
+  0Cu  3pz       -0.029471  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  3px        0.000000 -0.000599 -0.002745  0.000000  0.000000  0.000000
+  0Cu  3py       -0.000000 -0.002745  0.000599 -0.000000 -0.000000  0.000000
+  0Cu  1dz2      -0.240489  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  1dxz      -0.000000  0.047784  0.219059  0.000000  0.000000  0.000000
+  0Cu  1dyz       0.000000  0.219059 -0.047784  0.000000  0.000000 -0.000000
+  0Cu  1dx2y2    -0.000000 -0.000000 -0.000000  0.229285 -0.000000  0.230933
+  0Cu  1dxy      -0.000000  0.000000 -0.000000 -0.000000 -0.229279  0.000000
+  0Cu  2dz2      -0.231088  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  2dxz      -0.000000  0.052288  0.239708  0.000000  0.000000  0.000000
+  0Cu  2dyz       0.000000  0.239708 -0.052288  0.000000  0.000000 -0.000000
+  0Cu  2dx2y2    -0.000000 -0.000000 -0.000000  0.241045 -0.000000  0.238888
+  0Cu  2dxy      -0.000000  0.000000 -0.000000 -0.000000 -0.241011  0.000000
+  0Cu  3dz2       0.844786 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  3dxz       0.000000 -0.195022 -0.894054 -0.000000 -0.000000 -0.000000
+  0Cu  3dyz      -0.000000 -0.894054  0.195022 -0.000000 -0.000000  0.000000
+  0Cu  3dx2y2     0.000000  0.000000  0.000000 -0.910674  0.000000 -0.933550
+  0Cu  3dxy       0.000000 -0.000000 -0.000000  0.000000  0.910670 -0.000000
+  0Cu  4pz        0.092541 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  4px       -0.000000  0.017026  0.078053 -0.000000  0.000000 -0.000000
+  0Cu  4py        0.000000  0.078053 -0.017026  0.000000  0.000000  0.000000
+  0Cu  4dz2      -0.503073  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  4dxz      -0.000000  0.098109  0.449769  0.000000  0.000000  0.000000
+  0Cu  4dyz       0.000000  0.449769 -0.098109  0.000000  0.000000 -0.000000
+  0Cu  4dx2y2     0.000000 -0.000000 -0.000000  0.378721 -0.000000  0.522213
+  0Cu  4dxy      -0.000000 -0.000000  0.000000 -0.000000 -0.378707  0.000000
+  0Cu  1f0       -0.002841  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  1f+1      -0.000000  0.000294  0.001347  0.000000  0.000000 -0.000000
+  0Cu  1f-1       0.000000  0.001347 -0.000294  0.000000  0.000000 -0.000000
+  0Cu  1f+2      -0.000000 -0.000000 -0.000000 -0.000005  0.000000  0.000291
+  0Cu  1f-2       0.000000  0.000000  0.000000  0.000000  0.000013  0.000000
+  0Cu  1f+3       0.000000 -0.000001 -0.000003  0.000000 -0.000000 -0.000000
+  0Cu  1f-3      -0.000000  0.000003 -0.000001  0.000000  0.000000 -0.000000
+  1Cu  1s         0.001234 -0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  2s        -0.005239 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  3s         0.007231 -0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  4s         0.022964  0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  5s         0.191409 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  6s        -0.094033 -0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1pz       -0.005274  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1px       -0.000000  0.000134  0.000615 -0.000000 -0.000000  0.000000
+  1Cu  1py       -0.000000  0.000615 -0.000134  0.000000 -0.000000 -0.000000
+  1Cu  2pz        0.012402 -0.000000  0.000000  0.000000 -0.000000  0.000000
+  1Cu  2px        0.000000 -0.000351 -0.001611  0.000000  0.000000  0.000000
+  1Cu  2py        0.000000 -0.001611  0.000351 -0.000000  0.000000  0.000000
+  1Cu  3pz        0.029471  0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  3px        0.000000 -0.000599 -0.002745 -0.000000 -0.000000 -0.000000
+  1Cu  3py       -0.000000 -0.002745  0.000599  0.000000 -0.000000 -0.000000
+  1Cu  1dz2      -0.240489  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  1dxz       0.000000 -0.047784 -0.219059 -0.000000 -0.000000  0.000000
+  1Cu  1dyz      -0.000000 -0.219059  0.047784 -0.000000 -0.000000 -0.000000
+  1Cu  1dx2y2    -0.000000 -0.000000  0.000000  0.229285 -0.000000 -0.230934
+  1Cu  1dxy      -0.000000  0.000000  0.000000 -0.000000 -0.229278 -0.000000
+  1Cu  2dz2      -0.231088  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  2dxz       0.000000 -0.052288 -0.239708 -0.000000 -0.000000  0.000000
+  1Cu  2dyz      -0.000000 -0.239708  0.052288 -0.000000 -0.000000 -0.000000
+  1Cu  2dx2y2    -0.000000 -0.000000  0.000000  0.241045 -0.000000 -0.238888
+  1Cu  2dxy      -0.000000  0.000000  0.000000 -0.000000 -0.241011 -0.000000
+  1Cu  3dz2       0.844786 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  3dxz      -0.000000  0.195021  0.894053  0.000000  0.000000 -0.000000
+  1Cu  3dyz       0.000000  0.894053 -0.195021  0.000000  0.000000  0.000000
+  1Cu  3dx2y2     0.000000  0.000000 -0.000000 -0.910674  0.000000  0.933550
+  1Cu  3dxy       0.000000 -0.000000 -0.000000  0.000000  0.910669  0.000000
+  1Cu  4pz       -0.092541 -0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  4px       -0.000000  0.017026  0.078054  0.000000  0.000000  0.000000
+  1Cu  4py        0.000000  0.078054 -0.017026  0.000000  0.000000 -0.000000
+  1Cu  4dz2      -0.503073  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  4dxz       0.000000 -0.098109 -0.449769 -0.000000 -0.000000  0.000000
+  1Cu  4dyz      -0.000000 -0.449769  0.098109 -0.000000 -0.000000 -0.000000
+  1Cu  4dx2y2    -0.000000 -0.000000  0.000000  0.378721 -0.000000 -0.522213
+  1Cu  4dxy      -0.000000  0.000000  0.000000 -0.000000 -0.378706 -0.000000
+  1Cu  1f0        0.002841  0.000000  0.000000  0.000000  0.000000  0.000000
+  1Cu  1f+1       0.000000  0.000294  0.001347  0.000000  0.000000  0.000000
+  1Cu  1f-1       0.000000  0.001347 -0.000294 -0.000000 -0.000000 -0.000000
+  1Cu  1f+2      -0.000000 -0.000000 -0.000000  0.000005  0.000000  0.000291
+  1Cu  1f-2      -0.000000  0.000000 -0.000000  0.000000 -0.000013  0.000000
+  1Cu  1f+3      -0.000000 -0.000001 -0.000003 -0.000000 -0.000000 -0.000000
+  1Cu  1f-3      -0.000000  0.000003 -0.000001 -0.000000 -0.000000 -0.000000
+                     54        55        56        57        58        59   
+                   0.98556   1.02359   1.02359   1.21519   2.23305   2.23305
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.000000 -0.000000  0.000000 -0.009635  0.000000  0.000000
+  0Cu  2s         0.000000  0.000000  0.000000  0.020338  0.000000  0.000000
+  0Cu  3s         0.000000 -0.000000  0.000000 -0.093990  0.000000  0.000000
+  0Cu  4s        -0.000000  0.000000 -0.000000 -0.024936 -0.000000 -0.000000
+  0Cu  5s         0.000000 -0.000000  0.000000  0.254505  0.000000  0.000000
+  0Cu  6s        -0.000000  0.000000  0.000000  0.078907 -0.000000 -0.000000
+  0Cu  1pz       -0.000000  0.000000 -0.000000 -0.032809  0.000000 -0.000000
+  0Cu  1px        0.000000 -0.000344 -0.001798 -0.000000  0.002074  0.226661
+  0Cu  1py        0.000000  0.001798 -0.000344  0.000000  0.226661 -0.002074
+  0Cu  2pz        0.000000 -0.000000  0.000000  0.098425 -0.000000  0.000000
+  0Cu  2px       -0.000000  0.001173  0.006123  0.000000 -0.007577 -0.828123
+  0Cu  2py       -0.000000 -0.006123  0.001173 -0.000000 -0.828123  0.007577
+  0Cu  3pz       -0.000000  0.000000  0.000000  0.008796  0.000000 -0.000000
+  0Cu  3px        0.000000 -0.000820 -0.004282 -0.000000  0.009873  1.079120
+  0Cu  3py        0.000000  0.004282 -0.000820 -0.000000  1.079120 -0.009873
+  0Cu  1dz2      -0.000000 -0.000000  0.000000 -0.226467  0.000000 -0.000000
+  0Cu  1dxz      -0.000000  0.044582  0.232803  0.000000 -0.000028 -0.003011
+  0Cu  1dyz      -0.000000 -0.232803  0.044582  0.000000 -0.003011  0.000028
+  0Cu  1dx2y2     0.000000 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  1dxy      -0.230924  0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  2dz2      -0.000000  0.000000  0.000000 -0.240147  0.000000 -0.000000
+  0Cu  2dxz      -0.000000  0.044580  0.232792  0.000000  0.000027  0.002926
+  0Cu  2dyz      -0.000000 -0.232792  0.044580  0.000000  0.002926 -0.000027
+  0Cu  2dx2y2     0.000000 -0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  2dxy      -0.238862  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  3dz2       0.000000 -0.000000 -0.000000  1.104080  0.000000  0.000000
+  0Cu  3dxz       0.000000 -0.175619 -0.917057 -0.000000  0.000023  0.002501
+  0Cu  3dyz       0.000000  0.917057 -0.175619  0.000000  0.002501 -0.000023
+  0Cu  3dx2y2    -0.000000  0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  3dxy       0.933550 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  4pz        0.000000 -0.000000 -0.000000 -0.533590 -0.000000 -0.000000
+  0Cu  4px        0.000000 -0.014189 -0.074092  0.000000 -0.003427 -0.374524
+  0Cu  4py        0.000000  0.074092 -0.014189  0.000000 -0.374524  0.003427
+  0Cu  4dz2      -0.000000  0.000000  0.000000 -0.268802  0.000000  0.000000
+  0Cu  4dxz      -0.000000  0.083236  0.434647  0.000000 -0.000401 -0.043860
+  0Cu  4dyz      -0.000000 -0.434647  0.083236  0.000000 -0.043860  0.000401
+  0Cu  4dx2y2     0.000000 -0.000000 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  4dxy      -0.522224  0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  1f0       -0.000000  0.000000 -0.000000  0.005816  0.000000  0.000000
+  0Cu  1f+1      -0.000000 -0.000217 -0.001134 -0.000000 -0.000008 -0.000874
+  0Cu  1f-1      -0.000000  0.001134 -0.000217 -0.000000 -0.000874  0.000008
+  0Cu  1f+2       0.000000 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f-2      -0.000283  0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  1f+3       0.000000 -0.000001 -0.000003  0.000000 -0.000000 -0.000007
+  0Cu  1f-3      -0.000000 -0.000003  0.000001  0.000000  0.000007 -0.000000
+  1Cu  1s        -0.000000 -0.000000 -0.000000  0.009635  0.000000 -0.000000
+  1Cu  2s        -0.000000  0.000000 -0.000000 -0.020338  0.000000 -0.000000
+  1Cu  3s        -0.000000 -0.000000 -0.000000  0.093990  0.000000 -0.000000
+  1Cu  4s         0.000000 -0.000000  0.000000  0.024936 -0.000000  0.000000
+  1Cu  5s        -0.000000  0.000000 -0.000000 -0.254505  0.000000 -0.000000
+  1Cu  6s         0.000000 -0.000000  0.000000 -0.078907  0.000000 -0.000000
+  1Cu  1pz       -0.000000 -0.000000  0.000000 -0.032809 -0.000000  0.000000
+  1Cu  1px       -0.000000  0.000344  0.001798 -0.000000  0.002074  0.226661
+  1Cu  1py       -0.000000 -0.001798  0.000344 -0.000000  0.226661 -0.002074
+  1Cu  2pz        0.000000  0.000000 -0.000000  0.098425  0.000000 -0.000000
+  1Cu  2px        0.000000 -0.001173 -0.006123  0.000000 -0.007577 -0.828122
+  1Cu  2py        0.000000  0.006123 -0.001173  0.000000 -0.828122  0.007577
+  1Cu  3pz        0.000000 -0.000000  0.000000  0.008796 -0.000000  0.000000
+  1Cu  3px       -0.000000  0.000820  0.004282 -0.000000  0.009873  1.079119
+  1Cu  3py        0.000000 -0.004282  0.000820 -0.000000  1.079119 -0.009873
+  1Cu  1dz2      -0.000000  0.000000 -0.000000  0.226467 -0.000000  0.000000
+  1Cu  1dxz      -0.000000  0.044583  0.232803  0.000000  0.000028  0.003011
+  1Cu  1dyz      -0.000000 -0.232803  0.044583  0.000000  0.003011 -0.000028
+  1Cu  1dx2y2    -0.000000  0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  1dxy       0.230924 -0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  2dz2      -0.000000  0.000000 -0.000000  0.240147  0.000000  0.000000
+  1Cu  2dxz      -0.000000  0.044580  0.232792  0.000000 -0.000027 -0.002925
+  1Cu  2dyz      -0.000000 -0.232792  0.044580 -0.000000 -0.002925  0.000027
+  1Cu  2dx2y2    -0.000000  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  2dxy       0.238862 -0.000000  0.000000  0.000000  0.000000 -0.000000
+  1Cu  3dz2       0.000000 -0.000000  0.000000 -1.104080 -0.000000 -0.000000
+  1Cu  3dxz       0.000000 -0.175619 -0.917057 -0.000000 -0.000023 -0.002501
+  1Cu  3dyz       0.000000  0.917057 -0.175619 -0.000000 -0.002501  0.000023
+  1Cu  3dx2y2     0.000000 -0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  3dxy      -0.933550  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  4pz       -0.000000 -0.000000 -0.000000 -0.533590  0.000000 -0.000000
+  1Cu  4px       -0.000000  0.014189  0.074092  0.000000 -0.003427 -0.374523
+  1Cu  4py       -0.000000 -0.074092  0.014189  0.000000 -0.374523  0.003427
+  1Cu  4dz2      -0.000000 -0.000000 -0.000000  0.268802  0.000000 -0.000000
+  1Cu  4dxz      -0.000000  0.083236  0.434647  0.000000  0.000401  0.043860
+  1Cu  4dyz      -0.000000 -0.434647  0.083236  0.000000  0.043860 -0.000401
+  1Cu  4dx2y2    -0.000000  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  4dxy       0.522224 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  1f0        0.000000  0.000000  0.000000  0.005816 -0.000000  0.000000
+  1Cu  1f+1      -0.000000  0.000217  0.001134 -0.000000 -0.000008 -0.000874
+  1Cu  1f-1      -0.000000 -0.001134  0.000217  0.000000 -0.000874  0.000008
+  1Cu  1f+2       0.000000 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  1f-2      -0.000283 -0.000000 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1f+3       0.000000  0.000001  0.000003 -0.000000 -0.000000 -0.000007
+  1Cu  1f-3      -0.000000  0.000003 -0.000001  0.000000  0.000007 -0.000000
+                     60        61        62        63        64        65   
+                   2.35461   2.35670   2.35670   2.48716   3.07816   3.32673
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.000210 -0.000000 -0.000000 -0.028297  0.112487 -0.106515
+  0Cu  2s         0.002137 -0.000000 -0.000000  0.008654  0.016377 -0.030735
+  0Cu  3s         0.006511 -0.000000 -0.000000 -0.369159  1.559712 -1.504621
+  0Cu  4s        -0.025916  0.000000  0.000000  0.344049 -1.803692  1.836333
+  0Cu  5s         0.214934 -0.000000 -0.000000  0.166979  0.681091 -1.042800
+  0Cu  6s        -0.107647  0.000000  0.000000  0.380391 -0.309440  0.306245
+  0Cu  1pz       -0.226501  0.000000  0.000000  0.217857 -0.000018 -0.053485
+  0Cu  1px        0.000000  0.209703  0.085444 -0.000000  0.000000  0.000000
+  0Cu  1py       -0.000000  0.085444 -0.209703  0.000000 -0.000000 -0.000000
+  0Cu  2pz        0.833095 -0.000001 -0.000000 -0.813780  0.000791  0.210038
+  0Cu  2px       -0.000001 -0.773267 -0.315071  0.000000 -0.000000 -0.000000
+  0Cu  2py        0.000000 -0.315071  0.773267 -0.000000  0.000000  0.000000
+  0Cu  3pz       -1.110813  0.000001  0.000000  1.173443 -0.007252 -0.365377
+  0Cu  3px        0.000001  1.048602  0.427257 -0.000000  0.000000  0.000000
+  0Cu  3py       -0.000000  0.427257 -1.048602  0.000000 -0.000000 -0.000000
+  0Cu  1dz2       0.014652 -0.000000 -0.000000 -0.036036 -0.002846  0.168065
+  0Cu  1dxz       0.000000  0.004800  0.001956  0.000000 -0.000000 -0.000000
+  0Cu  1dyz      -0.000000  0.001956 -0.004800 -0.000000  0.000000  0.000000
+  0Cu  1dx2y2    -0.000000  0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  1dxy       0.000000 -0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  2dz2      -0.023581  0.000000  0.000000 -0.001016  0.006320 -0.185893
+  0Cu  2dxz       0.000000 -0.000204 -0.000083  0.000000 -0.000000 -0.000000
+  0Cu  2dyz       0.000000 -0.000083  0.000204  0.000000 -0.000000 -0.000000
+  0Cu  2dx2y2     0.000000  0.000000  0.000000  0.000000  0.000000 -0.000000
+  0Cu  2dxy       0.000000 -0.000000 -0.000000  0.000000  0.000000  0.000000
+  0Cu  3dz2       0.074381 -0.000000 -0.000000  0.165801 -0.019489 -0.066440
+  0Cu  3dxz      -0.000000 -0.027074 -0.011032  0.000000 -0.000000 -0.000000
+  0Cu  3dyz       0.000000 -0.011032  0.027074 -0.000000  0.000000  0.000000
+  0Cu  3dx2y2    -0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+  0Cu  3dxy       0.000000 -0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  4pz        0.374013 -0.000000 -0.000000 -0.975950  0.037947  0.586592
+  0Cu  4px       -0.000000 -0.529223 -0.215634 -0.000000 -0.000000 -0.000000
+  0Cu  4py        0.000000 -0.215634  0.529223 -0.000000 -0.000000  0.000000
+  0Cu  4dz2      -0.151925  0.000000  0.000000  0.180251 -0.024361 -0.205797
+  0Cu  4dxz       0.000000  0.222001  0.090455 -0.000000  0.000000 -0.000000
+  0Cu  4dyz      -0.000000  0.090455 -0.222001  0.000000  0.000000 -0.000000
+  0Cu  4dx2y2     0.000000  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  4dxy      -0.000000  0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  1f0        0.000692 -0.000000 -0.000000  0.006032 -0.001050 -0.008426
+  0Cu  1f+1       0.000000  0.001756  0.000716  0.000000  0.000000  0.000000
+  0Cu  1f-1      -0.000000  0.000716 -0.001756 -0.000000 -0.000000 -0.000000
+  0Cu  1f+2      -0.000000  0.000000  0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  1f-2       0.000000  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f+3      -0.000000 -0.000007 -0.000003 -0.000000 -0.000000 -0.000000
+  0Cu  1f-3      -0.000000  0.000003 -0.000007 -0.000000  0.000000  0.000000
+  1Cu  1s         0.000210 -0.000000 -0.000000  0.028297  0.112487  0.106515
+  1Cu  2s         0.002137 -0.000000 -0.000000 -0.008654  0.016377  0.030735
+  1Cu  3s         0.006510 -0.000000 -0.000000  0.369159  1.559711  1.504622
+  1Cu  4s        -0.025915  0.000000  0.000000 -0.344050 -1.803690 -1.836334
+  1Cu  5s         0.214934 -0.000000 -0.000000 -0.166979  0.681090  1.042801
+  1Cu  6s        -0.107646  0.000000  0.000000 -0.380392 -0.309439 -0.306246
+  1Cu  1pz        0.226500 -0.000000 -0.000000  0.217857  0.000018 -0.053485
+  1Cu  1px       -0.000000 -0.209704 -0.085445  0.000000 -0.000000  0.000000
+  1Cu  1py        0.000000 -0.085445  0.209704 -0.000000 -0.000000  0.000000
+  1Cu  2pz       -0.833093  0.000001  0.000000 -0.813782 -0.000790  0.210038
+  1Cu  2px        0.000001  0.773268  0.315071 -0.000000  0.000000 -0.000000
+  1Cu  2py       -0.000000  0.315071 -0.773268  0.000000  0.000000 -0.000000
+  1Cu  3pz        1.110811 -0.000001 -0.000000  1.173445  0.007252 -0.365377
+  1Cu  3px       -0.000001 -1.048603 -0.427258  0.000000 -0.000000  0.000000
+  1Cu  3py        0.000000 -0.427258  1.048603 -0.000000 -0.000000  0.000000
+  1Cu  1dz2       0.014652 -0.000000 -0.000000  0.036036 -0.002846 -0.168064
+  1Cu  1dxz       0.000000  0.004800  0.001956 -0.000000  0.000000 -0.000000
+  1Cu  1dyz       0.000000  0.001956 -0.004800 -0.000000  0.000000 -0.000000
+  1Cu  1dx2y2    -0.000000 -0.000000  0.000000  0.000000  0.000000 -0.000000
+  1Cu  1dxy       0.000000  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  2dz2      -0.023580  0.000000  0.000000  0.001016  0.006320  0.185892
+  1Cu  2dxz      -0.000000 -0.000204 -0.000083  0.000000 -0.000000  0.000000
+  1Cu  2dyz       0.000000 -0.000083  0.000204  0.000000 -0.000000  0.000000
+  1Cu  2dx2y2     0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  1Cu  2dxy       0.000000 -0.000000  0.000000  0.000000 -0.000000  0.000000
+  1Cu  3dz2       0.074381 -0.000000 -0.000000 -0.165801 -0.019489  0.066440
+  1Cu  3dxz      -0.000000 -0.027074 -0.011032 -0.000000  0.000000 -0.000000
+  1Cu  3dyz       0.000000 -0.011032  0.027074 -0.000000  0.000000 -0.000000
+  1Cu  3dx2y2    -0.000000 -0.000000  0.000000  0.000000  0.000000 -0.000000
+  1Cu  3dxy       0.000000  0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  4pz       -0.374012  0.000000  0.000000 -0.975951 -0.037947  0.586592
+  1Cu  4px        0.000000  0.529223  0.215634 -0.000000  0.000000 -0.000000
+  1Cu  4py       -0.000000  0.215634 -0.529223  0.000000  0.000000  0.000000
+  1Cu  4dz2      -0.151925  0.000000  0.000000 -0.180252 -0.024361  0.205797
+  1Cu  4dxz       0.000000  0.222001  0.090455 -0.000000 -0.000000  0.000000
+  1Cu  4dyz      -0.000000  0.090455 -0.222001  0.000000 -0.000000  0.000000
+  1Cu  4dx2y2     0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  1Cu  4dxy      -0.000000 -0.000000 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  1f0       -0.000693  0.000000  0.000000  0.006032  0.001050 -0.008426
+  1Cu  1f+1      -0.000000 -0.001756 -0.000716  0.000000 -0.000000  0.000000
+  1Cu  1f-1       0.000000 -0.000716  0.001756  0.000000 -0.000000  0.000000
+  1Cu  1f+2      -0.000000 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f-2      -0.000000 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1f+3      -0.000000  0.000007  0.000003  0.000000 -0.000000  0.000000
+  1Cu  1f-3       0.000000 -0.000003  0.000007 -0.000000 -0.000000  0.000000
+                     66        67        68        69        70        71   
+                   3.80704   3.80704   3.83440   3.83472   3.85741   3.85960
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s        -0.000000 -0.000000 -0.000000  0.000000 -0.000296  0.000000
+  0Cu  2s        -0.000000 -0.000000 -0.000000  0.000000  0.001054 -0.000000
+  0Cu  3s        -0.000000 -0.000000 -0.000000  0.000000 -0.002266  0.000000
+  0Cu  4s         0.000000  0.000000  0.000000 -0.000000 -0.006335 -0.000000
+  0Cu  5s        -0.000000 -0.000000 -0.000000  0.000000 -0.058584  0.000000
+  0Cu  6s         0.000000  0.000000  0.000000 -0.000000  0.028873 -0.000000
+  0Cu  1pz        0.000000 -0.000000  0.000000  0.000000 -0.004506  0.000000
+  0Cu  1px       -0.000953  0.000036 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1py       -0.000036 -0.000953 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  2pz       -0.000000  0.000000 -0.000000 -0.000000  0.016041 -0.000000
+  0Cu  2px        0.003585 -0.000136  0.000000 -0.000000  0.000000  0.000000
+  0Cu  2py        0.000136  0.003585  0.000000 -0.000000 -0.000000  0.000000
+  0Cu  3pz        0.000000 -0.000000  0.000000  0.000000 -0.012018  0.000000
+  0Cu  3px       -0.004610  0.000174  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  3py       -0.000174 -0.004610 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  1dz2      -0.000000  0.000000  0.000000  0.000000 -0.637005  0.000001
+  0Cu  1dxz      -0.638752  0.024168  0.000000 -0.000000  0.000000 -0.000000
+  0Cu  1dyz      -0.024168 -0.638752  0.000000  0.000000 -0.000000  0.000000
+  0Cu  1dx2y2     0.000000  0.000000  0.638590  0.000000  0.000001  0.638070
+  0Cu  1dxy       0.000000 -0.000000  0.000000 -0.638586 -0.000000 -0.000000
+  0Cu  2dz2       0.000000 -0.000000 -0.000000 -0.000000  0.932291 -0.000001
+  0Cu  2dxz       0.929852 -0.035183 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  2dyz       0.035183  0.929852 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  2dx2y2    -0.000000 -0.000000 -0.939846 -0.000000 -0.000001 -0.947320
+  0Cu  2dxy      -0.000000  0.000000 -0.000000  0.939852  0.000000  0.000000
+  0Cu  3dz2      -0.000000  0.000000  0.000000  0.000000 -0.446403  0.000000
+  0Cu  3dxz      -0.465184  0.017601  0.000000 -0.000000  0.000000 -0.000000
+  0Cu  3dyz      -0.017601 -0.465184  0.000000  0.000000 -0.000000  0.000000
+  0Cu  3dx2y2     0.000000  0.000000  0.487789  0.000000  0.000001  0.510931
+  0Cu  3dxy       0.000000 -0.000000  0.000000 -0.487810 -0.000000 -0.000000
+  0Cu  4pz       -0.000000  0.000000 -0.000000 -0.000000 -0.022421  0.000000
+  0Cu  4px        0.021571 -0.000816  0.000000  0.000000  0.000000 -0.000000
+  0Cu  4py        0.000816  0.021571 -0.000000 -0.000000 -0.000000  0.000000
+  0Cu  4dz2       0.000000 -0.000000 -0.000000 -0.000000  0.170350 -0.000000
+  0Cu  4dxz       0.157433 -0.005957 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  4dyz       0.005957  0.157433 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  4dx2y2    -0.000000 -0.000000 -0.143350 -0.000000 -0.000000 -0.197204
+  0Cu  4dxy      -0.000000  0.000000 -0.000000  0.143358  0.000000  0.000000
+  0Cu  1f0       -0.000000 -0.000000  0.000000  0.000000  0.008104 -0.000000
+  0Cu  1f+1       0.003568 -0.000135 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  1f-1       0.000135  0.003568  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f+2       0.000000  0.000000 -0.000479 -0.000000 -0.000000 -0.000927
+  0Cu  1f-2       0.000000 -0.000000 -0.000000  0.000508  0.000000  0.000000
+  0Cu  1f+3       0.000012 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  1f-3      -0.000000 -0.000012  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  1s        -0.000000  0.000000 -0.000000 -0.000000 -0.000296  0.000000
+  1Cu  2s         0.000000 -0.000000 -0.000000 -0.000000  0.001054 -0.000000
+  1Cu  3s        -0.000000  0.000000 -0.000000 -0.000000 -0.002266  0.000000
+  1Cu  4s         0.000000 -0.000000  0.000000  0.000000 -0.006336 -0.000000
+  1Cu  5s        -0.000000  0.000000  0.000000 -0.000000 -0.058584  0.000000
+  1Cu  6s         0.000000 -0.000000 -0.000000  0.000000  0.028873 -0.000000
+  1Cu  1pz       -0.000000 -0.000000 -0.000000  0.000000  0.004506 -0.000000
+  1Cu  1px       -0.000953  0.000036 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  1py       -0.000036 -0.000953  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  2pz        0.000000  0.000000 -0.000000 -0.000000 -0.016041  0.000000
+  1Cu  2px        0.003585 -0.000136  0.000000  0.000000 -0.000000  0.000000
+  1Cu  2py        0.000136  0.003585 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  3pz       -0.000000 -0.000000  0.000000  0.000000  0.012018 -0.000000
+  1Cu  3px       -0.004610  0.000174 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  3py       -0.000174 -0.004610 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1dz2      -0.000000 -0.000000  0.000000  0.000000 -0.637004  0.000001
+  1Cu  1dxz       0.638750 -0.024168 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  1dyz       0.024168  0.638750 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1dx2y2     0.000000  0.000000  0.638585  0.000000 -0.000001 -0.638075
+  1Cu  1dxy       0.000000 -0.000000  0.000000 -0.638580  0.000000  0.000000
+  1Cu  2dz2       0.000000  0.000000 -0.000000 -0.000000  0.932291 -0.000001
+  1Cu  2dxz      -0.929849  0.035183  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  2dyz      -0.035183 -0.929849  0.000000  0.000000  0.000000 -0.000000
+  1Cu  2dx2y2    -0.000000 -0.000000 -0.939839 -0.000000  0.000001  0.947327
+  1Cu  2dxy      -0.000000  0.000000 -0.000000  0.939844 -0.000000 -0.000000
+  1Cu  3dz2      -0.000000 -0.000000  0.000000  0.000000 -0.446403  0.000001
+  1Cu  3dxz       0.465183 -0.017601 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  3dyz       0.017601  0.465183 -0.000000 -0.000000 -0.000000  0.000000
+  1Cu  3dx2y2     0.000000  0.000000  0.487785  0.000000 -0.000001 -0.510935
+  1Cu  3dxy       0.000000 -0.000000  0.000000 -0.487806  0.000000  0.000000
+  1Cu  4pz        0.000000  0.000000 -0.000000 -0.000000  0.022421 -0.000000
+  1Cu  4px        0.021572 -0.000816 -0.000000  0.000000 -0.000000  0.000000
+  1Cu  4py        0.000816  0.021572 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  4dz2       0.000000  0.000000 -0.000000 -0.000000  0.170350 -0.000000
+  1Cu  4dxz      -0.157433  0.005957  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  4dyz      -0.005957 -0.157433  0.000000  0.000000  0.000000 -0.000000
+  1Cu  4dx2y2    -0.000000 -0.000000 -0.143349 -0.000000  0.000000  0.197205
+  1Cu  4dxy      -0.000000  0.000000 -0.000000  0.143356 -0.000000 -0.000000
+  1Cu  1f0       -0.000000  0.000000  0.000000  0.000000 -0.008104  0.000000
+  1Cu  1f+1       0.003568 -0.000135 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  1f-1       0.000135  0.003568  0.000000  0.000000  0.000000  0.000000
+  1Cu  1f+2       0.000000  0.000000  0.000479 -0.000000  0.000000 -0.000927
+  1Cu  1f-2       0.000000  0.000000 -0.000000 -0.000508  0.000000 -0.000000
+  1Cu  1f+3       0.000012 -0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  1Cu  1f-3      -0.000000 -0.000012  0.000000  0.000000  0.000000  0.000000
+                     72        73        74        75        76        77   
+                   3.85992   3.89204   3.89204   4.02849   5.96859   5.96859
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s        -0.000000  0.000000  0.000000  0.027594  0.000000 -0.000000
+  0Cu  2s        -0.000000  0.000000 -0.000000  0.018263  0.000000 -0.000000
+  0Cu  3s        -0.000000  0.000000  0.000000  0.408427  0.000000 -0.000000
+  0Cu  4s         0.000000 -0.000000 -0.000000 -0.563871 -0.000000  0.000000
+  0Cu  5s         0.000000  0.000000 -0.000000  0.432536  0.000000 -0.000000
+  0Cu  6s        -0.000000 -0.000000 -0.000000 -0.041204 -0.000000  0.000000
+  0Cu  1pz        0.000000  0.000000 -0.000000  0.025508  0.000000 -0.000000
+  0Cu  1px        0.000000  0.000009  0.001735  0.000000  0.000152 -0.000004
+  0Cu  1py        0.000000  0.001735 -0.000009  0.000000  0.000004  0.000152
+  0Cu  2pz       -0.000000 -0.000000  0.000000 -0.105582 -0.000000  0.000000
+  0Cu  2px       -0.000000 -0.000035 -0.006624  0.000000 -0.000601  0.000015
+  0Cu  2py       -0.000000 -0.006624  0.000035 -0.000000 -0.000015 -0.000601
+  0Cu  3pz        0.000000  0.000000 -0.000000  0.221761  0.000000 -0.000000
+  0Cu  3px        0.000000  0.000058  0.010900 -0.000000  0.001018 -0.000025
+  0Cu  3py        0.000000  0.010900 -0.000058  0.000000  0.000025  0.001018
+  0Cu  1dz2       0.000000  0.000000 -0.000000  0.615509  0.000000 -0.000000
+  0Cu  1dxz      -0.000000 -0.003378 -0.637626  0.000000  0.001123 -0.000028
+  0Cu  1dyz       0.000000 -0.637626  0.003378  0.000000  0.000028  0.001123
+  0Cu  1dx2y2    -0.000000  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  1dxy      -0.638066 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  2dz2      -0.000000 -0.000000  0.000000 -0.987836 -0.000000  0.000000
+  0Cu  2dxz       0.000000  0.005077  0.958307 -0.000000 -0.002739  0.000068
+  0Cu  2dyz      -0.000000  0.958307 -0.005077 -0.000000 -0.000068 -0.002739
+  0Cu  2dx2y2     0.000000 -0.000000  0.000000 -0.000000 -0.000000  0.000000
+  0Cu  2dxy       0.947324  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  3dz2       0.000000  0.000000 -0.000000  0.755731  0.000000 -0.000000
+  0Cu  3dxz      -0.000000 -0.002846 -0.537093  0.000000  0.002470 -0.000061
+  0Cu  3dyz       0.000000 -0.537093  0.002846  0.000000  0.000062  0.002470
+  0Cu  3dx2y2    -0.000000  0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  3dxy      -0.510945 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  0Cu  4pz        0.000000  0.000000 -0.000000 -0.467846 -0.000000  0.000000
+  0Cu  4px       -0.000000 -0.000189 -0.035650  0.000000 -0.001030  0.000026
+  0Cu  4py        0.000000 -0.035650  0.000189  0.000000 -0.000026 -0.001030
+  0Cu  4dz2      -0.000000 -0.000000  0.000000 -0.085419 -0.000000  0.000000
+  0Cu  4dxz       0.000000  0.000993  0.187493 -0.000000 -0.000589  0.000015
+  0Cu  4dyz      -0.000000  0.187493 -0.000993 -0.000000 -0.000015 -0.000589
+  0Cu  4dx2y2     0.000000 -0.000000  0.000000 -0.000000 -0.000000  0.000000
+  0Cu  4dxy       0.197212  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  1f0       -0.000000  0.000000  0.000000  0.021221  0.000001 -0.000000
+  0Cu  1f+1      -0.000000 -0.000013 -0.002481 -0.000000  0.276139 -0.006876
+  0Cu  1f-1      -0.000000 -0.002481  0.000013 -0.000000  0.006888  0.276183
+  0Cu  1f+2       0.000000 -0.000000 -0.000000  0.000000  0.000005 -0.000009
+  0Cu  1f-2       0.000957  0.000000 -0.000000  0.000000  0.000004  0.000031
+  0Cu  1f+3       0.000000  0.000000  0.000012 -0.000000  0.679509 -0.017015
+  0Cu  1f-3      -0.000000 -0.000012  0.000000 -0.000000 -0.017016 -0.680022
+  1Cu  1s         0.000000  0.000000 -0.000000 -0.027594 -0.000000  0.000000
+  1Cu  2s        -0.000000 -0.000000 -0.000000 -0.018263 -0.000000  0.000000
+  1Cu  3s        -0.000000  0.000000 -0.000000 -0.408427 -0.000000  0.000000
+  1Cu  4s         0.000000 -0.000000  0.000000  0.563871  0.000000 -0.000000
+  1Cu  5s         0.000000  0.000000 -0.000000 -0.432535 -0.000000  0.000000
+  1Cu  6s        -0.000000 -0.000000  0.000000  0.041204 -0.000000  0.000000
+  1Cu  1pz       -0.000000 -0.000000  0.000000  0.025508  0.000000 -0.000000
+  1Cu  1px       -0.000000 -0.000009 -0.001735 -0.000000  0.000156 -0.000004
+  1Cu  1py        0.000000 -0.001735  0.000009 -0.000000  0.000004  0.000156
+  1Cu  2pz        0.000000  0.000000 -0.000000 -0.105582 -0.000000  0.000000
+  1Cu  2px        0.000000  0.000035  0.006624  0.000000 -0.000615  0.000015
+  1Cu  2py       -0.000000  0.006624 -0.000035  0.000000 -0.000015 -0.000615
+  1Cu  3pz       -0.000000 -0.000000  0.000000  0.221761  0.000000 -0.000000
+  1Cu  3px       -0.000000 -0.000058 -0.010900 -0.000000  0.001046 -0.000026
+  1Cu  3py        0.000000 -0.010900  0.000058 -0.000000  0.000026  0.001046
+  1Cu  1dz2       0.000000  0.000000 -0.000000 -0.615509  0.000000 -0.000000
+  1Cu  1dxz      -0.000000 -0.003378 -0.637627  0.000000 -0.001134  0.000028
+  1Cu  1dyz       0.000000 -0.637627  0.003378 -0.000000 -0.000028 -0.001135
+  1Cu  1dx2y2     0.000000 -0.000000  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  1dxy       0.638071  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  1Cu  2dz2      -0.000000 -0.000000  0.000000  0.987837 -0.000000  0.000000
+  1Cu  2dxz       0.000000  0.005077  0.958309 -0.000000  0.002758 -0.000069
+  1Cu  2dyz      -0.000000  0.958309 -0.005077  0.000000  0.000069  0.002758
+  1Cu  2dx2y2    -0.000000  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  2dxy      -0.947331 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  1Cu  3dz2       0.000000  0.000000 -0.000000 -0.755732  0.000000 -0.000000
+  1Cu  3dxz      -0.000000 -0.002846 -0.537094  0.000000 -0.002490  0.000062
+  1Cu  3dyz       0.000000 -0.537094  0.002846 -0.000000 -0.000062 -0.002491
+  1Cu  3dx2y2     0.000000 -0.000000  0.000000 -0.000000 -0.000000  0.000000
+  1Cu  3dxy       0.510949  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  1Cu  4pz       -0.000000 -0.000000 -0.000000 -0.467845 -0.000000  0.000000
+  1Cu  4px        0.000000  0.000189  0.035650  0.000000 -0.001073  0.000027
+  1Cu  4py       -0.000000  0.035650 -0.000189 -0.000000 -0.000027 -0.001073
+  1Cu  4dz2      -0.000000 -0.000000  0.000000  0.085419 -0.000000  0.000000
+  1Cu  4dxz       0.000000  0.000993  0.187493 -0.000000  0.000552 -0.000014
+  1Cu  4dyz      -0.000000  0.187493 -0.000993  0.000000  0.000014  0.000552
+  1Cu  4dx2y2    -0.000000  0.000000 -0.000000  0.000000  0.000000 -0.000000
+  1Cu  4dxy      -0.197213 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  1Cu  1f0        0.000000  0.000000  0.000000  0.021221 -0.000002  0.000000
+  1Cu  1f+1      -0.000000  0.000013  0.002481 -0.000000  0.273166 -0.006794
+  1Cu  1f-1       0.000000  0.002481 -0.000013 -0.000000  0.006804  0.273167
+  1Cu  1f+2      -0.000000  0.000000 -0.000000 -0.000000  0.000015  0.000002
+  1Cu  1f-2       0.000957  0.000000  0.000000  0.000000  0.000001 -0.000018
+  1Cu  1f+3       0.000000 -0.000000 -0.000012  0.000000  0.621911 -0.015411
+  1Cu  1f-3       0.000000  0.000012 -0.000000 -0.000000 -0.015400 -0.621329
+                     78        79        80        81        82        83   
+                   5.96859   5.96859   5.96863   5.96865   5.96866   5.96866
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s        -0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  0Cu  2s        -0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  0Cu  3s        -0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  0Cu  4s         0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  5s        -0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  6s         0.000000 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  1pz       -0.000000  0.000000 -0.000000  0.000000 -0.000000  0.000000
+  0Cu  1px       -0.000007 -0.000044 -0.000000  0.000000  0.000070  0.000349
+  0Cu  1py       -0.000044  0.000007 -0.000000  0.000000 -0.000349  0.000070
+  0Cu  2pz        0.000000 -0.000000  0.000000 -0.000000  0.000000 -0.000000
+  0Cu  2px        0.000029  0.000186  0.000000 -0.000001 -0.000278 -0.001389
+  0Cu  2py        0.000186 -0.000029  0.000000 -0.000000  0.001389 -0.000278
+  0Cu  3pz       -0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  0Cu  3px       -0.000057 -0.000365 -0.000000  0.000001  0.000474  0.002372
+  0Cu  3py       -0.000365  0.000057 -0.000000  0.000000 -0.002372  0.000474
+  0Cu  1dz2      -0.000000  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1dxz      -0.000027 -0.000176 -0.000000  0.000001  0.000519  0.002594
+  0Cu  1dyz      -0.000177  0.000028 -0.000000  0.000001 -0.002594  0.000519
+  0Cu  1dx2y2     0.000000  0.000000  0.000000 -0.000042 -0.000000  0.000000
+  0Cu  1dxy      -0.000000  0.000000 -0.000012 -0.000000  0.000001  0.000000
+  0Cu  2dz2       0.000000 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  2dxz       0.000053  0.000341  0.000000 -0.000003 -0.001271 -0.006355
+  0Cu  2dyz       0.000343 -0.000053  0.000000 -0.000001  0.006355 -0.001271
+  0Cu  2dx2y2    -0.000000 -0.000000 -0.000000 -0.000638 -0.000000 -0.000000
+  0Cu  2dxy       0.000000 -0.000000 -0.000673  0.000000 -0.000002 -0.000001
+  0Cu  3dz2      -0.000000  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  0Cu  3dxz      -0.000053 -0.000343 -0.000000  0.000003  0.001151  0.005756
+  0Cu  3dyz      -0.000344  0.000054 -0.000000  0.000001 -0.005756  0.001151
+  0Cu  3dx2y2     0.000000  0.000000  0.000000 -0.000606 -0.000000  0.000001
+  0Cu  3dxy      -0.000000  0.000000 -0.000595 -0.000000  0.000002  0.000001
+  0Cu  4pz        0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  0Cu  4px        0.000085  0.000546  0.000000 -0.000001 -0.000487 -0.002438
+  0Cu  4py        0.000546 -0.000085  0.000000 -0.000001  0.002438 -0.000487
+  0Cu  4dz2       0.000000 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  0Cu  4dxz      -0.000062 -0.000402  0.000000 -0.000000 -0.000265 -0.001325
+  0Cu  4dyz      -0.000401  0.000062  0.000000 -0.000000  0.001325 -0.000265
+  0Cu  4dx2y2    -0.000000 -0.000000 -0.000000  0.001742  0.000000 -0.000002
+  0Cu  4dxy       0.000000 -0.000000  0.001739  0.000000 -0.000004 -0.000001
+  0Cu  1f0       -0.000001  0.000001 -0.000001  0.000000 -0.000001 -0.000002
+  0Cu  1f+1       0.003554  0.023171 -0.000007  0.000275  0.127757  0.638969
+  0Cu  1f-1       0.022998 -0.003529 -0.000037  0.000123 -0.638961  0.127751
+  0Cu  1f+2       0.000024  0.000017  0.000001  0.709376  0.000050 -0.000177
+  0Cu  1f-2      -0.000044  0.000006  0.709342 -0.000003  0.000652  0.000197
+  0Cu  1f+3       0.103804  0.671242  0.000002 -0.000122 -0.053838 -0.269281
+  0Cu  1f-3      -0.670705  0.103713 -0.000018  0.000057 -0.269353  0.053861
+  1Cu  1s         0.000000 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  2s         0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  3s         0.000000 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  4s        -0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+  1Cu  5s        -0.000000 -0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  6s         0.000000 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  1Cu  1pz       -0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  1Cu  1px        0.000005  0.000031 -0.000000  0.000000  0.000070  0.000349
+  1Cu  1py        0.000031 -0.000005 -0.000000  0.000000 -0.000349  0.000070
+  1Cu  2pz        0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  2px       -0.000021 -0.000135  0.000000 -0.000001 -0.000278 -0.001391
+  1Cu  2py       -0.000135  0.000021  0.000000 -0.000000  0.001391 -0.000278
+  1Cu  3pz       -0.000000  0.000000  0.000000  0.000000 -0.000000  0.000000
+  1Cu  3px        0.000043  0.000279 -0.000000  0.000001  0.000475  0.002375
+  1Cu  3py        0.000278 -0.000043 -0.000000  0.000000 -0.002375  0.000475
+  1Cu  1dz2      -0.000000  0.000000 -0.000000  0.000000 -0.000000 -0.000000
+  1Cu  1dxz      -0.000013 -0.000082  0.000000 -0.000001 -0.000519 -0.002596
+  1Cu  1dyz      -0.000082  0.000012  0.000000 -0.000001  0.002596 -0.000519
+  1Cu  1dx2y2    -0.000000 -0.000000 -0.000000 -0.000045  0.000000 -0.000000
+  1Cu  1dxy       0.000000 -0.000000 -0.000015  0.000000 -0.000001 -0.000000
+  1Cu  2dz2       0.000000 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  1Cu  2dxz       0.000017  0.000112 -0.000000  0.000003  0.001271  0.006357
+  1Cu  2dyz       0.000111 -0.000017 -0.000000  0.000001 -0.006357  0.001271
+  1Cu  2dx2y2     0.000000  0.000000  0.000000 -0.000625 -0.000000  0.000001
+  1Cu  2dxy      -0.000000  0.000000 -0.000660 -0.000000  0.000002  0.000001
+  1Cu  3dz2      -0.000000  0.000000 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  3dxz      -0.000021 -0.000136  0.000000 -0.000002 -0.001151 -0.005759
+  1Cu  3dyz      -0.000135  0.000021  0.000000 -0.000001  0.005759 -0.001151
+  1Cu  3dx2y2    -0.000000 -0.000000 -0.000000 -0.000620  0.000000 -0.000000
+  1Cu  3dxy       0.000000 -0.000000 -0.000609  0.000000 -0.000002 -0.000001
+  1Cu  4pz        0.000000 -0.000000 -0.000000 -0.000000  0.000000 -0.000000
+  1Cu  4px       -0.000071 -0.000458  0.000000 -0.000001 -0.000488 -0.002443
+  1Cu  4py       -0.000458  0.000071  0.000000 -0.000000  0.002443 -0.000488
+  1Cu  4dz2       0.000000 -0.000000  0.000000 -0.000000  0.000000  0.000000
+  1Cu  4dxz      -0.000070 -0.000449  0.000000  0.000001  0.000264  0.001321
+  1Cu  4dyz      -0.000450  0.000070 -0.000000  0.000000 -0.001321  0.000264
+  1Cu  4dx2y2     0.000000  0.000000  0.000000  0.001769  0.000000  0.000000
+  1Cu  4dxy      -0.000000  0.000000  0.001765 -0.000000  0.000004  0.000001
+  1Cu  1f0        0.000001 -0.000002  0.000001 -0.000001  0.000001  0.000001
+  1Cu  1f+1      -0.007152 -0.046028 -0.000005  0.000292  0.127689  0.638628
+  1Cu  1f-1      -0.046197  0.007181 -0.000042  0.000127 -0.638613  0.127681
+  1Cu  1f+2      -0.000000  0.000002  0.000001 -0.704832 -0.000092  0.000475
+  1Cu  1f-2       0.000017 -0.000002 -0.704866 -0.000003  0.000717  0.000174
+  1Cu  1f+3      -0.112028 -0.723457  0.000001 -0.000106 -0.053980 -0.270013
+  1Cu  1f-3       0.723949 -0.112112  0.000041  0.000035 -0.269996  0.053990
+                     84        85        86        87        88        89   
+                   5.96867   5.96868   5.96911   5.96911   5.96998   5.97730
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+  0Cu  1s         0.000000  0.000000  0.000000  0.000000 -0.000237  0.002255
+  0Cu  2s         0.000000 -0.000000 -0.000000  0.000000 -0.000208  0.002540
+  0Cu  3s         0.000000  0.000000 -0.000000  0.000000 -0.003612  0.035306
+  0Cu  4s        -0.000000 -0.000000  0.000000 -0.000000  0.005062 -0.054604
+  0Cu  5s         0.000000 -0.000000  0.000000  0.000000 -0.012025  0.062079
+  0Cu  6s         0.000000  0.000000 -0.000000 -0.000000  0.007444  0.002527
+  0Cu  1pz        0.000000 -0.000000  0.000000  0.000000 -0.000446  0.004150
+  0Cu  1px        0.000000  0.000000 -0.000827  0.000137 -0.000000 -0.000000
+  0Cu  1py       -0.000000  0.000000 -0.000137 -0.000827 -0.000000  0.000000
+  0Cu  2pz       -0.000000  0.000000 -0.000000 -0.000000  0.001731 -0.017508
+  0Cu  2px       -0.000001 -0.000000  0.003431 -0.000568  0.000000  0.000000
+  0Cu  2py        0.000001 -0.000000  0.000568  0.003431  0.000000 -0.000000
+  0Cu  3pz        0.000000 -0.000000  0.000000  0.000000 -0.002512  0.037374
+  0Cu  3px        0.000001  0.000000 -0.006698  0.001109 -0.000000 -0.000000
+  0Cu  3py       -0.000002  0.000000 -0.001109 -0.006698 -0.000000  0.000000
+  0Cu  1dz2      -0.000000 -0.000000  0.000000  0.000000 -0.007575  0.018653
+  0Cu  1dxz       0.000001  0.000001 -0.002848  0.000471 -0.000000 -0.000000
+  0Cu  1dyz      -0.000002  0.000000 -0.000471 -0.002848 -0.000000  0.000000
+  0Cu  1dx2y2     0.000000 -0.000514 -0.000000  0.000000  0.000000 -0.000000
+  0Cu  1dxy      -0.000544 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  2dz2       0.000000  0.000000 -0.000000 -0.000000  0.016900 -0.040954
+  0Cu  2dxz      -0.000003 -0.000001  0.004860 -0.000804  0.000000  0.000000
+  0Cu  2dyz       0.000006 -0.000000  0.000804  0.004860 -0.000000  0.000000
+  0Cu  2dx2y2     0.000000  0.002005 -0.000000 -0.000000 -0.000000  0.000000
+  0Cu  2dxy       0.002041 -0.000000  0.000000  0.000000  0.000000 -0.000000
+  0Cu  3dz2       0.000000 -0.000000  0.000000  0.000000 -0.017103  0.058582
+  0Cu  3dxz       0.000003  0.000001 -0.004912  0.000813 -0.000000 -0.000000
+  0Cu  3dyz      -0.000005  0.000000 -0.000813 -0.004912 -0.000000  0.000000
+  0Cu  3dx2y2     0.000000 -0.002287  0.000000  0.000000  0.000000 -0.000000
+  0Cu  3dxy      -0.002298 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  0Cu  4pz       -0.000000  0.000000  0.000000 -0.000000  0.001937 -0.078118
+  0Cu  4px       -0.000001 -0.000000  0.010158 -0.001681  0.000000  0.000000
+  0Cu  4py        0.000002 -0.000000  0.001681  0.010158  0.000000 -0.000000
+  0Cu  4dz2       0.000000  0.000000 -0.000000 -0.000000  0.011809  0.008176
+  0Cu  4dxz      -0.000001 -0.000000 -0.008558  0.001417 -0.000000 -0.000000
+  0Cu  4dyz       0.000001 -0.000000 -0.001417 -0.008558 -0.000000  0.000000
+  0Cu  4dx2y2    -0.000000  0.004100 -0.000000 -0.000000 -0.000000 -0.000000
+  0Cu  4dxy       0.004104  0.000000  0.000000  0.000000 -0.000000 -0.000000
+  0Cu  1f0       -0.000000 -0.000002  0.000003  0.000001 -0.707101 -0.706867
+  0Cu  1f+1       0.000292  0.000142  0.696607 -0.115297  0.000002 -0.000000
+  0Cu  1f-1      -0.000585  0.000049  0.115296  0.696604  0.000002 -0.000000
+  0Cu  1f+2      -0.000003 -0.704833  0.000014  0.000003  0.000002 -0.000000
+  0Cu  1f-2      -0.704866  0.000001  0.000000 -0.000003 -0.000000  0.000000
+  0Cu  1f+3      -0.000121 -0.000035 -0.034565  0.005721  0.000003 -0.000001
+  0Cu  1f-3      -0.000240  0.000013  0.005718  0.034557  0.000002 -0.000000
+  1Cu  1s        -0.000000 -0.000000  0.000000 -0.000000 -0.000237 -0.002255
+  1Cu  2s        -0.000000 -0.000000  0.000000 -0.000000 -0.000209 -0.002540
+  1Cu  3s        -0.000000 -0.000000  0.000000 -0.000000 -0.003613 -0.035306
+  1Cu  4s         0.000000  0.000000 -0.000000  0.000000  0.005063  0.054603
+  1Cu  5s        -0.000000 -0.000000  0.000000  0.000000 -0.012027 -0.062079
+  1Cu  6s         0.000000  0.000000 -0.000000 -0.000000  0.007443 -0.002528
+  1Cu  1pz        0.000000  0.000000 -0.000000  0.000000  0.000446  0.004150
+  1Cu  1px        0.000000  0.000000  0.000827 -0.000137  0.000000 -0.000000
+  1Cu  1py       -0.000000  0.000000  0.000137  0.000827  0.000000 -0.000000
+  1Cu  2pz       -0.000000 -0.000000  0.000000 -0.000000 -0.001731 -0.017508
+  1Cu  2px       -0.000001 -0.000000 -0.003431  0.000568 -0.000000 -0.000000
+  1Cu  2py        0.000001 -0.000000 -0.000568 -0.003431 -0.000000  0.000000
+  1Cu  3pz        0.000000  0.000000 -0.000000  0.000000  0.002513  0.037374
+  1Cu  3px        0.000001  0.000001  0.006697 -0.001108  0.000000  0.000000
+  1Cu  3py       -0.000002  0.000000  0.001108  0.006697  0.000000 -0.000000
+  1Cu  1dz2      -0.000000 -0.000000  0.000000  0.000000 -0.007575 -0.018653
+  1Cu  1dxz      -0.000001 -0.000001 -0.002847  0.000471 -0.000000  0.000000
+  1Cu  1dyz       0.000002 -0.000000 -0.000471 -0.002847 -0.000000  0.000000
+  1Cu  1dx2y2     0.000000  0.000513 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  1dxy       0.000544  0.000000  0.000000  0.000000  0.000000  0.000000
+  1Cu  2dz2       0.000000  0.000000 -0.000000 -0.000000  0.016902  0.040954
+  1Cu  2dxz       0.000003  0.000001  0.004857 -0.000804  0.000000 -0.000000
+  1Cu  2dyz      -0.000006  0.000000  0.000804  0.004857  0.000000 -0.000000
+  1Cu  2dx2y2     0.000000 -0.002009  0.000000  0.000000  0.000000 -0.000000
+  1Cu  2dxy      -0.002045 -0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  3dz2      -0.000000 -0.000000  0.000000  0.000000 -0.017105 -0.058581
+  1Cu  3dxz      -0.000003 -0.000001 -0.004909  0.000813 -0.000000  0.000000
+  1Cu  3dyz       0.000005 -0.000000 -0.000813 -0.004909 -0.000000  0.000000
+  1Cu  3dx2y2     0.000000  0.002283 -0.000000 -0.000000 -0.000000 -0.000000
+  1Cu  3dxy       0.002294 -0.000000  0.000000  0.000000 -0.000000 -0.000000
+  1Cu  4pz       -0.000000 -0.000000  0.000000 -0.000000 -0.001939 -0.078117
+  1Cu  4px       -0.000001 -0.000001 -0.010156  0.001681 -0.000000 -0.000000
+  1Cu  4py        0.000002 -0.000000 -0.001681 -0.010156 -0.000000  0.000000
+  1Cu  4dz2       0.000000  0.000000 -0.000000 -0.000000  0.011809 -0.008176
+  1Cu  4dxz       0.000001  0.000000 -0.008559  0.001417 -0.000000 -0.000000
+  1Cu  4dyz      -0.000001  0.000000 -0.001417 -0.008559 -0.000000  0.000000
+  1Cu  4dx2y2    -0.000000 -0.004089  0.000000  0.000000  0.000000 -0.000000
+  1Cu  4dxy      -0.004093  0.000000 -0.000000 -0.000000  0.000000  0.000000
+  1Cu  1f0        0.000000  0.000002 -0.000003 -0.000001  0.707078 -0.706890
+  1Cu  1f+1       0.000292  0.000130 -0.696933  0.115351 -0.000004 -0.000000
+  1Cu  1f-1      -0.000580  0.000041 -0.115352 -0.696937 -0.000000  0.000000
+  1Cu  1f+2       0.000003 -0.709377 -0.000002  0.000002  0.000001  0.000000
+  1Cu  1f-2      -0.709343 -0.000001 -0.000002 -0.000001  0.000001  0.000000
+  1Cu  1f+3      -0.000121 -0.000058  0.034579 -0.005724  0.000001  0.000000
+  1Cu  1f-3      -0.000267  0.000033 -0.005723 -0.034586 -0.000000 -0.000000
+
+
+
+                    ********************************
+                    * MULLIKEN POPULATION ANALYSIS *
+                    ********************************
+
+-----------------------
+MULLIKEN ATOMIC CHARGES
+-----------------------
+   0 Cu:   -0.000000
+   1 Cu:    0.000000
+Sum of atomic charges:   -0.0000000
+
+--------------------------------
+MULLIKEN REDUCED ORBITAL CHARGES
+--------------------------------
+  0 Cus       :     6.986092  s :     6.986092
+      pz      :     4.033739  p :    12.037015
+      px      :     4.001638
+      py      :     4.001638
+      dz2     :     1.980165  d :     9.976880
+      dxz     :     1.998359
+      dyz     :     1.998359
+      dx2y2   :     1.999999
+      dxy     :     1.999999
+      f0      :     0.000004  f :     0.000012
+      f+1     :     0.000003
+      f-1     :     0.000003
+      f+2     :     0.000001
+      f-2     :     0.000001
+      f+3     :     0.000000
+      f-3     :     0.000000
+  1 Cus       :     6.986092  s :     6.986092
+      pz      :     4.033739  p :    12.037015
+      px      :     4.001638
+      py      :     4.001638
+      dz2     :     1.980165  d :     9.976881
+      dxz     :     1.998359
+      dyz     :     1.998359
+      dx2y2   :     1.999999
+      dxy     :     1.999999
+      f0      :     0.000004  f :     0.000012
+      f+1     :     0.000003
+      f-1     :     0.000003
+      f+2     :     0.000001
+      f-2     :     0.000001
+      f+3     :     0.000000
+      f-3     :     0.000000
+
+
+                     *******************************
+                     * LOEWDIN POPULATION ANALYSIS *
+                     *******************************
+
+----------------------
+LOEWDIN ATOMIC CHARGES
+----------------------
+   0 Cu:   -0.000000
+   1 Cu:    0.000000
+
+-------------------------------
+LOEWDIN REDUCED ORBITAL CHARGES
+-------------------------------
+  0 Cus       :     6.950726  s :     6.950726
+      pz      :     4.038488  p :    12.041347
+      px      :     4.001429
+      py      :     4.001429
+      dz2     :     2.010781  d :    10.007914
+      dxz     :     1.998568
+      dyz     :     1.998568
+      dx2y2   :     1.999999
+      dxy     :     1.999999
+      f0      :     0.000006  f :     0.000014
+      f+1     :     0.000003
+      f-1     :     0.000003
+      f+2     :     0.000001
+      f-2     :     0.000001
+      f+3     :     0.000000
+      f-3     :     0.000000
+  1 Cus       :     6.950725  s :     6.950725
+      pz      :     4.038488  p :    12.041347
+      px      :     4.001429
+      py      :     4.001429
+      dz2     :     2.010781  d :    10.007914
+      dxz     :     1.998568
+      dyz     :     1.998568
+      dx2y2   :     1.999999
+      dxy     :     1.999999
+      f0      :     0.000006  f :     0.000014
+      f+1     :     0.000003
+      f-1     :     0.000003
+      f+2     :     0.000001
+      f-2     :     0.000001
+      f+3     :     0.000000
+      f-3     :     0.000000
+
+
+                      *****************************
+                      * MAYER POPULATION ANALYSIS *
+                      *****************************
+
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0 Cu    29.0000    29.0000    -0.0000     1.0248     1.0248    -0.0000
+  1 Cu    29.0000    29.0000     0.0000     1.0248     1.0248    -0.0000
+
+  Mayer bond orders larger than 0.100000
+B(  0-Cu,  1-Cu) :   1.0248 
+
+-------
+TIMINGS
+-------
+
+Total SCF time: 0 days 0 hours 0 min 22 sec 
+
+Total time                  ....      22.261 sec
+Sum of individual times     ....      21.573 sec  ( 96.9%)
+
+Fock matrix formation       ....      12.805 sec  ( 57.5%)
+  Split-RI-J                ....       1.987 sec  ( 15.5% of F)
+  Chain of spheres X        ....       3.340 sec  ( 26.1% of F)
+  XC integration            ....       1.712 sec  ( 13.4% of F)
+    Basis function eval.    ....       0.083 sec  (  4.9% of XC)
+    Density eval.           ....       0.131 sec  (  7.7% of XC)
+    XC-Functional eval.     ....       0.068 sec  (  4.0% of XC)
+    XC-Potential eval.      ....       0.126 sec  (  7.4% of XC)
+Diagonalization             ....       3.559 sec  ( 16.0%)
+Density matrix formation    ....       0.131 sec  (  0.6%)
+Population analysis         ....       0.041 sec  (  0.2%)
+Initial guess               ....       0.022 sec  (  0.1%)
+Orbital Transformation      ....       0.000 sec  (  0.0%)
+Orbital Orthonormalization  ....       0.000 sec  (  0.0%)
+DIIS solution               ....       4.296 sec  ( 19.3%)
+Grid generation             ....       0.720 sec  (  3.2%)
+
+Maximum memory used throughout the entire SCF-calculation: 59.8 MB
+No protocol specified
+
+
+           ************************************************************
+           *        Program running with 16 parallel MPI-processes    *
+           *              working on a common directory               *
+           ************************************************************
+------------------------------------------------------------------------------
+                        ORCA TD-DFT/TDA CALCULATION
+------------------------------------------------------------------------------
+
+Input orbitals are from        ... cu2.gbw
+CI-vector output               ... cu2.cis
+Tamm-Dancoff approximation     ... operative
+CIS-Integral strategy          ... AO-integrals
+Integral handling              ... AO integral Direct
+Max. core memory used          ... 512 MB
+Reference state                ... RHF
+Generation of triplets         ... off
+Follow IRoot                   ... off
+Number of operators            ... 1
+Orbital ranges used for CIS calculation:
+ Operator 0:  Orbitals  10... 28  to  29... 89
+XAS localization array:
+ Operator 0:  Orbitals  -1... -1
+
+-------------------
+XC-INTEGRATION GRID
+-------------------
+
+General Integration Accuracy     IntAcc      ... 3.467
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 1 (Lebedev-50)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... Becke
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Angular grids for H and He will be reduced by one unit
+Partially contracted basis set               ... off
+Rotationally invariant grid construction     ... off
+
+Total number of grid points                  ...     8684
+Total number of batches                      ...      136
+Average number of points per batch           ...       63
+Average number of grid points per atom       ...     4342
+
+---------------------
+COSX-INTEGRATION GRID
+---------------------
+
+General Integration Accuracy     IntAcc      ... 3.067
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 1 (Lebedev-50)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... Becke
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Angular grids for H and He will be reduced by one unit
+Partially contracted basis set               ... on
+Rotationally invariant grid construction     ... off
+
+Total number of grid points                  ...     1666
+Total number of batches                      ...       28
+Average number of points per batch           ...       59
+Average number of grid points per atom       ...      833
+
+---------------
+TD-DFT XC SETUP
+---------------
+
+DFT calculation                         ... on
+Name of the grid file                   ... cu2.grid_cis.tmp
+Exchange functional (TD-DFT)            ... M062X
+Correlation functional (TD-DFT)         ... M062X
+Hybrid DFT                              ... on
+   Exchange mixing (TD-DFT)             ...  0.540
+   GGA exch. scaling (TD-DFT)           ...  0.460
+   GGA corr. scaling (TD-DFT)           ...  1.000
+
+Building densities             ... done
+Calculating rho(r) on the grid ... done
+Building xc-kernel on the grid ... done
+                    *** TD-DFT CALCULATION INITIALIZED ***
+
+---------------------------------
+    LR-CPCM (non-equilibrium)
+---------------------------------
+
+Setting up LR-CPCM             ... done
+
+------------------------
+DAVIDSON-DIAGONALIZATION
+------------------------
+
+Dimension of the eigenvalue problem            ...   1159
+Number of roots to be determined               ...     12
+Maximum size of the expansion space            ...    720
+Maximum number of iterations                   ...    100
+Convergence tolerance for the residual         ...    2.500e-07
+Convergence tolerance for the energies         ...    2.500e-07
+Orthogonality tolerance                        ...    1.000e-14
+Level Shift                                    ...    0.000e+00
+Constructing the preconditioner                ... o.k.
+Building the initial guess                     ... o.k.
+Number of trial vectors determined             ...    512
+
+
+                       ****Iteration    0****
+
+   Memory handling for direct AO based CIS:
+   Memory per vector needed      ...     1 MB
+   Memory needed                 ...    13 MB
+   Memory available              ...   512 MB
+   Number of vectors per batch   ...   512
+   Number of batches             ...     1
+   Time for densities:            0.004
+   Time for RI-J (Direct):        0.101
+   Time for K (COSX):             0.203
+   Time for XC-Integration:       0.266
+   Time for LR-CPCM terms:        0.376
+   Time for Sigma-Completion:     0.031
+   Size of expansion space: 36
+   Lowest Energy          :     0.107698225859
+   Maximum Energy change  :     0.208895064335 (vector 11)
+   Maximum residual norm  :     0.011142657023
+
+                       ****Iteration    1****
+   Time for densities:            0.001
+   Time for RI-J (Direct):        0.038
+   Time for K (COSX):             0.108
+   Time for XC-Integration:       0.088
+   Time for LR-CPCM terms:        0.247
+   Time for Sigma-Completion:     0.003
+   Size of expansion space: 48
+   Lowest Energy          :     0.104291994936
+   Maximum Energy change  :     0.011018859853 (vector 11)
+   Maximum residual norm  :     0.005347473926
+
+                       ****Iteration    2****
+   Time for densities:            0.001
+   Time for RI-J (Direct):        0.230
+   Time for K (COSX):             0.166
+   Time for XC-Integration:       0.147
+   Time for LR-CPCM terms:        0.305
+   Time for Sigma-Completion:     0.003
+   Size of expansion space: 60
+   Lowest Energy          :     0.104099097641
+   Maximum Energy change  :     0.003035714368 (vector 10)
+   Maximum residual norm  :     0.000169988640
+
+                       ****Iteration    3****
+   Time for densities:            0.001
+   Time for RI-J (Direct):        0.052
+   Time for K (COSX):             0.122
+   Time for XC-Integration:       0.092
+   Time for LR-CPCM terms:        0.296
+   Time for Sigma-Completion:     0.003
+   Size of expansion space: 72
+   Lowest Energy          :     0.104087771525
+   Maximum Energy change  :     0.000118108983 (vector 11)
+   Maximum residual norm  :     0.000010049723
+
+                       ****Iteration    4****
+   Time for densities:            0.001
+   Time for RI-J (Direct):        0.055
+   Time for K (COSX):             0.088
+   Time for XC-Integration:       0.154
+   Time for LR-CPCM terms:        0.207
+   Time for Sigma-Completion:     0.003
+   Size of expansion space: 84
+   Lowest Energy          :     0.104087472957
+   Maximum Energy change  :     0.000005086281 (vector 11)
+   Maximum residual norm  :     0.000000181435
+
+      *** CONVERGENCE OF RESIDUAL NORM REACHED ***
+
+Storing the converged CI vectors               ... cu2.cis1
+
+                 *** DAVIDSON DONE ***
+
+Total time for solving the CIS problem:     3.757sec
+
+------------------------------------
+TD-DFT/TDA EXCITED STATES (SINGLETS)
+------------------------------------
+
+the weight of the individual excitations are printed if larger than 1.0e-02
+
+STATE  1:  E=   0.104087 au      2.832 eV    22844.6 cm**-1 <S**2> =   0.000000
+    18a ->  29a  :     0.013332 (c=  0.11546401)
+    28a ->  29a  :     0.955337 (c=  0.97741341)
+    28a ->  36a  :     0.010097 (c= -0.10048596)
+
+STATE  2:  E=   0.146203 au      3.978 eV    32087.9 cm**-1 <S**2> =   0.000000
+    18a ->  30a  :     0.023047 (c=  0.15181170)
+    18a ->  35a  :     0.015883 (c=  0.12602813)
+    27a ->  29a  :     0.923149 (c= -0.96080626)
+    27a ->  36a  :     0.016737 (c= -0.12937224)
+
+STATE  3:  E=   0.148629 au      4.044 eV    32620.4 cm**-1 <S**2> =   0.000000
+    19a ->  30a  :     0.023334 (c=  0.15275525)
+    19a ->  35a  :     0.013645 (c=  0.11680976)
+    25a ->  29a  :     0.928743 (c=  0.96371287)
+    25a ->  36a  :     0.020567 (c=  0.14341086)
+
+STATE  4:  E=   0.148629 au      4.044 eV    32620.4 cm**-1 <S**2> =   0.000000
+    20a ->  30a  :     0.023334 (c= -0.15275536)
+    20a ->  35a  :     0.013645 (c= -0.11680981)
+    26a ->  29a  :     0.928742 (c= -0.96371284)
+    26a ->  36a  :     0.020567 (c= -0.14341086)
+
+STATE  5:  E=   0.153830 au      4.186 eV    33761.9 cm**-1 <S**2> =   0.000000
+    22a ->  30a  :     0.033416 (c=  0.18280037)
+    22a ->  35a  :     0.018379 (c=  0.13556801)
+    24a ->  29a  :     0.918349 (c= -0.95830529)
+    24a ->  36a  :     0.019218 (c= -0.13862807)
+
+STATE  6:  E=   0.153897 au      4.188 eV    33776.4 cm**-1 <S**2> =   0.000000
+    21a ->  30a  :     0.033366 (c=  0.18266482)
+    21a ->  35a  :     0.018361 (c=  0.13550193)
+    23a ->  29a  :     0.918382 (c= -0.95832236)
+    23a ->  36a  :     0.019235 (c= -0.13869087)
+
+STATE  7:  E=   0.156304 au      4.253 eV    34304.7 cm**-1 <S**2> =   0.000000
+    22a ->  29a  :     0.915735 (c=  0.95694059)
+    22a ->  36a  :     0.018752 (c=  0.13693829)
+    24a ->  30a  :     0.035811 (c= -0.18923664)
+    24a ->  35a  :     0.019342 (c= -0.13907593)
+
+STATE  8:  E=   0.156368 au      4.255 eV    34318.7 cm**-1 <S**2> =   0.000000
+    21a ->  29a  :     0.915801 (c= -0.95697491)
+    21a ->  36a  :     0.018771 (c= -0.13700670)
+    23a ->  30a  :     0.035735 (c=  0.18903586)
+    23a ->  35a  :     0.019320 (c=  0.13899820)
+
+STATE  9:  E=   0.160421 au      4.365 eV    35208.2 cm**-1 <S**2> =   0.000000
+    19a ->  29a  :     0.036542 (c= -0.19116012)
+    20a ->  29a  :     0.880761 (c=  0.93848879)
+    20a ->  36a  :     0.018798 (c=  0.13710641)
+    26a ->  30a  :     0.034703 (c=  0.18628738)
+    26a ->  35a  :     0.018145 (c=  0.13470430)
+
+STATE 10:  E=   0.160421 au      4.365 eV    35208.2 cm**-1 <S**2> =   0.000000
+    19a ->  29a  :     0.880761 (c=  0.93848876)
+    19a ->  36a  :     0.018798 (c=  0.13710638)
+    20a ->  29a  :     0.036542 (c=  0.19116011)
+    25a ->  30a  :     0.034703 (c=  0.18628755)
+    25a ->  35a  :     0.018145 (c=  0.13470436)
+
+STATE 11:  E=   0.166097 au      4.520 eV    36454.1 cm**-1 <S**2> =   0.000000
+    18a ->  29a  :     0.898300 (c=  0.94778689)
+    18a ->  36a  :     0.015783 (c=  0.12563077)
+    27a ->  30a  :     0.029293 (c= -0.17115216)
+    27a ->  35a  :     0.025130 (c= -0.15852565)
+    28a ->  29a  :     0.014415 (c= -0.12006185)
+
+STATE 12:  E=   0.195857 au      5.330 eV    42985.7 cm**-1 <S**2> =   0.000000
+    18a ->  30a  :     0.010321 (c= -0.10159316)
+    19a ->  32a  :     0.020191 (c=  0.14209330)
+    20a ->  31a  :     0.020191 (c= -0.14209344)
+    25a ->  34a  :     0.012315 (c= -0.11097239)
+    26a ->  33a  :     0.012315 (c= -0.11097254)
+    27a ->  29a  :     0.013403 (c= -0.11577101)
+    28a ->  30a  :     0.880283 (c= -0.93823404)
+    28a ->  35a  :     0.013427 (c= -0.11587278)
+
+
+-----------------------------
+TD-DFT/TDA-EXCITATION SPECTRA
+-----------------------------
+
+Center of mass = ( -4.9700,  0.0000, -9.2550)
+Calculating the Dipole integrals                  ... done
+Transforming integrals                            ... done
+Calculating the Linear Momentum integrals         ... done
+Transforming integrals                            ... done
+Calculating angular momentum integrals            ... done
+Transforming integrals                            ... done
+
+-----------------------------------------------------------------------------
+         ABSORPTION SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS
+-----------------------------------------------------------------------------
+State   Energy    Wavelength  fosc         T2        TX        TY        TZ  
+        (cm-1)      (nm)                 (au**2)    (au)      (au)      (au) 
+-----------------------------------------------------------------------------
+   1   22844.6    437.7   0.776895818  11.19581  -0.00000  -0.00000  -3.34601
+   2   32087.9    311.6   0.000000004   0.00000   0.00000  -0.00000  -0.00019
+   3   32620.4    306.6   0.008453496   0.08531   0.00529  -0.29204  -0.00000
+   4   32620.4    306.6   0.008453488   0.08531  -0.29204  -0.00529   0.00000
+   5   33761.9    296.2   0.000000000   0.00000   0.00000  -0.00000   0.00006
+   6   33776.4    296.1   0.000000000   0.00000  -0.00000  -0.00000   0.00000
+   7   34304.7    291.5   0.000000000   0.00000  -0.00000  -0.00000   0.00003
+   8   34318.7    291.4   0.000000000   0.00000  -0.00000  -0.00000   0.00000
+   9   35208.2    284.0   0.000000000   0.00000  -0.00002  -0.00000   0.00000
+  10   35208.2    284.0   0.000000000   0.00000  -0.00000   0.00001  -0.00000
+  11   36454.1    274.3   0.138394117   1.24982   0.00000  -0.00000   1.11795
+  12   42985.7    232.6   0.000000000   0.00000   0.00000  -0.00000   0.00001
+
+-----------------------------------------------------------------------------
+         ABSORPTION SPECTRUM VIA TRANSITION VELOCITY DIPOLE MOMENTS
+-----------------------------------------------------------------------------
+State   Energy    Wavelength   fosc        P2         PX        PY        PZ  
+        (cm-1)      (nm)                 (au**2)     (au)      (au)      (au) 
+-----------------------------------------------------------------------------
+   1   22844.6    437.7   0.185604457   0.02898   0.00000  -0.00000   0.17023
+   2   32087.9    311.6   0.000000001   0.00000  -0.00000   0.00000   0.00001
+   3   32620.4    306.6   0.005813115   0.00130  -0.00065   0.03599   0.00000
+   4   32620.4    306.6   0.005813101   0.00130   0.03599   0.00065  -0.00000
+   5   33761.9    296.2   0.000000000   0.00000  -0.00000   0.00000  -0.00001
+   6   33776.4    296.1   0.000000000   0.00000   0.00000   0.00000  -0.00000
+   7   34304.7    291.5   0.000000000   0.00000   0.00000   0.00000  -0.00000
+   8   34318.7    291.4   0.000000000   0.00000   0.00000   0.00000   0.00000
+   9   35208.2    284.0   0.000000000   0.00000   0.00000   0.00000  -0.00000
+  10   35208.2    284.0   0.000000000   0.00000   0.00000  -0.00000   0.00000
+  11   36454.1    274.3   0.084318927   0.02101  -0.00000   0.00000  -0.14494
+  12   42985.7    232.6   0.000000000   0.00000   0.00000   0.00000  -0.00000
+
+-------------------------------------------------------------------
+                             CD SPECTRUM
+-------------------------------------------------------------------
+State  Energy     Wavelength     R         MX        MY        MZ   
+       (cm-1)       (nm)     (1e40*cgs)   (au)      (au)      (au)  
+-------------------------------------------------------------------
+   1   22844.6    437.7      0.00000  -0.00000   0.00000  -0.00000
+   2   32087.9    311.6     -0.00000  -0.00000   0.00000   0.00000
+   3   32620.4    306.6      0.00000  -0.00000  -0.00000   0.00000
+   4   32620.4    306.6     -0.00000  -0.00000   0.00000  -0.00000
+   5   33761.9    296.2      0.00000  -0.00000  -0.00000   0.00000
+   6   33776.4    296.1      0.00000   0.00000  -0.00000   0.00000
+   7   34304.7    291.5      0.00000  -0.00000  -0.00000   0.00000
+   8   34318.7    291.4     -0.00000   0.00000  -0.00000   0.00000
+   9   35208.2    284.0     -0.00000   0.00004  -0.01436   0.00000
+  10   35208.2    284.0      0.00000  -0.01436  -0.00004   0.00000
+  11   36454.1    274.3     -0.00000  -0.00000   0.00000   0.00000
+  12   42985.7    232.6     -0.00000   0.00000   0.00000   0.00000
+
+-------------------------------------------------------------------
+         CD SPECTRUM VIA TRANSITION VELOCITY DIPOLE MOMENTS        
+-------------------------------------------------------------------
+State  Energy     Wavelength     R         MX        MY        MZ   
+       (cm-1)       (nm)     (1e40*cgs)   (au)      (au)      (au)  
+-------------------------------------------------------------------
+   1   22844.6    437.7     -0.00000  -0.00000   0.00000  -0.00000
+   2   32087.9    311.6      0.00000  -0.00000   0.00000   0.00000
+   3   32620.4    306.6     -0.00000  -0.00000  -0.00000   0.00000
+   4   32620.4    306.6      0.00000  -0.00000   0.00000  -0.00000
+   5   33761.9    296.2     -0.00000  -0.00000  -0.00000   0.00000
+   6   33776.4    296.1     -0.00000   0.00000  -0.00000   0.00000
+   7   34304.7    291.5     -0.00000  -0.00000  -0.00000   0.00000
+   8   34318.7    291.4      0.00000   0.00000  -0.00000   0.00000
+   9   35208.2    284.0      0.00000   0.00004  -0.01436   0.00000
+  10   35208.2    284.0     -0.00000  -0.01436  -0.00004   0.00000
+  11   36454.1    274.3      0.00000  -0.00000   0.00000   0.00000
+  12   42985.7    232.6      0.00000   0.00000   0.00000   0.00000
+
+Total run time:        4.661 sec
+
+           *** ORCA-CIS/TD-DFT FINISHED WITHOUT ERROR ***
+
+Maximum memory used throughout the entire CIS-calculation: 52.2 MB
+
+-----------------------
+CIS/TD-DFT TOTAL ENERGY
+-----------------------
+
+    E(SCF)  =  -3280.947165987 Eh
+    DE(CIS) =      0.104087473 Eh (Root  1)
+    ----------------------------- ---------
+    E(tot)  =  -3280.843078514 Eh
+
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY     -3280.843078514320
+-------------------------   --------------------
+
+
+                            ***************************************
+                            *     ORCA property calculations      *
+                            ***************************************
+
+                                    ---------------------
+                                    Active property flags
+                                    ---------------------
+   (+) Dipole Moment
+
+
+------------------------------------------------------------------------------
+                       ORCA ELECTRIC PROPERTIES CALCULATION
+------------------------------------------------------------------------------
+
+Dipole Moment Calculation                       ... on
+Quadrupole Moment Calculation                   ... off
+Polarizability Calculation                      ... off
+GBWName                                         ... cu2.gbw
+Electron density                                ... cu2.scfp
+The origin for moment calculation is the CENTER OF MASS  = (-4.970006,  0.000000 -9.255044)
+
+-------------
+DIPOLE MOMENT
+-------------
+                                X             Y             Z
+Electronic contribution:     -0.00000      -0.00000      -0.00000
+Nuclear contribution   :     -0.00000       0.00000      -0.00000
+                        -----------------------------------------
+Total Dipole Moment    :     -0.00000      -0.00000      -0.00000
+                        -----------------------------------------
+Magnitude (a.u.)       :      0.00000
+Magnitude (Debye)      :      0.00000
+
+
+
+--------------------
+Rotational spectrum 
+--------------------
+ 
+Rotational constants in cm-1:     0.000000     0.070666     0.070666 
+Rotational constants in MHz :     0.000000  2118.511955  2118.511955 
+
+ Dipole components along the rotational axes: 
+x,y,z [a.u.] :     0.000002     0.000000    -0.000000 
+x,y,z [Debye]:     0.000004     0.000000    -0.000000 
+
+ 
+No protocol specified
+
+Timings for individual modules:
+
+Sum of individual times         ...       29.440 sec (=   0.491 min)
+GTO integral calculation        ...        1.049 sec (=   0.017 min)   3.6 %
+SCF iterations                  ...       22.924 sec (=   0.382 min)  77.9 %
+CIS module                      ...        5.466 sec (=   0.091 min)  18.6 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 0 days 0 hours 0 minutes 30 seconds 655 msec
